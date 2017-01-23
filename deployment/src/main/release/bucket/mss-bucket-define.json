@@ -1,0 +1,12 @@
+{
+    "name":"localsitedb",
+
+    "owner":"localsiteservice",
+
+    "authorization":"private",
+
+    "allowread":
+    [
+        "localsiteservice"
+    ]
+}

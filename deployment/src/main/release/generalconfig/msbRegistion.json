@@ -1,0 +1,14 @@
+{
+  "serviceName": "sdnolocalsite",
+  "version": "v1",
+  "url": "/openoapi/sdnolocalsite/v1",
+  "protocol": "REST",
+  "visualRange": "1",
+  "nodes": [
+    {
+      "ip": "",
+      "port": "8548",
+      "ttl": 0
+    }
+  ]
+}
