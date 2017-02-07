@@ -37,6 +37,9 @@
         <!-- registering beans -->
         <jaxrs:serviceBeans>
             <ref bean="SiteRoaResource"></ref>
+            <ref bean="LocalCpeRoaResource"></ref>
+            <ref bean="CloudCpeRoaResource"></ref>
+            <ref bean="CpeOnlineRoaResource"></ref>
         </jaxrs:serviceBeans>
         <!-- registering providers -->
         <jaxrs:providers>
