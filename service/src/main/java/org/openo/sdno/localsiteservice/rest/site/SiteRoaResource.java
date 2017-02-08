@@ -16,6 +16,8 @@
 
 package org.openo.sdno.localsiteservice.rest.site;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,10 +34,24 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import org.codehaus.jackson.type.TypeReference;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
+import org.openo.sdno.exception.ParameterServiceException;
+import org.openo.sdno.framework.container.util.JsonUtil;
+import org.openo.sdno.framework.container.util.UuidUtils;
+import org.openo.sdno.localsiteservice.checker.SiteModelChecker;
+import org.openo.sdno.localsiteservice.inf.site.SiteService;
+import org.openo.sdno.overlayvpn.consts.HttpCode;
 import org.openo.sdno.overlayvpn.model.v2.result.ComplexResult;
 import org.openo.sdno.overlayvpn.model.v2.site.NbiSiteModel;
+import org.openo.sdno.overlayvpn.result.ResultRsp;
+import org.openo.sdno.overlayvpn.util.check.CheckStrUtil;
+import org.openo.sdno.overlayvpn.util.check.ValidationUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 
 /**
  * Restful Interface for Site Service.<br>
@@ -46,6 +62,14 @@ import org.springframework.stereotype.Controller;
 @Path("/sdnolocalsite/v1/sites")
 @Controller("SiteRoaResource")
 public class SiteRoaResource {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SiteRoaResource.class);
+
+    @Autowired
+    private SiteService service;
+
+    @Autowired
+    private SiteModelChecker modelChecker;
 
     /**
      * Query one site.<br>
@@ -63,7 +87,22 @@ public class SiteRoaResource {
     @Produces(MediaType.APPLICATION_JSON)
     public NbiSiteModel query(@Context HttpServletRequest request, @Context HttpServletResponse response,
             @PathParam("uuid") String siteUuid) throws ServiceException {
-        return null;
+
+        long beginTime = System.currentTimeMillis();
+        LOGGER.debug("Enter query method siteUuid:" + siteUuid);
+
+        // Check Uuid
+        CheckStrUtil.checkUuidStr(siteUuid);
+
+        // Query Site
+        ResultRsp<NbiSiteModel> resutRsp = service.query(request, siteUuid);
+        if(!resutRsp.isValid()) {
+            LOGGER.error("Query Site failed");
+            throw new ServiceException("Query Site failed");
+        }
+
+        LOGGER.debug("Exit query method cost time:" + (System.currentTimeMillis() - beginTime));
+        return resutRsp.getData();
     }
 
     /**
@@ -81,7 +120,20 @@ public class SiteRoaResource {
     @Produces(MediaType.APPLICATION_JSON)
     public ComplexResult<NbiSiteModel> batchQuery(@Context HttpServletRequest request,
             @Context HttpServletResponse response, @QueryParam("uuids") String uuids) throws ServiceException {
-        return null;
+        long beginTime = System.currentTimeMillis();
+        LOGGER.debug("Enter batch query method");
+
+        if(!StringUtils.hasLength(uuids)) {
+            LOGGER.error("uuids is empty");
+            throw new ParameterServiceException("uuids is empty");
+        }
+
+        ComplexResult<NbiSiteModel> result =
+                service.batchQuery(request, JsonUtil.fromJson(uuids, new TypeReference<List<String>>() {}));
+
+        LOGGER.debug("Exit query method cost time:" + (System.currentTimeMillis() - beginTime));
+
+        return result;
     }
 
     /**
@@ -99,7 +151,32 @@ public class SiteRoaResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Map<String, String> create(@Context HttpServletRequest request, @Context HttpServletResponse response,
             NbiSiteModel siteModel) throws ServiceException {
-        return null;
+
+        long beginTime = System.currentTimeMillis();
+        LOGGER.debug("Enter create method");
+
+        // Check SiteModel
+        ValidationUtil.validateModel(siteModel);
+
+        // Allocate Uuid
+        if(!StringUtils.hasLength(siteModel.getUuid())) {
+            siteModel.setUuid(UuidUtils.createUuid());
+        }
+
+        // Create SubnetModel
+        ResultRsp<NbiSiteModel> resultRsp = service.create(request, siteModel);
+        if(!resultRsp.isValid()) {
+            LOGGER.error("NbiSiteModel create failed");
+            throw new ServiceException("NbiSiteModel create failed");
+        }
+
+        Map<String, String> result = new HashMap<String, String>();
+        result.put("id", resultRsp.getData().getUuid());
+
+        response.setStatus(HttpCode.CREATE_OK);
+
+        LOGGER.debug("Exit create method cost time:" + (System.currentTimeMillis() - beginTime));
+        return result;
     }
 
     /**
@@ -117,6 +194,34 @@ public class SiteRoaResource {
     @Produces(MediaType.APPLICATION_JSON)
     public void delete(@Context HttpServletRequest request, @Context HttpServletResponse response,
             @PathParam("uuid") String siteUuid) throws ServiceException {
+
+        long beginTime = System.currentTimeMillis();
+        LOGGER.debug("Enter delete method, siteUuid:" + siteUuid);
+
+        // Check Uuid
+        CheckStrUtil.checkUuidStr(siteUuid);
+
+        ResultRsp<NbiSiteModel> queryResultRsp = service.query(request, siteUuid);
+        if(!queryResultRsp.isSuccess()) {
+            LOGGER.error("VlanModel query failed");
+            throw new ServiceException("VlanModel query failed");
+        }
+
+        // Check Existence
+        if(!queryResultRsp.isValid()) {
+            return;
+        }
+
+        // Check Resource Dependency
+        if(modelChecker.checkResourceDependency(siteUuid)) {
+            LOGGER.error("dependency resource Exist, can not be deleted");
+            throw new ServiceException("dependency resource Exist, can not be deleted");
+        }
+
+        // Delete Site
+        service.delete(request, siteUuid);
+
+        LOGGER.debug("Exit delete method cost time:" + (System.currentTimeMillis() - beginTime));
     }
 
     /**
@@ -136,7 +241,43 @@ public class SiteRoaResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Map<String, Object> update(@Context HttpServletRequest request, @Context HttpServletResponse response,
             @PathParam("uuid") String siteUuid, NbiSiteModel siteModel) throws ServiceException {
-        return null;
+
+        long beginTime = System.currentTimeMillis();
+        LOGGER.debug("Enter update method, siteUuid:" + siteUuid);
+
+        // Check Uuid
+        CheckStrUtil.checkUuidStr(siteUuid);
+
+        ResultRsp<NbiSiteModel> queryResultRsp = service.query(request, siteUuid);
+        if(!queryResultRsp.isSuccess()) {
+            LOGGER.error("VlanModel query failed");
+            throw new ServiceException("VlanModel query failed");
+        }
+
+        // Check Existence
+        if(!queryResultRsp.isValid()) {
+            LOGGER.error("Current Site does not exist");
+            throw new ServiceException("Current Site does not exist");
+        }
+
+        siteModel.setUuid(siteUuid);
+
+        // Update Site Model
+        ResultRsp<NbiSiteModel> updateResultRsp = service.update(request, siteModel);
+        if(!updateResultRsp.isValid()) {
+            LOGGER.error("Current Site update failed");
+            throw new ServiceException("Current Site update failed");
+        }
+
+        NbiSiteModel updatedModel = updateResultRsp.getData();
+
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("id", updatedModel.getUuid());
+        resultMap.put("properties", JsonUtil.fromJson(JsonUtil.toJson(updatedModel), Map.class));
+
+        LOGGER.debug("Exit update method cost time:" + (System.currentTimeMillis() - beginTime));
+
+        return resultMap;
     }
 
 }

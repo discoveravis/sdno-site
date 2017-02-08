@@ -37,6 +37,12 @@
         <!-- registering beans -->
         <jaxrs:serviceBeans>
             <ref bean="SiteRoaResource"></ref>
+            <ref bean="VlanRoaResource"></ref>
+            <ref bean="RouteEntryRoaResource"></ref>
+            <ref bean="SnatRoaResource"></ref>
+            <ref bean="InterfaceRoaResource"></ref>
+            <ref bean="InternetGatewayRoaResource"></ref>
+            <ref bean="SubnetRoaResource"></ref>
             <ref bean="PopRoaResource"></ref>
             <ref bean="LtpRoaResource"></ref>
             <ref bean="NetworkElementRoaResource"></ref>
