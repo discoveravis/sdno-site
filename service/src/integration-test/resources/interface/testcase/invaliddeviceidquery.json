@@ -1,0 +1,17 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/interfaces/24+4666",
+		"method": "get",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		}
+	},
+	"response": {
+		"status": 400,
+		"json": {
+			"errorCode": "overlayvpn.operation.paramter_invalid",
+			"httpCode": 400,
+			"message": ""
+		}
+	}
+}

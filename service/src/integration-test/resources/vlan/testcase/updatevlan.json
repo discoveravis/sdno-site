@@ -1,0 +1,29 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/vlans/VlanId",
+		"method": "put",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"name": "Vlan2",
+			"description": "Test for Vlan Model data",
+			"operStatus": "down",
+			"adminStatus": "inactive",
+			"actionState": "Normal",
+			"siteId": "SiteId",
+			"vlanId": 17,
+			"ports": [
+				"LtpId1",
+				"LtpId2"
+			],
+			"portNames": [
+				"Ltp1",
+				"Ltp2"
+			]
+		}
+	},
+	"response": {
+		"status": 200
+	}
+}

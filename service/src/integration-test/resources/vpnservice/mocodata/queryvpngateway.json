@@ -1,0 +1,16 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnooverlay/v1/vpn-gateways",
+		"method": "get"
+	},
+	"response": {
+		"status": 200,
+		"json": {
+			"total": 0,
+			"pageSize": 0,
+			"totalPageNum": 0,
+			"currentPage": 0,
+			"objects": []
+		}
+	}
+}

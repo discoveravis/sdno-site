@@ -1,0 +1,70 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnomss/v1/buckets/localsitedb/resources/localsite_snatnetmodel/objects",
+		"method": "post",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"objects": [
+				{
+					"id": "SnatId1",
+					"tenantId": "TenantId",
+					"name": "Snat1",
+					"description": "Test Snat Object",
+					"operStatus": "up",
+					"adminStatus": "active",
+					"actionState": "Normal",
+					"neId": "NeId",
+					"deviceId": "DeviceId",
+					"controllerId": "ControllerId",
+					"natId": "NatId",
+					"internetGatewayId": "InternetGatewayId1",
+					"subnetId": "SubnetId",
+					"ifName": "GigabitEthernet0/0/4",
+					"startPublicIpAddress": "10.10.10.1",
+					"endPublicIpAddress": "10.10.10.255"
+				},
+				{
+					"id": "SnatId2",
+					"tenantId": "TenantId2",
+					"name": "Snat2",
+					"description": "Test Snat Object",
+					"operStatus": "up",
+					"adminStatus": "active",
+					"actionState": "Normal",
+					"neId": "NeId",
+					"deviceId": "DeviceId",
+					"controllerId": "ControllerId",
+					"natId": "NatId",
+					"internetGatewayId": "InternetGatewayId1",
+					"subnetId": "SubnetId",
+					"ifName": "GigabitEthernet0/0/4",
+					"startPublicIpAddress": "10.10.10.1",
+					"endPublicIpAddress": "10.10.10.255"
+				},
+				{
+					"id": "SnatId3",
+					"tenantId": "TenantId",
+					"name": "Snat3",
+					"description": "Test Snat Object",
+					"operStatus": "up",
+					"adminStatus": "active",
+					"actionState": "Normal",
+					"neId": "NeId",
+					"deviceId": "DeviceId",
+					"controllerId": "ControllerId",
+					"natId": "NatId",
+					"internetGatewayId": "InternetGatewayId2",
+					"subnetId": "SubnetId",
+					"ifName": "GigabitEthernet0/0/4",
+					"startPublicIpAddress": "10.10.10.1",
+					"endPublicIpAddress": "10.10.10.255"
+				}
+			]
+		}
+	},
+	"response": {
+		"status": 200
+	}
+}

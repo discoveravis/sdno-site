@@ -1,0 +1,14 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnooverlay/v1/template/policy/enterprise_l2cpe_singleFixedNetwork/gwPolicy",
+		"method": "get"
+	},
+	"response": {
+		"status": 200,
+		"json": {
+			"gwPosition": "cloudcpe",
+			"priorDnsServerIp": "192.168.11.12",
+			"standbyDnsServerIp": "192.168.11.13"
+		}
+	}
+}

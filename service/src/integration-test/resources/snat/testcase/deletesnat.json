@@ -1,0 +1,15 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnomss/v1/buckets/localsitedb/resources/localsite_snatnetmodel/objects",
+		"method": "delete",
+		"queries": {
+			"ids": "SnatId1,SnatId2,SnatId3"
+		},
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		}
+	},
+	"response": {
+		"status": 204
+	}
+}

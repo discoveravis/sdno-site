@@ -1,0 +1,12 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnobrs/v1/logical-termination-points/LtpId1",
+		"method": "delete",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		}
+	},
+	"response": {
+		"status": 200
+	}
+}

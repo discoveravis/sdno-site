@@ -1,0 +1,17 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/snats",
+		"method": "get",
+		"queries": {
+			"igId": "InternetGatewayId3"
+		},
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8",
+			"Accept": "application/json"
+		}
+	},
+	"response": {
+		"status": 200,
+		"json": []
+	}
+}

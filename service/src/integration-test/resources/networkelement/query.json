@@ -1,0 +1,69 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/managed-elements",
+		"method": "get",
+		"queries": {
+			"uuids": "[\"NeId1\", \"NeId2\"]"
+		},
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		}
+	},
+	"response": {
+		"status": 200,
+		"json": [
+			{
+				"id": "NeId1",
+				"name": "Ne1",
+				"description": "TestNetworkElement",
+				"version": "V1R3",
+				"logicID": "849494949",
+				"phyNeID": "8965969966906",
+				"managementDomainID": "44444444444444",
+				"controllerID": null,
+				"siteID": null,
+				"productName": "SNC",
+				"isVirtual": "true",
+				"ipAddress": "192.168.1.1",
+				"source": "os",
+				"owner": null,
+				"location": null,
+				"serialNumber": null,
+				"manufacturer": null,
+				"manufactureDate": null,
+				"adminState": "active",
+				"operState": "up",
+				"nativeID": "networkelementlid",
+				"neRole": null,
+				"popID": null,
+				"accessIPVersion": null
+			},
+			{
+				"id": "NeId2",
+				"name": "Ne2",
+				"description": "TestNetworkElement",
+				"version": "V1R3",
+				"logicID": "849494949",
+				"phyNeID": "8965969966906",
+				"managementDomainID": "44444444444444",
+				"controllerID": null,
+				"siteID": null,
+				"productName": "SNC",
+				"isVirtual": "true",
+				"ipAddress": "192.168.1.2",
+				"source": "os",
+				"owner": null,
+				"location": null,
+				"serialNumber": null,
+				"manufacturer": null,
+				"manufactureDate": null,
+				"adminState": "active",
+				"operState": "up",
+				"nativeID": "networkelementlid",
+				"neRole": null,
+				"popID": null,
+				"accessIPVersion": null
+			}
+		]
+	}
+}

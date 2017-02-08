@@ -1,0 +1,10 @@
+{
+	"request": {
+		"uri": "/openoapi/sbi-localsite/v1/device/[a-zA-Z0-9\\-\\_]{1,36}/interfaces",
+		"method": "get"
+	},
+	"response": {
+		"status": 404,
+		"json": null
+	}
+}

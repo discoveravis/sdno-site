@@ -1,0 +1,23 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/sites",
+		"method": "post",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"id": "SiteId",
+			"tenantId": "TenantId",
+			"name": "TestSite",
+			"description": "Test for Site",
+			"location": "China ShenZhen",
+			"localCpeType": "AR169FGW-L",
+			"siteDescriptor": "enterprise_l2cpe",
+			"reliability": "singleFixedNetwork",
+			"isEncrypt": "false"
+		}
+	},
+	"response": {
+		"status": 201
+	}
+}

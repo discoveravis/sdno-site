@@ -1,0 +1,51 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/sites",
+		"method": "get",
+		"queries": {
+			"uuids": "[\"SiteId\"]"
+		},
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		}
+	},
+	"response": {
+		"status": 200,
+		"json": {
+			"total": 1,
+			"curIndex": 0,
+			"pageCapacity": 0,
+			"data": [
+				{
+					"tenantId": "TenantId",
+					"name": "TestSite",
+					"description": "Test for Site",
+					"location": "China ShenZhen",
+					"actionState": "Normal",
+					"deployCloudCpeByDefault": true,
+					"popId": null,
+					"localCpeType": "AR169FGW-L",
+					"siteDescriptor": "enterprise_l2cpe",
+					"reliability": "singleFixedNetwork",
+					"isEncrypt": "false",
+					"vpnUpstreamBandwidth": -1,
+					"vpnDownstreamBandwidth": -1,
+					"qosPolicyId": null,
+					"totalUpstreamBandwidth": null,
+					"totalDownstreamBandwidth": null,
+					"upstreamQosProfile": null,
+					"downstreamQosProfile": null,
+					"createtime": 1483608399,
+					"updatetime": null,
+					"localCpes": [],
+					"cloudCpes": [],
+					"subnets": [],
+					"vlans": [],
+					"routes": [],
+					"internetGateway": null,
+					"id": "SiteId"
+				}
+			]
+		}
+	}
+}

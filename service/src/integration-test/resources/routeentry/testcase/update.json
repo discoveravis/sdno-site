@@ -1,0 +1,35 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/route-entries/RouteEntryId",
+		"method": "put",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"name": "NewRouteEntry",
+			"description": "NewTest for RouteEntry"
+		}
+	},
+	"response": {
+		"status": 200,
+		"json": {
+			"tenantId": "TenantId",
+			"name": "NewRouteEntry",
+			"description": "NewTest for RouteEntry",
+			"additionalInfo": null,
+			"operStatus": "up",
+			"adminStatus": "active",
+			"actionState": "Normal",
+			"createTime": null,
+			"siteId": "SiteId",
+			"subnetId": "SubnetId",
+			"cidr": "10.10.10.0/24",
+			"vpnGatewayId": "VpnGateWayId",
+			"internetGatewayId": "InternetGatewayId",
+			"nextHop": "192.168.3.2",
+			"precedence": 13,
+			"routeType": "static-routing",
+			"id": "RouteEntryId"
+		}
+	}
+}

@@ -1,0 +1,63 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/ports",
+		"method": "get",
+		"queries": {
+			"uuids": "[\"LtpId1\", \"LtpId2\"]"
+		},
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		}
+	},
+	"response": {
+		"status": 200,
+		"json": [
+			{
+				"id": "LtpId1",
+				"name": "Ltp1",
+				"description": "Test for Ltp1",
+				"meID": "NeId1",
+				"logicalType": "ETH",
+				"layerRate": null,
+				"isEdgePoint": null,
+				"portIndex": null,
+				"source": "os",
+				"owner": null,
+				"ipAddress": "192.168.2.1",
+				"direction": null,
+				"phyBW": null,
+				"ipMask": null,
+				"adminState": "active",
+				"operState": "up",
+				"nativeID": null,
+				"macAddress": null,
+				"tenantID": null,
+				"usageState": null,
+				"containedLayers": null
+			},
+			{
+				"id": "LtpId2",
+				"name": "Ltp2",
+				"description": "Test for Ltp2",
+				"meID": "NeId2",
+				"logicalType": "ETH",
+				"layerRate": null,
+				"isEdgePoint": null,
+				"portIndex": null,
+				"source": "os",
+				"owner": null,
+				"ipAddress": "192.168.2.3",
+				"direction": null,
+				"phyBW": null,
+				"ipMask": null,
+				"adminState": "active",
+				"operState": "up",
+				"nativeID": null,
+				"macAddress": null,
+				"tenantID": null,
+				"usageState": null,
+				"containedLayers": null
+			}
+		]
+	}
+}

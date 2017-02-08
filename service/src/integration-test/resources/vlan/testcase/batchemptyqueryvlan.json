@@ -1,0 +1,21 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/vlans",
+		"method": "get",
+		"queries": {
+			"name": "Vlan2"
+		},
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		}
+	},
+	"response": {
+		"status": 200,
+		"json": {
+			"total": 0,
+			"curIndex": 0,
+			"pageCapacity": 0,
+			"data": []
+		}
+	}
+}

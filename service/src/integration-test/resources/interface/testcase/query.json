@@ -1,0 +1,58 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/interfaces/NeId",
+		"method": "get",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		}
+	},
+	"response": {
+		"status": 200,
+		"json": [
+			{
+				"id": "InterfaceKey [_name=wlan-radio0/0/0]",
+				"name": "wlan-radio0/0/0",
+				"runStatus": 1,
+				"mgrStatus": 1,
+				"index": null,
+				"alias": "wlan-radio0/0/0",
+				"ipAddr": null,
+				"ipv6Addr": null,
+				"bandWidth": "100Mbps",
+				"mtu": null,
+				"report": null,
+				"mode": 1,
+				"iccid": null,
+				"mac": null,
+				"terminationMode": null,
+				"ceLowVlan": null,
+				"ceHighVlan": null,
+				"peVlan": null,
+				"mask": null,
+				"prefixLength": null
+			},
+			{
+				"id": "InterfaceKey [_name=wlan-radio0/0/1]",
+				"name": "wlan-radio0/0/1",
+				"runStatus": 1,
+				"mgrStatus": 1,
+				"index": null,
+				"alias": "wlan-radio0/0/1",
+				"ipAddr": null,
+				"ipv6Addr": null,
+				"bandWidth": "100Mbps",
+				"mtu": null,
+				"report": null,
+				"mode": 1,
+				"iccid": null,
+				"mac": null,
+				"terminationMode": null,
+				"ceLowVlan": null,
+				"ceHighVlan": null,
+				"peVlan": null,
+				"mask": null,
+				"prefixLength": null
+			}
+		]
+	}
+}

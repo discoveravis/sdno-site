@@ -1,0 +1,25 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/cloud-cpes",
+		"method": "post",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"tenantId": "TenantId",
+			"siteId": "SiteId",
+			"vCpeId": null,
+			"name": "CloudCpe",
+			"esn": "21ABCDEFGH12345678901234abcdefgh",
+			"controllerId": "",
+			"description": "Test for CloudCpe",
+			"id": "CloudCpeId"
+		}
+	},
+	"response": {
+		"status": 201,
+		"json": {
+			"id": "CloudCpeId"
+		}
+	}
+}

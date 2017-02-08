@@ -1,0 +1,25 @@
+{
+	"request": {
+		"uri": "/openoapi/extsys/v1/sdncontrollers",
+		"method": "post",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8",
+			"Accept": "application/json"
+		},
+		"json": {
+			"name": "SdnController",
+			"url": "https://172.19.37.201:18008",
+			"userName": "admin",
+			"password": "Huawei12#$",
+			"version": "V200R002C00",
+			"vendor": "Huawei",
+			"description": "Angile Controller",
+			"protocol": "https",
+			"productName": "Angile Controller",
+			"type": "Agile Controller-BRANCH"
+		}
+	},
+	"response": {
+		"status": 201
+	}
+}

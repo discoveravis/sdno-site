@@ -1,0 +1,15 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnomss/v1/buckets/localsitedb/resources/localsite_vlanmodel/objects/VlanId",
+		"method": "put",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"actionState": "Create_Exception"
+		}
+	},
+	"response": {
+		"status": 200
+	}
+}

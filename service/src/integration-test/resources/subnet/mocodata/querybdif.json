@@ -1,0 +1,25 @@
+{
+	"request": {
+		"uri": "/openoapi/sbi-localsite/v1/device/CloudCpeDeviceId/bdinfo/vni/13",
+		"method": "get"
+	},
+	"response": {
+		"status": 200,
+		"json": {
+			"errorCode": "overlayvpn.operation.success",
+			"httpCode": 200,
+			"data": {
+				"bdId": "13",
+				"vbdifName": "vbdif13"
+			},
+			"descArg": "",
+			"reasonArg": "",
+			"detailArg": "",
+			"adviceArg": "",
+			"message": "",
+			"smallErrorCodeList": null,
+			"successed": null,
+			"fail": null
+		}
+	}
+}

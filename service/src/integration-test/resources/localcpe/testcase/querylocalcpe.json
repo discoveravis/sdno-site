@@ -1,0 +1,42 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/local-cpes/LocalCpeId",
+		"method": "get",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		}
+	},
+	"response": {
+		"status": 200,
+		"json": {
+			"id": "LocalCpeId",
+			"name": "CpeDevice",
+			"description": null,
+			"version": null,
+			"logicID": null,
+			"phyNeID": null,
+			"managementDomainID": null,
+			"controllerID": [
+				"45719e97-d15a-41e9-a4e9-f03edb73c3ef"
+			],
+			"siteID": [
+				"SiteId"
+			],
+			"productName": null,
+			"isVirtual": null,
+			"ipAddress": null,
+			"source": null,
+			"owner": null,
+			"location": null,
+			"serialNumber": "ABCDEFGHIJKLMNOP1234",
+			"manufacturer": null,
+			"manufactureDate": null,
+			"adminState": "active",
+			"operState": "up",
+			"nativeID": "CpeNativeId",
+			"neRole": "Thin CPE",
+			"popID": null,
+			"accessIPVersion": "IPV4"
+		}
+	}
+}

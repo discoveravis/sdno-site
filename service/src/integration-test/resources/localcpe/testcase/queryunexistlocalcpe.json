@@ -1,0 +1,12 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/local-cpes/UnExistLocalCpeId",
+		"method": "get",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		}
+	},
+	"response": {
+		"status": 500
+	}
+}

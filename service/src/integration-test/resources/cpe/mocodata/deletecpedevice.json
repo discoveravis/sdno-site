@@ -1,0 +1,22 @@
+{
+	"request": {
+		"uri": "/openoapi/sbi-localsite/v1/devices",
+		"method": "delete"
+	},
+	"response": {
+		"status": 200,
+		"json": {
+			"errorCode": "overlayvpn.operation.success",
+			"data": null,
+			"descArg": "",
+			"reasonArg": "",
+			"detailArg": "",
+			"adviceArg": "",
+			"httpCode": 200,
+			"message": "",
+			"smallErrorCodeList": null,
+			"successed": null,
+			"fail": null
+		}
+	}
+}

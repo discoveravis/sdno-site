@@ -1,0 +1,13 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/interfaces/NeId",
+		"method": "get",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		}
+	},
+	"response": {
+		"status": 200,
+		"json": []
+	}
+}

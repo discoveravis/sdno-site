@@ -1,0 +1,31 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnobrs/v1/managed-elements",
+		"method": "post",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"managedElement": {
+				"id": "LocalCpeId",
+				"name": "CpeDevice",
+				"description": "Test for Cpe",
+				"productName": "AR169FGW-L",
+				"isVirtual": "true",
+				"siteID": [
+					"SiteId"
+				],
+				"source": "os",
+				"serialNumber": "ABCDEFGHIJKLMNOP1234",
+				"neRole": "Thin CPE",
+				"version": "V1R3",
+				"adminState": "inactive",
+				"operState": "down",
+				"tenantID": "TenantId"
+			}
+		}
+	},
+	"response": {
+		"status": 200
+	}
+}

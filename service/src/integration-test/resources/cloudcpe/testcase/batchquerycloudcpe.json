@@ -1,0 +1,46 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/cloud-cpes",
+		"method": "get",
+		"queries": {
+			"siteId": "SiteId"
+		},
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		}
+	},
+	"response": {
+		"status": 200,
+		"json": [
+			{
+				"popId": null,
+				"tenantId": "TenantId",
+				"siteId": "SiteId",
+				"vCpeId": null,
+				"name": "CloudCpe",
+				"esn": "21ABCDEFGH12345678901234abcdefgh",
+				"mgrIp": null,
+				"mgrMask": null,
+				"controllerId": "30529201-c51d-452b-bb90-5bf191528534",
+				"controllerIp": null,
+				"controllerMask": null,
+				"description": null,
+				"vendor": null,
+				"type": null,
+				"vnfdVersion": null,
+				"callbackUrl": null,
+				"vnfdId": null,
+				"vnfId": null,
+				"vnfmId": null,
+				"dcLocation": null,
+				"rangeId": null,
+				"referenceCount": null,
+				"adminState": "active",
+				"actionState": "Normal",
+				"template": "enterprise_l2cpe_singleFixedNetwork",
+				"mgrGatewayIp": null,
+				"id": "CloudCpeId"
+			}
+		]
+	}
+}

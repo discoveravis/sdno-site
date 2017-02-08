@@ -1,0 +1,32 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnobrs/v1/managed-elements",
+		"method": "post",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"managedElement": {
+				"id": "LocalCpeId",
+				"name": "LocalCpeDevice",
+				"description": "LocalCpe Device",
+				"productName": "AR",
+				"isVirtual": "true",
+				"siteID": [
+					"SiteId"
+				],
+				"source": "os",
+				"neRole": "Thin CPE",
+				"version": "V1R3",
+				"nativeID": "LocalCpeDeviceId",
+				"ipAddress": "192.168.1.1",
+				"adminState": "active",
+				"operState": "up",
+				"tenantID": "TenantId"
+			}
+		}
+	},
+	"response": {
+		"status": 200
+	}
+}

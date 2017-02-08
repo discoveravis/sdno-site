@@ -1,0 +1,32 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnobrs/v1/managed-elements",
+		"method": "post",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"managedElement": {
+				"id": "ThinCpeId",
+				"name": "ThinCpeDevice",
+				"description": "ThinCpe Device",
+				"productName": "AR169FGW-L",
+				"isVirtual": "true",
+				"source": "os",
+				"neRole": "Thin CPE",
+				"version": "V1R3",
+				"nativeID": "ThinCpeDeviceId",
+				"ipAddress": "192.168.1.2",
+				"adminState": "active",
+				"operState": "up",
+				"tenantID": "TenantId",
+				"siteID": [
+					"SiteId"
+				]
+			}
+		}
+	},
+	"response": {
+		"status": 200
+	}
+}

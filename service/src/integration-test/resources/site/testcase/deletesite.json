@@ -1,0 +1,12 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/sites/SiteId",
+		"method": "delete",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		}
+	},
+	"response": {
+		"status": 204
+	}
+}

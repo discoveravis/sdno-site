@@ -1,0 +1,26 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/local-cpes",
+		"method": "post",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"name": "CpeDevice",
+			"esn": "ABCDEFGHIJKLMNOP1234",
+			"oldEsn": null,
+			"tenantId": "TenantId",
+			"controllerId": "SdnControllerId",
+			"siteId": "SiteId",
+			"localCpeType": "AR169FGW-L",
+			"description": "Test for Cpe",
+			"id": "LocalCpeId"
+		}
+	},
+	"response": {
+		"status": 201,
+		"json": {
+			"id": "LocalCpeId"
+		}
+	}
+}

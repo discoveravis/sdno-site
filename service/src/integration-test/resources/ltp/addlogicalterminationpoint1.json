@@ -1,0 +1,25 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnobrs/v1/logical-termination-points",
+		"method": "post",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"logicalTerminationPoint": {
+				"id": "LtpId1",
+				"name": "Ltp1",
+				"meID":"NeId1",
+				"description": "Test for Ltp1",
+				"logicalType": "ETH",
+				"source": "os",
+				"adminState": "active",
+				"operState": "up",
+				"ipAddress": "192.168.2.1"
+			}
+		}
+	},
+	"response": {
+		"status": 200
+	}
+}

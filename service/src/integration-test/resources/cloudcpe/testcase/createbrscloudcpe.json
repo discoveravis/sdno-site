@@ -1,0 +1,30 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnobrs/v1/managed-elements",
+		"method": "post",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"managedElement": {
+				"id": "CloudCpeId",
+				"name": "CpeDevice",
+				"description": "Test for Cpe",
+				"isVirtual": "true",
+				"siteID": [
+					"SiteId"
+				],
+				"source": "os",
+				"serialNumber": "21ABCDEFGH12345678901234abcdefgh",
+				"neRole": "vCPE",
+				"version": "V1R3",
+				"adminState": "inactive",
+				"operState": "down",
+				"tenantID": "TenantId"
+			}
+		}
+	},
+	"response": {
+		"status": 200
+	}
+}

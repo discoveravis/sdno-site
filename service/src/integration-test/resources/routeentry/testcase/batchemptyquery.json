@@ -1,0 +1,21 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/route-entries",
+		"method": "get",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"queries": {
+			"name": "UnExistRouteEntryName"
+		}
+	},
+	"response": {
+		"status": 200,
+		"json": {
+			"total": 0,
+			"curIndex": 0,
+			"pageCapacity": 0,
+			"data": []
+		}
+	}
+}

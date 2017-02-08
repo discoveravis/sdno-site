@@ -1,0 +1,22 @@
+{
+	"request": {
+		"uri": "/openoapi/sbi-localsite/v1/device/[a-zA-Z0-9\\-\\_]{1,36}/vlan/*",
+		"method": "get"
+	},
+	"response": {
+		"status": 200,
+		"json": {
+			"errorCode": "overlayvpn.operation.success",
+			"httpCode": 200,
+			"data": [],
+			"descArg": "",
+			"reasonArg": "",
+			"detailArg": "",
+			"adviceArg": "",
+			"message": "",
+			"smallErrorCodeList": null,
+			"successed": null,
+			"fail": null
+		}
+	}
+}

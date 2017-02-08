@@ -1,0 +1,17 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/sites/SiteId",
+		"method": "put",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"description": "Test for New Site",
+			"location": "China Beijing",
+			"reliability": "dualFixedNetwork"
+		}
+	},
+	"response": {
+		"status": 200
+	}
+}

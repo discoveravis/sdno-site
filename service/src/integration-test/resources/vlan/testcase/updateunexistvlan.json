@@ -1,0 +1,15 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/vlans/UnExistVlanId",
+		"method": "put",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			
+		}
+	},
+	"response": {
+		"status": 500
+	}
+}

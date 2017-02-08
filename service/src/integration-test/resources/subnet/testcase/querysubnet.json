@@ -1,0 +1,39 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/subnets/SubnetId",
+		"method": "get",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		}
+	},
+	"response": {
+		"status": 200,
+		"json": {
+			"tenantId": "TenantId",
+			"name": "Subnet1",
+			"description": "New Test for Subnet",
+			"additionalInfo": null,
+			"operStatus": "none",
+			"adminStatus": "none",
+			"actionState": "Normal",
+			"createTime": null,
+			"siteId": "SiteId",
+			"cidrBlock": "10.100.100.0/24",
+			"cidrBlockSize": 0,
+			"gatewayIp": "10.100.100.1",
+			"vlanId": null,
+			"vni": "13",
+			"portNames": null,
+			"ports": null,
+			"ipv6Address": null,
+			"prefixLength": null,
+			"dhcp6Enable": "false",
+			"dhcp6Mode": "server",
+			"enableDhcp": "false",
+			"gatewayInterface": "vbdif13",
+			"createtime": 1484117587,
+			"updatetime": 1484117590,
+			"id": "SubnetId"
+		}
+	}
+}

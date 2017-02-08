@@ -1,0 +1,41 @@
+{
+	"request": {
+		"uri": "/openoapi/sbi-localsite/v1/device/TestDeviceId/interfaces",
+		"method": "get"
+	},
+	"response": {
+		"status": 200,
+		"json": {
+			"errorCode": "overlayvpn.operation.success",
+			"httpCode": 200,
+			"descArg": "",
+			"reasonArg": "",
+			"detailArg": "",
+			"adviceArg": "",
+			"message": "",
+			"smallErrorCodeList": null,
+			"successed": null,
+			"fail": null,
+			"data": [
+				{
+					"id": "InterfaceKey [_name=wlan-radio0/0/0]",
+					"name": "wlan-radio0/0/0",
+					"runStatus": 1,
+					"mgrStatus": 1,
+					"alias": "wlan-radio0/0/0",
+					"bandWidth": "100Mbps",
+					"mode": 1
+				},
+				{
+					"id": "InterfaceKey [_name=wlan-radio0/0/1]",
+					"name": "wlan-radio0/0/1",
+					"runStatus": 1,
+					"mgrStatus": 1,
+					"alias": "wlan-radio0/0/1",
+					"bandWidth": "100Mbps",
+					"mode": 1
+				}
+			]
+		}
+	}
+}

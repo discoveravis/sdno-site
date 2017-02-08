@@ -1,0 +1,21 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnobrs/v1/sites",
+		"method": "post",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"site": {
+				"id": "SiteId",
+				"name": "TestSite",
+				"type": "tenant_site",
+				"tenantID": "TenantId",
+				"location": "China ShenZhen"
+			}
+		}
+	},
+	"response": {
+		"status": 200
+	}
+}

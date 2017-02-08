@@ -1,0 +1,17 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/interfaces/UnexistNeId",
+		"method": "get",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		}
+	},
+	"response": {
+		"status": 500,
+		"json": {
+			"errorCode": "framwork.remote.SystemError",
+			"httpCode": 500,
+			"message": "Network Element does not exist"
+		}
+	}
+}

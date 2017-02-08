@@ -1,0 +1,44 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/internet-gateways/internetGatewayId",
+		"method": "put",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"name": "InternetGateway2",
+			"description": "New Test for InternetGateway"
+		}
+	},
+	"response": {
+		"status": 200,
+		"json": {
+			"tenantId": "TenantId",
+			"name": "Subnet1",
+			"description": "New Test for Subnet",
+			"modifyMask": "NOMODIFY",
+			"additionalInfo": null,
+			"operStatus": "none",
+			"adminStatus": "none",
+			"actionState": "Normal",
+			"createTime": null,
+			"siteId": "SiteId",
+			"cidrBlock": "10.100.100.0/24",
+			"cidrBlockSize": 0,
+			"gatewayIp": "10.100.100.1",
+			"vlanId": null,
+			"vni": "13",
+			"portNames": null,
+			"ports": null,
+			"ipv6Address": null,
+			"prefixLength": null,
+			"dhcp6Enable": "false",
+			"dhcp6Mode": "server",
+			"enableDhcp": "false",
+			"createtime": 1484107003,
+			"updatetime": 1484107004,
+			"gatewayInterface": "vbdif13",
+			"id": "SubnetId"
+		}
+	}
+}

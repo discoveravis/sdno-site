@@ -1,0 +1,16 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/subnets/UnExistSubnetId",
+		"method": "put",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"name": "NewSubnet",
+			"description": "New Test for Subnet"
+		}
+	},
+	"response": {
+		"status": 500
+	}
+}

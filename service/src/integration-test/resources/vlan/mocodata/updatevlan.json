@@ -1,0 +1,33 @@
+{
+	"request": {
+		"uri": "/openoapi/sbi-localsite/v1/device/[a-zA-Z0-9\\-\\_]{1,36}/vlan",
+		"method": "put"
+	},
+	"response": {
+		"status": 200,
+		"json": {
+			"errorCode": "overlayvpn.operation.success",
+			"httpCode": 200,
+			"data": [
+				{
+					"id": null,
+					"serviceVlanUuid": null,
+					"ethInterfaceConfigId": null,
+					"ifId": null,
+					"ifName": null,
+					"defaultVlan": null,
+					"linkType": "trunk",
+					"vlans": null
+				}
+			],
+			"descArg": "",
+			"reasonArg": "",
+			"detailArg": "",
+			"adviceArg": "",
+			"message": "",
+			"smallErrorCodeList": null,
+			"successed": null,
+			"fail": null
+		}
+	}
+}

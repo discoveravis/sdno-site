@@ -1,0 +1,25 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnobrs/v1/logical-termination-points",
+		"method": "post",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"logicalTerminationPoint": {
+				"id": "WanLtpId",
+				"name": "GigabitEthernet001",
+				"meID": "CloudCpeId",
+				"description": "Wan Interface of CloudCpe",
+				"logicalType": "ETH",
+				"source": "os",
+				"adminState": "active",
+				"operState": "up",
+				"ipAddress": "192.168.5.34"
+			}
+		}
+	},
+	"response": {
+		"status": 200
+	}
+}

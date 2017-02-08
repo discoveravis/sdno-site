@@ -1,0 +1,22 @@
+{
+	"request": {
+		"uri": "/openoapi/sbi-localsite/v1/device/TestDeviceId/interfaces",
+		"method": "get"
+	},
+	"response": {
+		"status": 200,
+		"json": {
+			"errorCode": "overlayvpn.operation.success",
+			"httpCode": 200,
+			"descArg": "",
+			"reasonArg": "",
+			"detailArg": "",
+			"adviceArg": "",
+			"message": "",
+			"smallErrorCodeList": null,
+			"successed": null,
+			"fail": null,
+			"data": []
+		}
+	}
+}

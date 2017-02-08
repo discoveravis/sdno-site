@@ -1,0 +1,22 @@
+{
+	"request": {
+		"uri": "/openoapi/sbi-localsite/v1/device/CloudCpeDeviceId/subnet",
+		"method": "put"
+	},
+	"response": {
+		"status": 200,
+		"json": {
+			"errorCode": "overlayvpn.operation.success",
+			"httpCode": 200,
+			"data": null,
+			"descArg": "",
+			"reasonArg": "",
+			"detailArg": "",
+			"adviceArg": "",
+			"message": "",
+			"smallErrorCodeList": null,
+			"successed": null,
+			"fail": null
+		}
+	}
+}

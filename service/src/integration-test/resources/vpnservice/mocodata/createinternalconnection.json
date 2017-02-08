@@ -1,0 +1,9 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnooverlay/v1/site-internal-connections",
+		"method": "post"
+	},
+	"response": {
+		"status": 201
+	}
+}

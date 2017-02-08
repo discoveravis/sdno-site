@@ -1,0 +1,12 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnooverlay/v1/template/policy/enterprise_l2cpe_singleFixedNetwork/cloudCpeInfo",
+		"method": "get"
+	},
+	"response": {
+		"status": 200,
+		"json": {
+			"interfaceName_WAN": "GigabitEthernet001"
+		}
+	}
+}

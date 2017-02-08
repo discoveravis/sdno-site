@@ -1,0 +1,24 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/subnets",
+		"method": "post",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"tenantId": "TenantId",
+			"name": "Subnet1",
+			"description": "Test for Subnet",
+			"siteId": "SiteId",
+			"cidrBlock": "10.100.100.0/24",
+			"cidrBlockSize": 24,
+			"gatewayIp": "10.100.100.1",
+			"vni": 13,
+			"enableDhcp": "false",
+			"id": "SubnetId"
+		}
+	},
+	"response": {
+		"status": 400
+	}
+}

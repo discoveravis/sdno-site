@@ -1,0 +1,31 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnobrs/v1/managed-elements",
+		"method": "post",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"managedElement": {
+				"id": "NeId1",
+				"name": "Ne1",
+				"description": "TestNetworkElement",
+				"productName": "SNC",
+				"isVirtual": "true",
+				"source": "os",
+				"version": "V1R3",
+				"logicID": "849494949",
+				"phyNeID": "8965969966906",
+				"nativeID": "networkelementlid",
+				"managementDomainID": "44444444444444",
+				"ipAddress": "192.168.1.1",
+				"adminState": "active",
+				"operState": "up",
+				"tenantID": "testTenantID"
+			}
+		}
+	},
+	"response": {
+		"status": 200
+	}
+}

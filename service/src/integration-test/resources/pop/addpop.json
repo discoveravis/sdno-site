@@ -1,0 +1,27 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnobrs/v1/pops",
+		"method": "post",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"pop": {
+				"id": "d74c4487-58ae-4ac7-adac-dbdacf06b4f9",
+				"name": "testpop",
+				"description": "pop for test",
+				"location": "Wuhan",
+				"area": "area",
+				"source": "source",
+				"controllerID": "controllerId",
+				"dcGW": "dcGW",
+				"internetGW": "internetGW",
+				"siteGW": "siteGw",
+				"managedGW": "managedGw"
+			}
+		}
+	},
+	"response": {
+		"status": 200
+	}
+}

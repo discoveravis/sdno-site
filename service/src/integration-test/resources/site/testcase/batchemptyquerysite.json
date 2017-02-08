@@ -1,0 +1,21 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/sites",
+		"method": "get",
+		"queries": {
+			"uuids": "[\"UnExistSiteId\"]"
+		},
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		}
+	},
+	"response": {
+		"status": 200,
+		"json": {
+			"total": 0,
+			"curIndex": 0,
+			"pageCapacity": 0,
+			"data": []
+		}
+	}
+}

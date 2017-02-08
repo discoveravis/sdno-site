@@ -1,0 +1,13 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnooverlay/v1/site-internal-connections/[a-zA-Z0-9\\-\\_]{1,36}",
+		"method": "delete"
+	},
+	"response": {
+		"status": 200,
+		"json": {
+			"name": "InternetGateway1",
+			"description": "Test for InternetGateway"
+		}
+	}
+}

@@ -1,0 +1,13 @@
+{
+	"request": {
+		"uri": "/openoapi/sdnolocalsite/v1/route-entries/23+34",
+		"method": "get",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8",
+			"Accept": "application/json"
+		}
+	},
+	"response": {
+		"status": 400
+	}
+}
