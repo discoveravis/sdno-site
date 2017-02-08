@@ -46,10 +46,11 @@ public class InterfaceServiceImpl implements InterfaceService {
     @Autowired
     private InterfaceSbiService sbiService;
 
+    @Autowired
+    private NetworkElementInvDao neInvDao;
+
     @Override
     public ResultRsp<List<InterfaceModel>> query(HttpServletRequest req, String deviceUuid) throws ServiceException {
-
-        NetworkElementInvDao neInvDao = new NetworkElementInvDao();
         NetworkElementMO neMO = neInvDao.query(deviceUuid);
         if(null == neMO) {
             LOGGER.error("Current Network Element does not exist");
