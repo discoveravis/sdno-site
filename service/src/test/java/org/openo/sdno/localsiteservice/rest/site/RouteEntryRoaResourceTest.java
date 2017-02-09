@@ -28,9 +28,12 @@ import org.junit.Test;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
 import org.openo.sdno.localsiteservice.moco.inventorydao.MockInventoryDao;
 import org.openo.sdno.localsiteservice.springtest.SpringTest;
+import org.openo.sdno.overlayvpn.model.v2.result.ComplexResult;
 import org.openo.sdno.overlayvpn.model.v2.routeentry.NbiRouteEntryModel;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import mockit.Mock;
+import mockit.MockUp;
 import mockit.Mocked;
 
 public class RouteEntryRoaResourceTest extends SpringTest {
@@ -65,6 +68,19 @@ public class RouteEntryRoaResourceTest extends SpringTest {
     public void queryTest() throws ServiceException {
         NbiRouteEntryModel routeEntryModel = routeEntryRoaResource.query(httpRequest, httpResponse, "RouteEntryId");
         assertTrue(null != routeEntryModel);
+    }
+
+    @Test
+    public void batchQueryTest() throws ServiceException {
+        new MockUp<HttpServletRequest>() {
+
+            @Mock
+            public String getParameter(String parameter) {
+                return parameter;
+            }
+        };
+        ComplexResult<NbiRouteEntryModel> queryResult = routeEntryRoaResource.batchQuery(httpRequest, httpResponse);
+        assertTrue(2 == queryResult.getTotal());
     }
 
     @Test

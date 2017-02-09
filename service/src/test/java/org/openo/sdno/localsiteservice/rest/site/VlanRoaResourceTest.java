@@ -34,6 +34,7 @@ import org.openo.sdno.localsiteservice.moco.inventorydao.MockInventoryDao;
 import org.openo.sdno.localsiteservice.moco.inventorydao.MockLtpInvDao;
 import org.openo.sdno.localsiteservice.moco.inventorydao.MockNetworkElementInvDao;
 import org.openo.sdno.localsiteservice.springtest.SpringTest;
+import org.openo.sdno.overlayvpn.model.v2.result.ComplexResult;
 import org.openo.sdno.overlayvpn.model.v2.site.NbiSiteModel;
 import org.openo.sdno.overlayvpn.model.v2.vlan.NbiVlanModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,6 +85,19 @@ public class VlanRoaResourceTest extends SpringTest {
     public void queryTest() throws ServiceException {
         NbiVlanModel vlanModel = vlanRoaResource.query(httpRequest, httpResponse, "vlanUuid");
         assertTrue(null != vlanModel);
+    }
+
+    @Test
+    public void batchQueryTest() throws ServiceException {
+        new MockUp<HttpServletRequest>() {
+
+            @Mock
+            public String getParameter(String parameter) {
+                return parameter;
+            }
+        };
+        ComplexResult<NbiVlanModel> queryResult = vlanRoaResource.batchQuery(httpRequest, httpResponse);
+        assertTrue(2 == queryResult.getTotal());
     }
 
     @Test
