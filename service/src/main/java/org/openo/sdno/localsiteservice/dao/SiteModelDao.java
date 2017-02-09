@@ -272,7 +272,7 @@ public class SiteModelDao {
         ComplexResult<NbiInternetGatewayModel> queryResult = JsonUtil.fromJson(response.getResponseContent(),
                 new TypeReference<ComplexResult<NbiInternetGatewayModel>>() {});
 
-        if(queryResult.getData().isEmpty()) {
+        if(0 == queryResult.getTotal()) {
             return null;
         }
 

@@ -32,4 +32,14 @@ public class MockSiteInvDao extends MockUp<SiteInvDao> {
         return siteMO;
     }
 
+    @Mock
+    public void deleteMO(String uuid) throws ServiceException {
+        return;
+    }
+
+    @Mock
+    public void updateMO(SiteMO curMO) throws ServiceException {
+        return;
+    }
+
 }

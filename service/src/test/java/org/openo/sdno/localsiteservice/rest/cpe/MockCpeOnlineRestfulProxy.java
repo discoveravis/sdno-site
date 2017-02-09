@@ -16,20 +16,20 @@
 
 package org.openo.sdno.localsiteservice.rest.cpe;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.openo.baseservice.remoteservice.exception.ServiceException;
 import org.openo.baseservice.roa.util.restclient.RestfulParametes;
 import org.openo.baseservice.roa.util.restclient.RestfulResponse;
 import org.openo.sdno.exception.HttpCode;
 import org.openo.sdno.framework.container.resthelper.RestfulProxy;
 import org.openo.sdno.framework.container.util.JsonUtil;
+import org.openo.sdno.overlayvpn.errorcode.ErrorCode;
+import org.openo.sdno.overlayvpn.model.v2.cpe.SbiDeviceInfo;
+import org.openo.sdno.overlayvpn.result.ResultRsp;
 
 import mockit.Mock;
 import mockit.MockUp;
 
-public class MockCpeSuccessRestfulProxy extends MockUp<RestfulProxy> {
+public class MockCpeOnlineRestfulProxy extends MockUp<RestfulProxy> {
 
     private static RestfulResponse restfulResponse = new RestfulResponse();
     static {
@@ -38,14 +38,16 @@ public class MockCpeSuccessRestfulProxy extends MockUp<RestfulProxy> {
 
     @Mock
     public static RestfulResponse post(String uri, RestfulParametes restParametes) throws ServiceException {
-        Map<String, String> resultMap =  new HashMap<String, String>();
-        resultMap.put("id", "CpeId");
-        restfulResponse.setResponseJson(JsonUtil.toJson(resultMap));
+        SbiDeviceInfo sbiDeviceInfo = new SbiDeviceInfo();
+        ResultRsp<SbiDeviceInfo> resultRsp = new ResultRsp<SbiDeviceInfo>(ErrorCode.OVERLAYVPN_SUCCESS, sbiDeviceInfo);
+        restfulResponse.setResponseJson(JsonUtil.toJson(resultRsp));
         return restfulResponse;
     }
 
     @Mock
     public static RestfulResponse delete(String uri, RestfulParametes restParametes) throws ServiceException {
+        ResultRsp<String> resultRsp = new ResultRsp<String>(ErrorCode.OVERLAYVPN_SUCCESS);
+        restfulResponse.setResponseJson(JsonUtil.toJson(resultRsp));
         return restfulResponse;
     }
 

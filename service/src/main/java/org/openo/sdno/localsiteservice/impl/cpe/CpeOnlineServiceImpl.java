@@ -101,7 +101,7 @@ public class CpeOnlineServiceImpl implements CpeOnlineService {
             // Check Uuid
             CheckStrUtil.checkUuidStr(uuid);
 
-            NetworkElementMO neMO = (new NetworkElementInvDao()).query(uuid);
+            NetworkElementMO neMO = networkElementInvDao.query(uuid);
             if(null == neMO) {
                 LOGGER.warn("This Device does not exist");
                 continue;
@@ -114,7 +114,7 @@ public class CpeOnlineServiceImpl implements CpeOnlineService {
                 throw new ServiceException("Device delete failed");
             }
 
-            (new NetworkElementInvDao()).deleteMO(uuid);
+            networkElementInvDao.deleteMO(uuid);
         }
     }
 

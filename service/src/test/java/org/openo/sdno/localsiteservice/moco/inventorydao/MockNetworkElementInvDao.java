@@ -29,8 +29,9 @@ import mockit.MockUp;
 
 public class MockNetworkElementInvDao extends MockUp<NetworkElementInvDao> {
 
-    private static NetworkElementMO neMO = new NetworkElementMO();
-    static {
+    private NetworkElementMO neMO = new NetworkElementMO();
+
+    public MockNetworkElementInvDao() {
         neMO.setControllerID(Arrays.asList("ControllerId"));
         neMO.setName("neName");
         neMO.setNativeID("nativeID");
@@ -50,6 +51,11 @@ public class MockNetworkElementInvDao extends MockUp<NetworkElementInvDao> {
     @Mock
     public List<NetworkElementMO> query(Map<String, String> condition) throws ServiceException {
         return Arrays.asList(neMO);
+    }
+
+    @Mock
+    public void updateMO(NetworkElementMO curNeMO) throws ServiceException {
+        return;
     }
 
 }

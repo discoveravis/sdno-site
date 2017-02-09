@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package org.openo.sdno.localsiteservice.rest.cpe;
+package org.openo.sdno.localsiteservice.rest.site;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,22 +28,18 @@ import org.junit.Test;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
 import org.openo.sdno.localsiteservice.moco.inventorydao.MockInventoryDao;
 import org.openo.sdno.localsiteservice.moco.inventorydao.MockNetworkElementInvDao;
-import org.openo.sdno.localsiteservice.moco.inventorydao.MockSdnControllerDao;
 import org.openo.sdno.localsiteservice.moco.inventorydao.MockSiteInvDao;
 import org.openo.sdno.localsiteservice.springtest.SpringTest;
-import org.openo.sdno.overlayvpn.brs.model.NetworkElementMO;
-import org.openo.sdno.overlayvpn.model.v2.cpe.NbiLocalCpeModel;
+import org.openo.sdno.overlayvpn.model.v2.result.ComplexResult;
 import org.openo.sdno.overlayvpn.model.v2.site.NbiSiteModel;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import mockit.Mock;
-import mockit.MockUp;
 import mockit.Mocked;
 
-public class LocalCpeRoaResourceTest extends SpringTest {
+public class SiteRoaResourceTest extends SpringTest {
 
     @Autowired
-    private LocalCpeRoaResource localCpeRoaResource;
+    private SiteRoaResource siteRoaResource;
 
     @Mocked
     private HttpServletRequest httpRequest;
@@ -52,55 +47,53 @@ public class LocalCpeRoaResourceTest extends SpringTest {
     @Mocked
     private HttpServletResponse httpResponse;
 
-    private static NbiLocalCpeModel localCpeModel = new NbiLocalCpeModel();
+    private static NbiSiteModel siteModel = new NbiSiteModel();
     static {
-        localCpeModel.setName("CpeDevice");
-        localCpeModel.setEsn("ABCDEFGHIJKLMNOP1234");
-        localCpeModel.setTenantId("TenantId");
-        localCpeModel.setControllerId("SdnControllerId");
-        localCpeModel.setSiteId("siteId");
-        localCpeModel.setLocalCpeType("AR169FGW-L");
-        localCpeModel.setUuid("LocalCpeId");
-    }
+        siteModel.setUuid("SiteId");
+        siteModel.setTenantId("TenantId");
+        siteModel.setName("TestSite");
+        siteModel.setDescription("Test for Site");
+        siteModel.setLocalCpeType("China ShenZhen");
+        siteModel.setSiteDescriptor("enterprise_l2cpe");
+        siteModel.setReliability("singleFixedNetwork");
+        siteModel.setIsEncrypt("false");
+    };
 
     @Before
     public void setUp() {
         new MockInventoryDao<NbiSiteModel>();
-        new MockNetworkElementInvDao();
-        new MockCpeRestfulProxy();
         new MockSiteInvDao();
-        new MockSdnControllerDao();
+        new MockSiteRestfulProxy();
+        new MockNetworkElementInvDao();
     }
 
     @Test
     public void queryTest() throws ServiceException {
-        NetworkElementMO localCpeMO = localCpeRoaResource.query(httpRequest, httpResponse, "localCpeUuid");
-        assertTrue("neName".equals(localCpeMO.getName()));
+        NbiSiteModel siteModel = siteRoaResource.query(httpRequest, httpResponse, "SiteId");
+        assertTrue(null != siteModel);
     }
 
     @Test
     public void batchQueryTest() throws ServiceException {
-        List<NetworkElementMO> localCpeMOList =
-                localCpeRoaResource.batchQuery(httpRequest, httpResponse, "siteId", "cpeType", 12, 13);
-        assertTrue(1 == localCpeMOList.size());
-        assertTrue("neName".equals(localCpeMOList.get(0).getName()));
+        ComplexResult<NbiSiteModel> queryResult =
+                siteRoaResource.batchQuery(httpRequest, httpResponse, "[\"SiteId\",\"SiteId2\"]");
+        assertTrue(2 == queryResult.getTotal());
     }
 
     @Test
     public void createTest() throws ServiceException {
-        new MockUp<NbiSiteModel>() {
-
-            @Mock
-            public String getLocalCpeType() {
-                return "AR169FGW-L";
-            }
-        };
-        Map<String, String> createResult = localCpeRoaResource.create(httpRequest, httpResponse, localCpeModel);
-        assertTrue("NeId".equals(createResult.get("id")));
+        Map<String, String> createResult = siteRoaResource.create(httpRequest, httpResponse, siteModel);
+        assertTrue("SiteId".equals(createResult.get("id")));
     }
 
     @Test
     public void deleteTest() throws ServiceException {
-        localCpeRoaResource.delete(httpRequest, httpResponse, "LocalCpeId");
+        siteRoaResource.delete(httpRequest, httpResponse, "SiteId");
+    }
+
+    @Test
+    public void updateTest() throws ServiceException {
+        Map<String, Object> updateResult = siteRoaResource.update(httpRequest, httpResponse, "SiteId", siteModel);
+        assertTrue(!updateResult.isEmpty());
     }
 }

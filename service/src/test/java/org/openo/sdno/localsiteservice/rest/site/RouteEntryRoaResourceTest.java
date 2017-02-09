@@ -16,6 +16,76 @@
 
 package org.openo.sdno.localsiteservice.rest.site;
 
-public class RouteEntryRoaResourceTest {
+import static org.junit.Assert.assertTrue;
+
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.openo.baseservice.remoteservice.exception.ServiceException;
+import org.openo.sdno.localsiteservice.moco.inventorydao.MockInventoryDao;
+import org.openo.sdno.localsiteservice.springtest.SpringTest;
+import org.openo.sdno.overlayvpn.model.v2.routeentry.NbiRouteEntryModel;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import mockit.Mocked;
+
+public class RouteEntryRoaResourceTest extends SpringTest {
+
+    @Autowired
+    private RouteEntryRoaResource routeEntryRoaResource;
+
+    @Mocked
+    private HttpServletRequest httpRequest;
+
+    @Mocked
+    private HttpServletResponse httpResponse;
+
+    private static NbiRouteEntryModel routeEntryModel = new NbiRouteEntryModel();
+    static {
+        routeEntryModel.setName("RouteEntry");
+        routeEntryModel.setUuid("RouteEntryId");
+        routeEntryModel.setTenantId("TenantId");
+        routeEntryModel.setSiteId("SiteId");
+        routeEntryModel.setInternetGatewayId("InternetGatewayId");
+        routeEntryModel.setVpnGatewayId("VpnGateWayId");
+        routeEntryModel.setRouteType("static-routing");
+        routeEntryModel.setPrecedence(13);
+    }
+
+    @Before
+    public void setUp() {
+        new MockInventoryDao<NbiRouteEntryModel>();
+    }
+
+    @Test
+    public void queryTest() throws ServiceException {
+        NbiRouteEntryModel routeEntryModel = routeEntryRoaResource.query(httpRequest, httpResponse, "RouteEntryId");
+        assertTrue(null != routeEntryModel);
+    }
+
+    @Test
+    public void createTest() throws ServiceException {
+        Map<String, String> createResult = routeEntryRoaResource.create(httpRequest, httpResponse, routeEntryModel);
+        assertTrue("RouteEntryId".equals(createResult.get("id")));
+    }
+
+    @Test
+    public void deleteTest() throws ServiceException {
+        routeEntryRoaResource.delete(httpRequest, httpResponse, "RouteEntryId");
+    }
+
+    @Test
+    public void updateTest() throws ServiceException {
+        NbiRouteEntryModel newModel = new NbiRouteEntryModel();
+        newModel.setName("newRoute");
+        newModel.setDescription("Test for route");
+        NbiRouteEntryModel updatedModel =
+                routeEntryRoaResource.update(httpRequest, httpResponse, "RouteEntryId", newModel);
+        assertTrue(null != updatedModel);
+    }
 
 }

@@ -17,11 +17,14 @@
 package org.openo.sdno.localsiteservice.moco.inventorydao;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.openo.baseservice.remoteservice.exception.ServiceException;
 import org.openo.sdno.overlayvpn.dao.common.InventoryDao;
 import org.openo.sdno.overlayvpn.errorcode.ErrorCode;
+import org.openo.sdno.overlayvpn.inventory.sdk.model.RelationMO;
+import org.openo.sdno.overlayvpn.inventory.sdk.model.RelationPuerMO;
 import org.openo.sdno.overlayvpn.result.ResultRsp;
 
 import mockit.Mock;
@@ -76,21 +79,35 @@ public final class MockInventoryDao<T> extends MockUp<InventoryDao<T>> {
 
     @Mock
     ResultRsp<String> batchDelete(Class<T> clazz, List<String> uuids) throws ServiceException {
-        return new ResultRsp<String>();
+        return new ResultRsp<String>(ErrorCode.OVERLAYVPN_SUCCESS);
     }
 
     @Mock
     public ResultRsp<List<T>> update(Class<T> clazz, List<T> oriUpdateList, String updateFieldListStr) {
-        return new ResultRsp<List<T>>(ErrorCode.OVERLAYVPN_SUCCESS);
+        return new ResultRsp<List<T>>(ErrorCode.OVERLAYVPN_SUCCESS, oriUpdateList);
     }
 
     @Mock
     public ResultRsp<T> insert(T data) throws ServiceException {
-        return new ResultRsp<T>(ErrorCode.OVERLAYVPN_SUCCESS);
+        return new ResultRsp<T>(ErrorCode.OVERLAYVPN_SUCCESS, data);
     }
 
     @Mock
     public ResultRsp<List<T>> batchInsert(List<T> dataList) {
-        return new ResultRsp<List<T>>(ErrorCode.OVERLAYVPN_SUCCESS);
+        return new ResultRsp<List<T>>(ErrorCode.OVERLAYVPN_SUCCESS, dataList);
     }
+
+    @Mock
+    public ResultRsp<List<RelationPuerMO>> queryByRelation(RelationMO condition) throws ServiceException {
+        RelationPuerMO relationPuerMO = new RelationPuerMO();
+        relationPuerMO.setSrcUuid("srcUuid");
+        relationPuerMO.setDstUuid("dstUuid");
+        return new ResultRsp<List<RelationPuerMO>>(ErrorCode.OVERLAYVPN_SUCCESS, Arrays.asList(relationPuerMO));
+    }
+
+    @Mock
+    public ResultRsp<T> addRelation(RelationMO relationMO) throws ServiceException {
+        return new ResultRsp<T>(ErrorCode.OVERLAYVPN_SUCCESS);
+    }
+
 }

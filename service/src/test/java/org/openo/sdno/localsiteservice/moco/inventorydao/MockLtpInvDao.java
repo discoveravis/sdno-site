@@ -16,7 +16,7 @@
 
 package org.openo.sdno.localsiteservice.moco.inventorydao;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.openo.baseservice.remoteservice.exception.ServiceException;
@@ -30,9 +30,16 @@ public class MockLtpInvDao extends MockUp<LogicalTernminationPointInvDao> {
 
     @Mock
     public List<LogicalTernminationPointMO> query(List<String> ids) throws ServiceException {
-        LogicalTernminationPointMO ltpMO = new LogicalTernminationPointMO();
-        ltpMO.setName("ltpName");
-        return Arrays.asList(ltpMO);
+
+        List<LogicalTernminationPointMO> ltpMOList = new ArrayList<LogicalTernminationPointMO>();
+        for(String curId : ids) {
+            LogicalTernminationPointMO ltpMO = new LogicalTernminationPointMO();
+            ltpMO.setName("ltpName");
+            ltpMO.setId(curId);
+            ltpMOList.add(ltpMO);
+        }
+
+        return ltpMOList;
     }
 
 }

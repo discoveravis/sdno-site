@@ -62,7 +62,7 @@ public class CloudCpeRoaResourceTest extends SpringTest {
     public void setUp() {
         new MockNetworkElementInvDao();
         new MockInventoryDao<NbiCloudCpeModel>();
-        new MockCpeSuccessRestfulProxy();
+        new MockCpeRestfulProxy();
     }
 
     @Test
