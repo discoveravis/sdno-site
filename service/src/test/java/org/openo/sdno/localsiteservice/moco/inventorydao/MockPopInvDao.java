@@ -14,23 +14,22 @@
  * limitations under the License.
  */
 
-package org.openo.sdno.localsiteservice.sbi.site;
+package org.openo.sdno.localsiteservice.moco.inventorydao;
 
-import org.junit.Test;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
-import org.openo.sdno.localsiteservice.restfulproxy.MockFailRestfulProxy;
-import org.openo.sdno.localsiteservice.springtest.SpringTest;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.openo.sdno.overlayvpn.brs.invdao.PopInvDao;
+import org.openo.sdno.overlayvpn.brs.model.PopMO;
 
-public class VpnGatewaySbiServiceTest extends SpringTest {
+import mockit.Mock;
+import mockit.MockUp;
 
-    @Autowired
-    private VpnGatewaySbiService vpnGatewaySbiService;
+public class MockPopInvDao extends MockUp<PopInvDao> {
 
-    @Test(expected = ServiceException.class)
-    public void queryFailedTest() throws ServiceException {
-        new MockFailRestfulProxy();
-        vpnGatewaySbiService.queryVpnGateway("SiteId");
+    @Mock
+    public PopMO query(String uuid) throws ServiceException {
+        PopMO popMO = new PopMO();
+        popMO.setName("popName");
+        return popMO;
     }
 
 }

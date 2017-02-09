@@ -14,32 +14,40 @@
  * limitations under the License.
  */
 
-package org.openo.sdno.localsiteservice.sbi.site;
+package org.openo.sdno.localsiteservice.rest.inventory;
 
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.junit.Test;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
-import org.openo.sdno.localsiteservice.restfulproxy.MockFailRestfulProxy;
+import org.openo.sdno.localsiteservice.moco.inventorydao.MockNetworkElementInvDao;
 import org.openo.sdno.localsiteservice.springtest.SpringTest;
-import org.openo.sdno.overlayvpn.model.v2.subnet.SbiSubnetBdInfoModel;
-import org.openo.sdno.overlayvpn.result.ResultRsp;
+import org.openo.sdno.overlayvpn.brs.model.NetworkElementMO;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class SubnetBdInfoSbiServiceTest extends SpringTest {
+import mockit.Mocked;
+
+public class NetworkElementRoaResourceTest extends SpringTest {
 
     @Autowired
-    private SubnetBdInfoSbiService subnetBdInfoSbiService;
+    private NetworkElementRoaResource networkElementRoaResource;
+
+    @Mocked
+    private HttpServletRequest httpRequest;
+
+    @Mocked
+    private HttpServletResponse httpResponse;
 
     @Test
-    public void queryFailedTest() throws ServiceException {
-        new MockFailRestfulProxy();
-        SbiSubnetBdInfoModel subnetBdInfoModel = new SbiSubnetBdInfoModel();
-        subnetBdInfoModel.setControllerId("ControllerId");
-        subnetBdInfoModel.setDeviceId("DeviceId");
-        subnetBdInfoModel.setVni("13");
-        ResultRsp<SbiSubnetBdInfoModel> resultRsp = subnetBdInfoSbiService.query(subnetBdInfoModel);
-        assertTrue(!resultRsp.isSuccess());
+    public void queryTest() throws ServiceException {
+        new MockNetworkElementInvDao();
+        List<NetworkElementMO> neList = networkElementRoaResource.query(httpRequest, httpResponse, "[\"NeId\"]");
+        assertTrue("neName".equals(neList.get(0).getName()));
     }
 
 }

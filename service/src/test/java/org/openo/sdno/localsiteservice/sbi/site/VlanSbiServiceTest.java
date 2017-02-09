@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.junit.Test;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
-import org.openo.sdno.localsiteservice.restfulproxy.MocoFailRestfulProxy;
+import org.openo.sdno.localsiteservice.restfulproxy.MockFailRestfulProxy;
 import org.openo.sdno.localsiteservice.springtest.SpringTest;
 import org.openo.sdno.overlayvpn.model.v2.vlan.SbiIfVlan;
 import org.openo.sdno.overlayvpn.result.ResultRsp;
@@ -48,7 +48,7 @@ public class VlanSbiServiceTest extends SpringTest {
 
     @Test
     public void queryFailedTest() throws ServiceException {
-        new MocoFailRestfulProxy();
+        new MockFailRestfulProxy();
         ResultRsp<List<SbiIfVlan>> resultRsp = vlanSbiService.query("ControllerId", "DeviceId", "PortId");
         assertTrue(!resultRsp.isSuccess());
     }
@@ -61,7 +61,7 @@ public class VlanSbiServiceTest extends SpringTest {
 
     @Test
     public void createFailedTest() throws ServiceException {
-        new MocoFailRestfulProxy();
+        new MockFailRestfulProxy();
         ResultRsp<List<SbiIfVlan>> resultRsp =
                 vlanSbiService.create("ControllerId", "DeviceId", Arrays.asList(new SbiIfVlan()));
         assertTrue(!resultRsp.isSuccess());
@@ -75,7 +75,7 @@ public class VlanSbiServiceTest extends SpringTest {
 
     @Test
     public void updateFailedTest() throws ServiceException {
-        new MocoFailRestfulProxy();
+        new MockFailRestfulProxy();
         ResultRsp<List<SbiIfVlan>> resultRsp =
                 vlanSbiService.update("ControllerId", "DeviceId", Arrays.asList(new SbiIfVlan()));
         assertTrue(!resultRsp.isSuccess());

@@ -14,23 +14,25 @@
  * limitations under the License.
  */
 
-package org.openo.sdno.localsiteservice.sbi.site;
+package org.openo.sdno.localsiteservice.moco.inventorydao;
 
-import org.junit.Test;
+import java.util.Arrays;
+import java.util.List;
+
 import org.openo.baseservice.remoteservice.exception.ServiceException;
-import org.openo.sdno.localsiteservice.restfulproxy.MockFailRestfulProxy;
-import org.openo.sdno.localsiteservice.springtest.SpringTest;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.openo.sdno.overlayvpn.brs.invdao.LogicalTernminationPointInvDao;
+import org.openo.sdno.overlayvpn.brs.model.LogicalTernminationPointMO;
 
-public class VpnGatewaySbiServiceTest extends SpringTest {
+import mockit.Mock;
+import mockit.MockUp;
 
-    @Autowired
-    private VpnGatewaySbiService vpnGatewaySbiService;
+public class MockLtpInvDao extends MockUp<LogicalTernminationPointInvDao> {
 
-    @Test(expected = ServiceException.class)
-    public void queryFailedTest() throws ServiceException {
-        new MockFailRestfulProxy();
-        vpnGatewaySbiService.queryVpnGateway("SiteId");
+    @Mock
+    public List<LogicalTernminationPointMO> query(List<String> ids) throws ServiceException {
+        LogicalTernminationPointMO ltpMO = new LogicalTernminationPointMO();
+        ltpMO.setName("ltpName");
+        return Arrays.asList(ltpMO);
     }
 
 }

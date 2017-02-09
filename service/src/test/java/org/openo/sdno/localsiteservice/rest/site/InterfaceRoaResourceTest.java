@@ -14,29 +14,40 @@
  * limitations under the License.
  */
 
-package org.openo.sdno.localsiteservice.sbi.cpe;
+package org.openo.sdno.localsiteservice.rest.site;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.junit.Before;
 import org.junit.Test;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
-import org.openo.sdno.localsiteservice.model.cpe.VCpePlanInfo;
-import org.openo.sdno.localsiteservice.restfulproxy.MockFailRestfulProxy;
-import org.openo.sdno.localsiteservice.springtest.SpringTest;
+import org.openo.sdno.localsiteservice.moco.inventorydao.MockNetworkElementInvDao;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class CpeSbiServiceTest extends SpringTest {
+import mockit.Mocked;
+
+public class InterfaceRoaResourceTest {
 
     @Autowired
-    private CpeSbiService cpeSbiService;
+    private InterfaceRoaResource interfaceRoaResource;
 
-    @Test(expected = ServiceException.class)
-    public void createFailedTest() throws ServiceException {
-        new MockFailRestfulProxy();
-        cpeSbiService.create(new VCpePlanInfo());
+    @Mocked
+    private HttpServletRequest httpRequest;
+
+    @Mocked
+    private HttpServletResponse httpResponse;
+
+    @Before
+    public void setUp() {
+        new MockNetworkElementInvDao();
     }
 
-    @Test(expected = ServiceException.class)
-    public void deleteFailedTest() throws ServiceException {
-        new MockFailRestfulProxy();
-        cpeSbiService.delete("CpeUuid");
+    @Test
+    public void queryTest() throws ServiceException {
+
+        //List<InterfaceModel> interfaceModelList = interfaceRoaResource.query(httpRequest, httpResponse, "deviceUuid");
+
     }
+
 }

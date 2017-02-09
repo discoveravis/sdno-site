@@ -14,29 +14,38 @@
  * limitations under the License.
  */
 
-package org.openo.sdno.localsiteservice.sbi.cpe;
+package org.openo.sdno.localsiteservice.rest.pop;
+
+import static org.junit.Assert.assertTrue;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Test;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
-import org.openo.sdno.localsiteservice.model.cpe.VCpePlanInfo;
-import org.openo.sdno.localsiteservice.restfulproxy.MockFailRestfulProxy;
+import org.openo.sdno.localsiteservice.moco.inventorydao.MockPopInvDao;
 import org.openo.sdno.localsiteservice.springtest.SpringTest;
+import org.openo.sdno.overlayvpn.brs.model.PopMO;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class CpeSbiServiceTest extends SpringTest {
+import mockit.Mocked;
+
+public class PopRoaResourceTest extends SpringTest {
 
     @Autowired
-    private CpeSbiService cpeSbiService;
+    private PopRoaResource popRoaResource;
 
-    @Test(expected = ServiceException.class)
-    public void createFailedTest() throws ServiceException {
-        new MockFailRestfulProxy();
-        cpeSbiService.create(new VCpePlanInfo());
+    @Mocked
+    private HttpServletRequest httpRequest;
+
+    @Mocked
+    private HttpServletResponse httpResponse;
+
+    @Test
+    public void queryTest() throws ServiceException {
+        new MockPopInvDao();
+        PopMO popMO = popRoaResource.query(httpRequest, httpResponse, "PopUuid");
+        assertTrue("popName".equals(popMO.getName()));
     }
 
-    @Test(expected = ServiceException.class)
-    public void deleteFailedTest() throws ServiceException {
-        new MockFailRestfulProxy();
-        cpeSbiService.delete("CpeUuid");
-    }
 }

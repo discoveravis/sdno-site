@@ -14,36 +14,33 @@
  * limitations under the License.
  */
 
-package org.openo.sdno.localsiteservice.restfulproxy;
+package org.openo.sdno.localsiteservice.rest.cpe;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.openo.baseservice.remoteservice.exception.ServiceException;
 import org.openo.baseservice.roa.util.restclient.RestfulParametes;
 import org.openo.baseservice.roa.util.restclient.RestfulResponse;
 import org.openo.sdno.exception.HttpCode;
 import org.openo.sdno.framework.container.resthelper.RestfulProxy;
+import org.openo.sdno.framework.container.util.JsonUtil;
 
 import mockit.Mock;
 import mockit.MockUp;
 
-public class MocoFailRestfulProxy extends MockUp<RestfulProxy> {
+public class MockCpeSuccessRestfulProxy extends MockUp<RestfulProxy> {
 
     private static RestfulResponse restfulResponse = new RestfulResponse();
     static {
-        restfulResponse.setStatus(HttpCode.ERR_FAILED);
-    }
-
-    @Mock
-    public static RestfulResponse get(String uri, RestfulParametes restParametes) throws ServiceException {
-        return restfulResponse;
-    }
-
-    @Mock
-    public static RestfulResponse put(String uri, RestfulParametes restParametes) throws ServiceException {
-        return restfulResponse;
+        restfulResponse.setStatus(HttpCode.RESPOND_OK);
     }
 
     @Mock
     public static RestfulResponse post(String uri, RestfulParametes restParametes) throws ServiceException {
+        Map<String, String> resultMap =  new HashMap<String, String>();
+        resultMap.put("id", "CpeId");
+        restfulResponse.setResponseJson(JsonUtil.toJson(resultMap));
         return restfulResponse;
     }
 

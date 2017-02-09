@@ -21,7 +21,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
 import org.openo.sdno.localsiteservice.model.vpn.InternalConnectionModel;
-import org.openo.sdno.localsiteservice.restfulproxy.MocoFailRestfulProxy;
+import org.openo.sdno.localsiteservice.restfulproxy.MockFailRestfulProxy;
 import org.openo.sdno.localsiteservice.springtest.SpringTest;
 import org.openo.sdno.overlayvpn.result.ResultRsp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class InternalConnectionSbiServiceTest extends SpringTest {
 
     @Test
     public void createFailedTest() throws ServiceException {
-        new MocoFailRestfulProxy();
+        new MockFailRestfulProxy();
         ResultRsp<InternalConnectionModel> resultRsp =
                 internalConnectionSbiService.create(new InternalConnectionModel());
         assertTrue(!resultRsp.isSuccess());
@@ -41,7 +41,7 @@ public class InternalConnectionSbiServiceTest extends SpringTest {
 
     @Test
     public void deleteFailedTest() throws ServiceException {
-        new MocoFailRestfulProxy();
+        new MockFailRestfulProxy();
         ResultRsp<InternalConnectionModel> resultRsp = internalConnectionSbiService.delete("ConnectionId");
         assertTrue(!resultRsp.isSuccess());
     }

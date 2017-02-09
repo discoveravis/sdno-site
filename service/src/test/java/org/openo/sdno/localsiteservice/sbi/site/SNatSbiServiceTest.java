@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
-import org.openo.sdno.localsiteservice.restfulproxy.MocoFailRestfulProxy;
+import org.openo.sdno.localsiteservice.restfulproxy.MockFailRestfulProxy;
 import org.openo.sdno.localsiteservice.springtest.SpringTest;
 import org.openo.sdno.overlayvpn.model.v2.internetgateway.SbiSnatNetModel;
 import org.openo.sdno.overlayvpn.result.ResultRsp;
@@ -51,7 +51,7 @@ public class SNatSbiServiceTest extends SpringTest {
 
     @Test
     public void createFailedTest() throws ServiceException {
-        new MocoFailRestfulProxy();
+        new MockFailRestfulProxy();
         SbiSnatNetModel sNatNetModel = new SbiSnatNetModel();
         sNatNetModel.setControllerId("ControllerId");
         sNatNetModel.setDeviceId("DeviceId");
@@ -61,7 +61,7 @@ public class SNatSbiServiceTest extends SpringTest {
 
     @Test
     public void deleteFailedTest() throws ServiceException {
-        new MocoFailRestfulProxy();
+        new MockFailRestfulProxy();
         SbiSnatNetModel sNatNetModel = new SbiSnatNetModel();
         sNatNetModel.setControllerId("ControllerId");
         sNatNetModel.setDeviceId("DeviceId");

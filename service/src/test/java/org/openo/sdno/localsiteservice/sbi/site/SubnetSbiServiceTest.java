@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
-import org.openo.sdno.localsiteservice.restfulproxy.MocoFailRestfulProxy;
+import org.openo.sdno.localsiteservice.restfulproxy.MockFailRestfulProxy;
 import org.openo.sdno.localsiteservice.springtest.SpringTest;
 import org.openo.sdno.overlayvpn.brs.invdao.NetworkElementInvDao;
 import org.openo.sdno.overlayvpn.brs.model.NetworkElementMO;
@@ -57,7 +57,7 @@ public class SubnetSbiServiceTest extends SpringTest {
     @Test
     public void queryFailedTest() throws ServiceException {
         new MockNeInvDao();
-        new MocoFailRestfulProxy();
+        new MockFailRestfulProxy();
         SbiSubnetNetModel subnetNetModel = new SbiSubnetNetModel();
         ResultRsp<SbiSubnetNetModel> resultRsp = subnetSbiService.query(subnetNetModel);
         assertTrue(!resultRsp.isSuccess());
@@ -76,7 +76,7 @@ public class SubnetSbiServiceTest extends SpringTest {
     @Test
     public void createFailedTest() throws ServiceException {
         new MockNeInvDao();
-        new MocoFailRestfulProxy();
+        new MockFailRestfulProxy();
         SbiSubnetNetModel subnetNetModel = new SbiSubnetNetModel();
         subnetNetModel.setNeId("NeId");
         subnetNetModel.setControllerId("ControllerId");
@@ -88,7 +88,7 @@ public class SubnetSbiServiceTest extends SpringTest {
     @Test
     public void deleteFailedTest() throws ServiceException {
         new MockNeInvDao();
-        new MocoFailRestfulProxy();
+        new MockFailRestfulProxy();
         ResultRsp<SbiSubnetNetModel> resultRsp = subnetSbiService.delete(subnetNetModel);
         assertTrue(!resultRsp.isSuccess());
     }
@@ -96,7 +96,7 @@ public class SubnetSbiServiceTest extends SpringTest {
     @Test
     public void updateFailedTest() throws ServiceException {
         new MockNeInvDao();
-        new MocoFailRestfulProxy();
+        new MockFailRestfulProxy();
         ResultRsp<SbiSubnetNetModel> resultRsp = subnetSbiService.update(subnetNetModel);
         assertTrue(!resultRsp.isSuccess());
     }

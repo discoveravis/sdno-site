@@ -20,7 +20,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
-import org.openo.sdno.localsiteservice.restfulproxy.MocoFailRestfulProxy;
+import org.openo.sdno.localsiteservice.restfulproxy.MockFailRestfulProxy;
 import org.openo.sdno.localsiteservice.springtest.SpringTest;
 import org.openo.sdno.overlayvpn.model.v2.cpe.SbiDeviceCreateBasicInfo;
 import org.openo.sdno.overlayvpn.model.v2.cpe.SbiDeviceInfo;
@@ -34,14 +34,14 @@ public class CpeOnlineSbiServiceTest extends SpringTest{
 
     @Test
     public void createFailedTest() throws ServiceException {
-        new MocoFailRestfulProxy();
+        new MockFailRestfulProxy();
         ResultRsp<SbiDeviceInfo> resultRsp = cpeOnlineSbiService.create("ControllerId", new SbiDeviceCreateBasicInfo());
         assertTrue(!resultRsp.isSuccess());
     }
 
     @Test
     public void deleteFailedTest() throws ServiceException {
-        new MocoFailRestfulProxy();
+        new MockFailRestfulProxy();
         ResultRsp<String> resultRsp = cpeOnlineSbiService.delete("ControllerId", "DeviceId");
         assertTrue(!resultRsp.isSuccess());
     }

@@ -23,7 +23,7 @@ import java.util.List;
 import org.junit.Test;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
 import org.openo.sdno.localsiteservice.model.inf.InterfaceModel;
-import org.openo.sdno.localsiteservice.restfulproxy.MocoFailRestfulProxy;
+import org.openo.sdno.localsiteservice.restfulproxy.MockFailRestfulProxy;
 import org.openo.sdno.localsiteservice.springtest.SpringTest;
 import org.openo.sdno.overlayvpn.result.ResultRsp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class InterfaceSbiServiceTest extends SpringTest {
 
     @Test
     public void queryFailedTest() throws ServiceException {
-        new MocoFailRestfulProxy();
+        new MockFailRestfulProxy();
         ResultRsp<List<InterfaceModel>> resultRsp = interfaceSbiService.query("Controller", "DeviceId");
         assertTrue(!resultRsp.isSuccess());
     }
