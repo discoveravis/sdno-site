@@ -28,14 +28,15 @@ public class RestfulParameterUtilTest {
     public void setContentTypeTest() {
         RestfulParametes restfulParameters = new RestfulParametes();
         RestfulParameterUtil.setContentType(restfulParameters);
-        assertTrue("application/json;charset=UTF-8".equals(restfulParameters.get(HttpContext.CONTENT_TYPE_HEADER)));
+        assertTrue("application/json;charset=UTF-8"
+                .equals(restfulParameters.getHttpContextHeader(HttpContext.CONTENT_TYPE_HEADER)));
     }
 
     @Test
     public void setDefaultContentTypeTest() {
         RestfulParametes restfulParameters = new RestfulParametes();
         RestfulParameterUtil.setContentType(restfulParameters, "application/json");
-        assertTrue("application/json".equals(restfulParameters.get(HttpContext.CONTENT_TYPE_HEADER)));
+        assertTrue("application/json".equals(restfulParameters.getHttpContextHeader(HttpContext.CONTENT_TYPE_HEADER)));
     }
 
     public void setControllerUuidTest() {

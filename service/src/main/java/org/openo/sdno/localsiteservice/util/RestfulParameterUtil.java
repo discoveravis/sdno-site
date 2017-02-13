@@ -35,7 +35,7 @@ public class RestfulParameterUtil {
      * @since SDNO 0.5
      */
     public static void setContentType(RestfulParametes restfulParameters, String contentType) {
-        restfulParameters.put(HttpContext.CONTENT_TYPE_HEADER, contentType);
+        restfulParameters.putHttpContextHeader(HttpContext.CONTENT_TYPE_HEADER, contentType);
     }
 
     /**
@@ -45,7 +45,7 @@ public class RestfulParameterUtil {
      * @since SDNO 0.5
      */
     public static void setContentType(RestfulParametes restfulParameters) {
-        restfulParameters.put(HttpContext.CONTENT_TYPE_HEADER, "application/json;charset=UTF-8");
+        restfulParameters.putHttpContextHeader(HttpContext.CONTENT_TYPE_HEADER, "application/json;charset=UTF-8");
     }
 
     /**
