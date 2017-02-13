@@ -32,7 +32,7 @@ import org.openo.sdno.localsiteservice.moco.inventorydao.MockNetworkElementInvDa
 import org.openo.sdno.localsiteservice.springtest.SpringTest;
 import org.openo.sdno.overlayvpn.model.v2.cpe.NbiCloudCpeModel;
 import org.openo.sdno.overlayvpn.model.v2.site.NbiSiteModel;
-import org.openo.sdno.overlayvpn.util.OverlayvpnContextHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import mockit.Mock;
 import mockit.MockUp;
@@ -40,8 +40,8 @@ import mockit.Mocked;
 
 public class CloudCpeRoaResourceTest extends SpringTest {
 
-    private CloudCpeRoaResource cloudCpeRoaResource =
-            (CloudCpeRoaResource)OverlayvpnContextHelper.getBean("CloudCpeRoaResource");
+    @Autowired
+    private CloudCpeRoaResource cloudCpeRoaResource;
 
     @Mocked
     private HttpServletRequest httpRequest;
@@ -93,6 +93,7 @@ public class CloudCpeRoaResourceTest extends SpringTest {
             }
         };
 
+        assertTrue(null != cloudCpeRoaResource);
         Map<String, String> createResult = cloudCpeRoaResource.create(httpRequest, httpResponse, cloudCpeModel);
         assertTrue("CpeId".equals(createResult.get("id")));
     }
