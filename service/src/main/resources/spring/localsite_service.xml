@@ -49,6 +49,7 @@
             <ref bean="LocalCpeRoaResource"></ref>
             <ref bean="CloudCpeRoaResource"></ref>
             <ref bean="CpeOnlineRoaResource"></ref>
+            <ref bean="healthCheckRoaResource"></ref>
         </jaxrs:serviceBeans>
         <!-- registering providers -->
         <jaxrs:providers>

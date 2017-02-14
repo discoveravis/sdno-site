@@ -29,8 +29,6 @@ public class StatusAndBodyChecker implements IChecker {
 
     @Override
     public boolean check(HttpResponse inputResponse) {
-        System.out.println(inputResponse.getData());
-        System.out.println(expectedResponse.getData());
         return inputResponse.getStatus() == expectedResponse.getStatus()
                 && expectedResponse.getData().equals(inputResponse.getData());
     }
