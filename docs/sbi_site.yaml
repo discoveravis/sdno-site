@@ -1,0 +1,1266 @@
+#
+# Copyright 2017 Huawei Technologies Co., Ltd.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+swagger: '2.0'
+info:
+  title: LocalSiteService
+  description: local site service SBI interface
+  version: 1.0.0
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+basePath: /openoapi/sbi-localsite/v1
+paths:
+  /device/{deviceuuid}/vlan:
+    post:
+      summary: create interface vlan
+      description: create interface vlan
+      operationId: createIfVlan
+      parameters:
+        - name: X-Driver-Parameter
+          in: header
+          description: additional driver-related parameters, current format is "extSysId={ctrlUuid}",and drivermgr will find out driver instance by controller 
+          required: true
+          type: string
+        - name: deviceuuid
+          in: path
+          description: device Id
+          required: true
+          type: string
+        - name: ifvlanList
+          in: body
+          description: interface vlan list
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SbiIfVlan'
+      responses:
+        201:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SbiIfVlanResultRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    put:
+      summary: update interface vlan
+      description: update interface vlan
+      operationId: updateIfVlan
+      parameters:
+        - name: X-Driver-Parameter
+          in: header
+          description: additional driver-related parameters, current format is "extSysId={ctrlUuid}",and drivermgr will find out driver instance by controller 
+          required: true
+          type: string
+        - name: deviceuuid
+          in: path
+          description: device Id
+          required: true
+          type: string
+        - name: ifvlanList
+          in: body
+          description: interface vlan list
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SbiIfVlan'
+      responses:
+        201:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SbiIfVlanResultRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+  /device/{deviceuuid}/vlan/{ids}:
+    get:
+      summary: query interface vlan
+      description: query interface vlan
+      operationId: queryIfVlan
+      parameters:
+        - name: X-Driver-Parameter
+          in: header
+          description: additional driver-related parameters, current format is "extSysId={ctrlUuid}",and drivermgr will find out driver instance by controller 
+          required: true
+          type: string
+        - name: deviceuuid
+          in: path
+          description: device Id
+          required: true
+          type: string
+        - name: ids
+          in: path
+          description: interface vlan uuid string
+          required: true
+          type: string
+      responses:
+        201:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SbiIfVlanResultRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+  /device/{deviceuuid}/subnet:
+    post:
+      summary: create subnet
+      description: create subnet
+      operationId: createSubnet
+      parameters:
+        - name: X-Driver-Parameter
+          in: header
+          description: additional driver-related parameters, current format is "extSysId={ctrlUuid}",and drivermgr will find out driver instance by controller 
+          required: true
+          type: string
+        - name: deviceuuid
+          in: path
+          description: device Id
+          required: true
+          type: string
+        - name: netModel
+          in: body
+          description: subnet info
+          required: true
+          schema:
+            $ref: '#/definitions/SbiSubnetNetModel'
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/SbiSubnetNetModelResultRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    put:
+      summary: update subnet
+      description: update subnet
+      operationId: updateSubnet
+      parameters:
+        - name: X-Driver-Parameter
+          in: header
+          description: additional driver-related parameters, current format is "extSysId={ctrlUuid}",and drivermgr will find out driver instance by controller 
+          required: true
+          type: string
+        - name: deviceuuid
+          in: path
+          description: device Id
+          required: true
+          type: string
+        - name: netModel
+          in: body
+          description: subnet info
+          required: true
+          schema:
+            $ref: '#/definitions/SbiSubnetNetModel'
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/SbiSubnetNetModelResultRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+  /device/{deviceuuid}/subnet/{networkid}:
+    delete:
+      summary: delete subnet
+      description: delete subnet
+      operationId: deleteSubnet
+      parameters:
+        - name: X-Driver-Parameter
+          in: header
+          description: additional driver-related parameters, current format is "extSysId={ctrlUuid}",and drivermgr will find out driver instance by controller 
+          required: true
+          type: string
+        - name: deviceuuid
+          in: path
+          description: device Id
+          required: true
+          type: string
+        - name: networkid
+          in: path
+          description: network Id
+          required: true
+          type: string
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/SbiSubnetNetModelResultRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    get:
+      summary: query subnet
+      description: query subnet
+      operationId: querySubnet
+      parameters:
+        - name: X-Driver-Parameter
+          in: header
+          description: additional driver-related parameters, current format is "extSysId={ctrlUuid}",and drivermgr will find out driver instance by controller 
+          required: true
+          type: string
+        - name: deviceuuid
+          in: path
+          description: device Id
+          required: true
+          type: string
+        - name: networkid
+          in: path
+          description: network Id
+          required: true
+          type: string
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/SbiSubnetNetModelResultRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+  /device/{deviceuuid}/bdinfo/vni/{vni}:
+    get:
+      summary: query bdinfo
+      description: query bdinfo
+      operationId: getBDIfInfo
+      parameters:
+        - name: X-Driver-Parameter
+          in: header
+          description: additional driver-related parameters, current format is "extSysId={ctrlUuid}",and drivermgr will find out driver instance by controller 
+          required: true
+          type: string
+        - name: deviceuuid
+          in: path
+          description: device Id
+          required: true
+          type: string
+        - name: vni
+          in: path
+          description: vni
+          required: true
+          type: string
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/SbiSubnetBdInfoModel'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+  /device/{deviceuuid}/snat:
+    post:
+      summary: create snat
+      description: create snat
+      operationId: createSNat
+      parameters:
+        - name: X-Driver-Parameter
+          in: header
+          description: additional driver-related parameters, current format is "extSysId={ctrlUuid}",and drivermgr will find out driver instance by controller 
+          required: true
+          type: string
+        - name: deviceuuid
+          in: path
+          description: device Id
+          required: true
+          type: string
+        - name: natModel
+          in: body
+          description: snat info
+          required: true
+          schema:
+            $ref: '#/definitions/SbiSnatNetModel'
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/SbiSnatNetModelResultRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    put:
+      summary: update snat
+      description: update snat
+      operationId: updateSNat
+      parameters:
+        - name: X-Driver-Parameter
+          in: header
+          description: additional driver-related parameters, current format is "extSysId={ctrlUuid}",and drivermgr will find out driver instance by controller 
+          required: true
+          type: string
+        - name: deviceuuid
+          in: path
+          description: device Id
+          required: true
+          type: string
+        - name: natModel
+          in: body
+          description: snat info
+          required: true
+          schema:
+            $ref: '#/definitions/SbiSnatNetModel'
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/SbiSnatNetModelResultRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+  /device/{deviceuuid}/snat/{natid}/acl/{aclid}:
+    delete:
+      summary: delete snat
+      description: delete snat
+      operationId: deleteSNat
+      parameters:
+        - name: X-Driver-Parameter
+          in: header
+          description: additional driver-related parameters, current format is "extSysId={ctrlUuid}",and drivermgr will find out driver instance by controller 
+          required: true
+          type: string
+        - name: deviceuuid
+          in: path
+          description: device Id
+          required: true
+          type: string
+        - name: natid
+          in: path
+          description: nat Id
+          required: true
+          type: string
+        - name: aclid
+          in: path
+          description: acl Id
+          required: true
+          type: string
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/StringResultRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    get:
+      summary: query snat
+      description: query snat
+      operationId: querySNat
+      parameters:
+        - name: X-Driver-Parameter
+          in: header
+          description: additional driver-related parameters, current format is "extSysId={ctrlUuid}",and drivermgr will find out driver instance by controller 
+          required: true
+          type: string
+        - name: deviceuuid
+          in: path
+          description: device Id
+          required: true
+          type: string
+        - name: natid
+          in: path
+          description: nat Id
+          required: true
+          type: string
+        - name: aclid
+          in: path
+          description: acl Id
+          required: true
+          type: string
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/StringResultRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+  /device/{deviceuuid}/interfaces:
+    put:
+      summary: update IP address of the interface
+      description: update IP address of the interface
+      operationId: updateInfIp
+      parameters:
+        - name: X-Driver-Parameter
+          in: header
+          description: additional driver-related parameters, current format is "extSysId={ctrlUuid}",and drivermgr will find out driver instance by controller 
+          required: true
+          type: string
+        - name: deviceuuid
+          in: path
+          description: device Id
+          required: true
+          type: string
+        - name: ipCfgs
+          in: body
+          description: interface IP config
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SbiInterfaceIpConfig'
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/SbiInterfaceIpConfigResultRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+  /devices:
+    get:
+      summary: query CPE info
+      description: query CPE info
+      operationId: queryCpes
+      parameters:
+        - name: X-Driver-Parameter
+          in: header
+          description: additional driver-related parameters, current format is "extSysId={ctrlUuid}",and drivermgr will find out driver instance by controller 
+          required: true
+          type: string
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/SbiDeviceInfoResultRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    post:
+      summary: create CPE info
+      description: create CPE info
+      operationId: createCpe
+      parameters:
+        - name: X-Driver-Parameter
+          in: header
+          description: additional driver-related parameters, current format is "extSysId={ctrlUuid}",and drivermgr will find out driver instance by controller 
+          required: true
+          type: string
+        - name: basicInfos
+          in: body
+          description: basic infos of CPE
+          required: true
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SbiDeviceCreateBasicInfo'
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/SbiDeviceInfoResultRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    delete:
+      summary: delete CPE info
+      description: delete CPE info
+      operationId: deleteCpe
+      parameters:
+        - name: X-Driver-Parameter
+          in: header
+          description: additional driver-related parameters, current format is "extSysId={ctrlUuid}",and drivermgr will find out driver instance by controller 
+          required: true
+          type: string
+        - name: deviceIds
+          in: query
+          description: device Id list
+          required: true
+          type: array
+          items:
+            type: string
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/StringResultRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+  /devices/{deviceuuid}:
+    put:
+      summary: update CPE info
+      description: update CPE info
+      parameters:
+        - name: X-Driver-Parameter
+          in: header
+          description: additional driver-related parameters, current format is "extSysId={ctrlUuid}",and drivermgr will find out driver instance by controller 
+          required: true
+          type: string
+        - name: deviceuuid
+          in: path
+          description: device Id
+          required: true
+          type: string
+        - name: deviceInfo
+          in: body
+          description: device info of CPE
+          required: true
+          schema:
+            $ref: '#/definitions/SbiDeviceInfo'
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/StringResultRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+definitions:
+  SbiIfVlan:
+    allOf:
+      - $ref: '#/definitions/UuidModel'
+      - type: object
+        required:
+          - serviceVlanUuId
+          - linkType
+        properties:
+          serviceVlanUuId:
+            type: string
+            description: The UUID of VLAN model
+          ethInterfaceConfigId:
+            type: string
+            description: The interface UUID allocated by controller
+          ifId:
+            type: string
+            description: The UUID of interface
+          ifName:
+            type: string
+            description: interface name
+          defaultVlan:
+            type: integer
+            format: int32
+            description: VLAN value, the range is 1 to 4094
+          linkType:
+            type: string
+            description: the scope is access,trunk,hybird,dot1q,qinq
+          vlans:
+            type: string
+            description: vlan
+
+  SbiSubnetNetModel:
+    allOf:
+      - $ref: '#/definitions/BaseServiceModel'
+      - type: object
+        required:
+          - neId
+          - controllerId
+          - serviceSubnetId
+          - cidrIpAddress
+          - cidrMask
+          - useMode
+          - dhcpMode
+          - dnsServerMode
+        properties:
+          neId:
+            type: string
+            description: NE Id
+          controllerId:
+            type: string
+            description: controller Id
+          networkId:
+            type: string
+            description: network Id
+          serviceSubnetId:
+            type: string
+            description: The UUID of subnet service
+          vni:
+            type: string
+            description: vni value
+          vlanId:
+            type: string
+            description: The UUID of VLAN service
+          cidrIpAddress:
+            type: string
+            description: The IP address of the subnet
+          cidrMask:
+            type: string
+            description: The mask of the subnet
+          gatewayIp:
+            type: string
+            description: The gateway IP address
+          enableDhcp:
+            type: string
+            description: enable dhcp or not
+          ipRangeStartIp:
+            type: string
+            description: The start IP address of the subnet
+          ipRangeEndIp:
+            type: string
+            description: The end IP address of the subnet
+          useMode:
+            type: string
+            description: the scope is terminal,vm
+          changedMode:
+            type: string
+            description: change mode
+          dhcpMode:
+            type: string
+            description: the scope is server,relay
+          dnsServerMode:
+            type: string
+            description: the scope is systemsetting,custom
+          unlimit:
+            type: string
+            description: the scope is true,false
+          ipv6Address:
+            type: string
+            description: ipv6 address
+          prefixLength:
+            type: string
+            description: prefix length
+          dhcp6Enable:
+            type: string
+            description: the scope is true,false
+          dhcp6Mode:
+            type: string
+            description: the scope is server,relay
+          priorDnsServer:
+            description: prior dns server
+            type: string
+          standbyDnsServer:
+            type: string
+            description: standby dns server
+
+  NvString:
+    allOf:
+      - $ref: '#/definitions/UuidModel'
+      - type: object
+        required:
+          - name
+        properties:
+          name:
+            type: string
+          value:
+            type: string
+          firstParentUuid:
+            type: string
+
+  SbiSubnetBdInfoModel:
+    type: object
+    properties:
+      controllerId:
+        type: string
+        description: controller Id
+      neId:
+        type: string
+        description: NE Id
+      deviceId:
+        type: string
+        description: device Id
+      vni:
+        type: string
+        description: vni value
+      subnetId:
+        type: string
+        description: subnet Id
+      bdId:
+        type: string
+        description: broadcast domain Id
+      vbdifName:
+        type: string
+        description: The interface name of broadcast domain
+
+  SbiSnatNetModel:
+    allOf:
+      - $ref: '#/definitions/BaseServiceModel'
+      - type: object
+        required:
+          - neId
+          - deviceId
+          - controllerId
+          - internetGatewayId
+          - ifName
+          - aclNumber
+        properties:
+          neId:
+            type: string
+            description: NE Id
+          deviceId:
+            type: string
+            description: device Id
+          controllerId:
+            type: string
+            description: controller Id
+          natId:
+            type: string
+            description: nat Id
+          internetGatewayId:
+            type: string
+            description: internet gateway Id
+          subnetId:
+            type: string
+            description: subnet Id
+          ifName:
+            type: string
+            description: interface name
+          privateCidr:
+            type: string
+            description: private IP address
+          privatePrefix:
+            type: string
+            description: private prefix of IP address
+          aclNumber:
+            type: string
+            description: acl number
+          aclId:
+            type: string
+            description: acl Id
+          startPublicIpAddress:
+            type: string
+            description: start public IP address
+          endPublicIpAddress:
+            type: string
+            description: end public IP address
+          qosPreNat:
+            type: string
+            description: default false, true when vcpe
+          createtime:
+            type: integer
+            format: int64
+            description: create time
+          updatetime:
+            type: integer
+            format: int64
+            description: update time
+          type:
+            type: string
+            description: the scope is none,create,updateIp
+
+  SbiInterfaceIpConfig:
+    type: object
+    required:
+      - mode
+      - mode6
+    properties:
+      interfaceName:
+        type: string
+        description: interface name
+      mode:
+        type: string
+        description: IP address assignment mode, the scope is dhcp,manual
+      ip:
+        type: string
+        description: IP address
+      netMask:
+        type: string
+        description: the mask of IP address
+      mode6:
+        type: string
+        description: ipv6 address assignment mode, the scope is dhcp,manual
+      ipv6Address:
+        type: string
+        description: ipv6 address
+      prefixLength:
+        type: integer
+        format: int64
+        description: prefix length
+
+  UuidModel:
+    type: object
+    properties:
+      id:
+        type: string
+        description: the UUID of the model
+  ModelBase:
+    allOf:
+      - $ref: '#/definitions/UuidModel'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: the name of the route
+          tenantId:
+            type: string
+            description: tenant ID
+          description:
+            type: string
+            description: description info
+          additionalInfo:
+            type: array
+            items:
+              $ref: '#/definitions/NvString'
+  BaseServiceModel:
+    allOf:
+      - $ref: '#/definitions/ModelBase'
+      - type: object
+        required:
+          - adminStatus
+        properties:
+          adminStatus:
+            type: string
+            description: the scope is none,active,inactive,partially inactive
+          operStatus:
+            type: string
+            description: the scope is none,up,down,partially down
+          actionState:
+            type: string
+            description: the scope is Normal,Creating,Deleting,Updating,Checking,Create_Exception,
+                        Update_Exception,Delete_Exception,Check_Exception
+          createTime:
+            type: string
+            description: create time
+  SbiDeviceCreateBasicInfo:
+    allOf:
+      - $ref: '#/definitions/UuidModel'
+      - type: object
+        required:
+          - esn
+        properties:
+          name:
+            type: string
+            description: device name
+          esn:
+            type: string
+            description: electronic serial number
+          orgnizationName:
+            type: string
+            description: orgnization name
+          description:
+            type: string
+            description: description info
+  SbiDeviceInfo:
+    allOf:
+      - $ref: '#/definitions/SbiDeviceCreateBasicInfo'
+      - type: object
+        properties:
+          id:
+            type: string
+            description: the Id allocated by controller
+          showTenant:
+            type: string
+            description: Whether the tenant is displayed in the query result
+          serviceIp:
+            type: string
+            description: device IP
+          neType:
+            type: string
+            description: device type
+          version:
+            type: string
+            description: software version of the device
+          status:
+            type: string
+            description: device status
+          gisLon:
+            type: number
+            format: double
+            description: longitude of the device
+          gisLat:
+            type: number
+            format: double
+            description: latitude of the device
+          vendor:
+            type: string
+            description: device vendor
+          tenantId:
+            type: string
+            description: tenant Id
+          tenantName:
+            type: string
+            description: tenant name
+          orgnizationId:
+            type: string
+            description: orgnization Id
+          creator:
+            type: string
+            description: creator
+          createTime:
+            type: string
+            description: create time
+          registerTime:
+            type: string
+            description: register time
+          modifier:
+            type: string
+            description: modifier
+          modifyTime:
+            type: string
+            description: modify time
+
+  ResultResponse:
+    type: object
+    description: common result model
+    properties:
+      errorCode:
+        type: string
+        description: result error code
+      descArg:
+        type: string
+        description: The description args
+      reasonArg:
+        type: string
+        description: The reason args
+      detailArg:
+        type: string
+        description: The detail args
+      adviceArg:
+        type: string
+        description: The advice args
+      httpCode:
+        type: integer
+        description: The http status code
+      message:
+        type: string
+        description: the exception message word
+      smallErrorCodeList:
+        $ref: "#/definitions/ErrorCodeInfo"               
+  SbiIfVlanResultRsp:
+    description: String result model
+    allOf:
+      - $ref: '#/definitions/ResultResponse'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: "#/definitions/SbiIfVlan"
+          successed:
+            type: array
+            items:
+              type: array
+              items:
+                $ref: "#/definitions/SbiIfVlan"
+            description: the successed list.
+          fail:
+            type: array
+            items:
+              $ref: "#/definitions/SbiIfVlanFailData"
+            description: the failed list.
+  SbiIfVlanFailData:
+    type: object
+    description: fail data model
+    properties:
+      errorCode:
+        type: string
+        description: result error code
+      message:
+        type: string
+        description: the error message word
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/SbiIfVlan"
+
+  SbiInterfaceIpConfigResultRsp:
+    description: String result model
+    allOf:
+      - $ref: '#/definitions/ResultResponse'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: "#/definitions/SbiInterfaceIpConfig"
+          successed:
+            type: array
+            items:
+              type: array
+              items:
+                $ref: "#/definitions/SbiInterfaceIpConfig"
+            description: the successed list.
+          fail:
+            type: array
+            items:
+              $ref: "#/definitions/SbiInterfaceIpConfigFailData"
+            description: the failed list.
+  SbiInterfaceIpConfigFailData:
+    type: object
+    description: fail data model
+    properties:
+      errorCode:
+        type: string
+        description: result error code
+      message:
+        type: string
+        description: the error message word
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/SbiInterfaceIpConfig"
+
+  SbiDeviceInfoResultRsp:
+    description: String result model
+    allOf:
+      - $ref: '#/definitions/ResultResponse'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: "#/definitions/SbiDeviceInfo"
+          successed:
+            type: array
+            items:
+              type: array
+              items:
+                $ref: "#/definitions/SbiDeviceInfo"
+            description: the successed list.
+          fail:
+            type: array
+            items:
+              $ref: "#/definitions/SbiDeviceInfoFailData"
+            description: the failed list.
+  SbiDeviceInfoFailData:
+    type: object
+    description: fail data model
+    properties:
+      errorCode:
+        type: string
+        description: result error code
+      message:
+        type: string
+        description: the error message word
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/SbiDeviceInfo"
+
+  SbiSubnetNetModelResultRsp:
+    description: String result model
+    allOf:
+      - $ref: '#/definitions/ResultResponse'
+      - type: object
+        properties:
+          data:
+            $ref: "#/definitions/SbiSubnetNetModel"
+          successed:
+            type: array
+            items:
+              $ref: "#/definitions/SbiSubnetNetModel"
+            description: the successed list.
+          fail:
+            type: array
+            items:
+              $ref: "#/definitions/SbiSubnetNetModelFailData"
+            description: the failed list.
+  SbiSubnetNetModelFailData:
+    type: object
+    description: fail data model
+    properties:
+      errorCode:
+        type: string
+        description: result error code
+      message:
+        type: string
+        description: the error message word
+      data:
+        $ref: "#/definitions/SbiSubnetNetModel"
+
+  SbiSnatNetModelResultRsp:
+    description: String result model
+    allOf:
+      - $ref: '#/definitions/ResultResponse'
+      - type: object
+        properties:
+          data:
+            $ref: "#/definitions/SbiSnatNetModel"
+          successed:
+            type: array
+            items:
+              $ref: "#/definitions/SbiSnatNetModel"
+            description: the successed list.
+          fail:
+            type: array
+            items:
+              $ref: "#/definitions/SbiSnatNetModelFailData"
+            description: the failed list.
+  SbiSnatNetModelFailData:
+    type: object
+    description: fail data model
+    properties:
+      errorCode:
+        type: string
+        description: result error code
+      message:
+        type: string
+        description: the error message word
+      data:
+        $ref: "#/definitions/SbiSnatNetModel"
+
+  StringResultRsp:
+    description: String result model
+    allOf:
+      - $ref: '#/definitions/ResultResponse'
+      - type: object
+        properties:
+          data:
+            type: string
+            description: data body
+          successed:
+            type: array
+            items:
+              type: string
+            description: the successed list.
+          fail:
+            type: array
+            items:
+              $ref: '#/definitions/StringFailData'
+            description: the failed list.
+  StringFailData:
+    type: object
+    description: fail data model
+    properties:
+      errorCode:
+        type: string
+        description: result error code
+      message:
+        type: string
+        description: the error message word
+      data:
+        type: string
+  ErrorCodeInfo:
+    type: object
+    description: Error code information model
+    required:
+      - errorCode
+      - description
+      - objectId
+      - objectName
+      - object
+      - descArg
+      - reasonArg
+      - detailArg
+    properties:
+      errorCode:
+        type: string
+        description: error code
+      description:
+        type: string
+        description: error description
+      objectId:
+        type: string
+        description: object Id
+      objectName:
+        type: string
+        description: object Name
+      object:
+        type: object
+        description: object
+      descArg:
+        type: string
+        description: The description args
+      reasonArg:
+        type: string
+        description: The reason args
+      detailArg:
+        type: string
+        description: The detail args

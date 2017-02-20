@@ -1,0 +1,1657 @@
+#
+# Copyright 2017 Huawei Technologies Co., Ltd.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+swagger: '2.0'
+info:
+  title: SiteService
+  description: site service NBI interface
+  version: 1.0.0
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+basePath: /openoapi/sdnolocalsite/v1
+paths:
+  /sites:
+    get:
+      tags:
+      - SiteRoaResource
+      operationId: batchQuerySites
+      summary: batch query  sites
+      description: batch query  sites
+      parameters:
+        - name: uuids
+          in: query
+          description: uuid list of sites
+          required: true
+          type: string
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiSiteModelRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    post:
+      tags:
+      - SiteRoaResource
+      operationId: createSite
+      summary: create  site
+      description: create  site
+      parameters:
+        - name: site
+          in: body
+          schema:
+              $ref: '#/definitions/NbiSiteModel'
+          description: site to create
+          required: true
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiSiteModelRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+  /sites/{uuid}:
+    get:
+      tags:
+      - SiteRoaResource
+      operationId: querySite
+      summary: query  sites
+      description: query  sites
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid of site to query
+          type: string
+          required: true
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiSiteModel'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    delete:
+      tags:
+      - SiteRoaResource
+      operationId: deleteSite
+      summary: delete  sites
+      description: delete  sites
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid of site to delete
+          type: string
+          required: true
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiSiteModel'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    put:
+      tags:
+      - SiteRoaResource
+      operationId: updateSite
+      summary: update  sites
+      description: update  sites
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid of site to update
+          type: string
+          required: true
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiSiteModel'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+  /internet-gateways:
+    get:
+      tags:
+      - InternetGatewayRoaResource
+      operationId: batchQueryInternetGateways
+      summary: batch query  internet gateways
+      description: batch query  internet gateways
+      parameters:
+        - name: name
+          in: query
+          description: name
+          required: true
+          type: string
+        - name: tenantId
+          in: query
+          description: tenant id
+          required: true
+          type: string
+        - name: siteId
+          in: query
+          description: site id
+          required: true
+          type: string
+        - name: pageNum
+          in: query
+          description: page number
+          required: true
+          type: string
+        - name: pageSize
+          in: query
+          description: size of page
+          required: true
+          type: string
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiInternetGatewayModelRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    post:
+      tags:
+      - InternetGatewayRoaResource
+      operationId: createInternetGateway
+      summary: create  internet gateway
+      description: create  internet gateway
+      parameters:
+        - name: internet gateway
+          in: body
+          schema:
+              $ref: '#/definitions/NbiInternetGatewayModel'
+          description: internet gateway to create
+          required: true
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiInternetGatewayModelRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+  /internet-gateways/{uuid}:
+    get:
+      tags:
+      - InternetGatewayRoaResource
+      operationId: queryInternetGateway
+      summary: query  internet gateways
+      description: query  internet gateways
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid of internet gateway to query
+          type: string
+          required: true
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiInternetGatewayModel'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    delete:
+      tags:
+      - InternetGatewayRoaResource
+      operationId: deleteInternetGateway
+      summary: delete  internet gateways
+      description: delete  internet gateways
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid of internet gateway to delete
+          type: string
+          required: true
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiInternetGatewayModel'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    put:
+      tags:
+      - InternetGatewayRoaResource
+      operationId: updateInternetGateway
+      summary: update  internet gateways
+      description: update  internet gateways
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid of internet gateway to update
+          type: string
+          required: true
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiInternetGatewayModel'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+  /local-cpes:
+    get:
+      tags:
+      - LocalCpeRoaResource
+      operationId: batchQueryLocalCpes
+      summary: batch query  localcpes
+      description: batch query  localcpes
+      parameters:
+        - name: cpeType
+          in: query
+          description: cpe type
+          required: true
+          type: string
+        - name: siteId
+          in: query
+          description: site id
+          required: true
+          type: string
+        - name: pageNum
+          in: query
+          description: page number
+          required: true
+          type: string
+        - name: pageSize
+          in: query
+          description: size of page
+          required: true
+          type: string
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiNeMo'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    post:
+      tags:
+      - LocalCpeRoaResource
+      operationId: createLocalCpe
+      summary: create  localcpe
+      description: create  localcpe
+      parameters:
+        - name: localcpe
+          in: body
+          schema:
+              $ref: '#/definitions/NbiLocalCpeModel'
+          description: localcpe to create
+          required: true
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiLocalCpeModelRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+  /local-cpes/{uuid}:
+    get:
+      tags:
+      - LocalCpeRoaResource
+      operationId: queryLocalCpe
+      summary: query  localcpes
+      description: query  localcpes
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid of localcpe to query
+          type: string
+          required: true
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiNeMo'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    delete:
+      tags:
+      - LocalCpeRoaResource
+      operationId: deleteLocalCpe
+      summary: delete  localcpes
+      description: delete  localcpes
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid of localcpe to delete
+          type: string
+          required: true
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiLocalCpeModel'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+  /cloud-cpes:
+    get:
+      tags:
+      - CloudCpeRoaResource
+      operationId: batchQueryCloudCpes
+      summary: batch query  cloudcpes
+      description: batch query  cloudcpes
+      parameters:
+        - name: name
+          in: query
+          description: pop id
+          type: string
+        - name: tenantId
+          in: query
+          description: tenant Id
+          required: true
+          type: string
+        - name: siteId
+          in: query
+          description: site id
+          required: true
+          type: string
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiCloudCpeModelRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    post:
+      tags:
+      - CloudCpeRoaResource
+      operationId: createCloudCpe
+      summary: create  cloudcpe
+      description: create  cloudcpe
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/NbiCloudCpeModel'
+          description: cloudcpe to create
+          required: true
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiCloudCpeModelRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+  /cloud-cpes/{uuid}:
+    get:
+      tags:
+      - CloudCpeRoaResource
+      operationId: queryCloudCpe
+      summary: query  cloudcpes
+      description: query  cloudcpes
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid of cloudcpe to query
+          type: string
+          required: true
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiCloudCpeModel'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    delete:
+      tags:
+      - CloudCpeRoaResource
+      operationId: deleteCloudCpe
+      summary: delete  cloudcpes
+      description: delete  cloudcpes
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid of cloudcpe to delete
+          type: string
+          required: true
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiCloudCpeModel'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    put:
+      tags:
+      - CloudCpeRoaResource
+      operationId: updateCloudCpe
+      summary: update  cloudcpes
+      description: update  cloudcpes
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid of cloudcpe to update
+          type: string
+          required: true
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiCloudCpeModel'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+  /subnets:
+    get:
+      tags:
+      - SubnetRoaResource
+      operationId: batchQuerySubnets
+      summary: batch query  subnets
+      description: batch query  subnets
+      parameters:
+        - name: name
+          in: query
+          description: name
+          required: true
+          type: string
+        - name: tenantId
+          in: query
+          description: tenant Id
+          required: true
+          type: string
+        - name: siteId
+          in: query
+          description: site id
+          required: true
+          type: string
+        - name: pageNum
+          in: query
+          description: page number
+          required: true
+          type: string
+        - name: pageSize
+          in: query
+          description: size of page
+          required: true
+          type: string
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiSubnetModelRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    post:
+      tags:
+      - SubnetRoaResource
+      operationId: createSubnet
+      summary: create  subnet
+      description: create  subnet
+      parameters:
+        - name: subnet
+          in: body
+          schema:
+              $ref: '#/definitions/NbiSubnetModel'
+          description: subnet to create
+          required: true
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiSubnetModelRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+  /subnets/{uuid}:
+    get:
+      tags:
+      - SubnetRoaResource
+      operationId: querySubnet
+      summary: query  subnets
+      description: query  subnets
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid of subnet to query
+          type: string
+          required: true
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiSubnetModel'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    delete:
+      tags:
+      - SubnetRoaResource
+      operationId: deleteSubnet
+      summary: delete  subnets
+      description: delete  subnets
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid of subnet to delete
+          type: string
+          required: true
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiSubnetModel'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    put:
+      tags:
+      - SubnetRoaResource
+      operationId: updateSubnet
+      summary: update  subnets
+      description: update  subnets
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid of subnet to update
+          type: string
+          required: true
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiSubnetModel'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+  /vlans:
+    get:
+      tags:
+      - VlanRoaResource
+      operationId: batchQueryVlans
+      summary: batch query  vlans
+      description: batch query  vlans
+      parameters:
+        - name: name
+          in: query
+          description: name
+          required: true
+          type: string
+        - name: tenantId
+          in: query
+          description: tenant Id
+          required: true
+          type: string
+        - name: siteId
+          in: query
+          description: site id
+          required: true
+          type: string
+        - name: pageNum
+          in: query
+          description: page number
+          required: true
+          type: string
+        - name: pageSize
+          in: query
+          description: size of page
+          required: true
+          type: string
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiVlanModelRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    post:
+      tags:
+      - VlanRoaResource
+      operationId: createVlan
+      summary: create  vlan
+      description: create  vlan
+      parameters:
+        - name: vlan
+          in: body
+          schema:
+              $ref: '#/definitions/NbiVlanModel'
+          description: vlan to create
+          required: true
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiVlanModelRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+  /vlans/{uuid}:
+    get:
+      tags:
+      - VlanRoaResource
+      operationId: queryVlan
+      summary: query  vlans
+      description: query  vlans
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid of vlan to query
+          type: string
+          required: true
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiVlanModel'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    delete:
+      tags:
+      - VlanRoaResource
+      operationId: deleteVlan
+      summary: delete  vlans
+      description: delete  vlans
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid of vlan to delete
+          type: string
+          required: true
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiVlanModelRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+    put:
+      tags:
+      - VlanRoaResource
+      operationId: updateVlan
+      summary: update  vlans
+      description: update  vlans
+      parameters:
+        - name: uuid
+          in: path
+          description: uuid of vlan to update
+          type: string
+          required: true
+      responses:
+        201:
+          description: OK
+          schema:
+            $ref: '#/definitions/NbiVlanModelRsp'
+        400:
+          description: Bad Request
+        401:
+          description: Unauthorized
+        404:
+          description: Not Found
+        500:
+          description: Internal Server Error
+
+
+definitions:
+  UuidModel:
+    type: object
+    properties:
+      id:
+        type: string
+        description: the UUID of the model
+
+  ModelBase:
+    allOf:
+      - $ref: '#/definitions/UuidModel'
+      - type: object
+        required:
+          - tenantId
+        properties:
+          name:
+            type: string
+            description: the name of the model
+          tenantId:
+            type: string
+            description: tenant ID
+          description:
+            type: string
+            description: description info
+          additionalInfo:
+            type: array
+            items:
+              $ref: '#/definitions/NvString'
+            description: additional info
+  NvString:
+    allOf:
+      - $ref: '#/definitions/UuidModel'
+      - type: object
+        required:
+          - name
+        properties:
+          name:
+            type: string
+            description: name, 1 <= length <= 36
+          value:
+            type: string
+            description: value, min = 0, max =255
+          firstParentUuid:
+            type: string
+            description: uuid, 1 <= length <= 36
+
+  BaseServiceModel:
+    allOf:
+      - $ref: '#/definitions/ModelBase'
+      - type: object
+        required:
+          - adminStatus
+        properties:
+          adminStatus:
+            type: string
+            description:  admin state (scope = none, active, inactive, partially_inactive)
+          operStatus:
+            type: string
+            description: (scope = none, up, down, partially_down)
+          actionState:
+            type: string
+            description: (scope = none, normal, creating, deleting, updating, create_exception, update_exception, delete_exception, deploying, deploy_exception, undeploying, undeploy_exception, checking, check_exception)
+          createTime:
+            type: string
+            description: create time
+  ErrorCodeInfo:
+    type: object
+    description: Error code information model
+    required:
+      - errorCode
+      - description
+      - objectId
+      - objectName
+      - object
+      - descArg
+      - reasonArg
+      - detailArg
+    properties:
+      errorCode:
+        type: string
+        description: error code
+      description:
+        type: string
+        description: error description
+      objectId:
+        type: string
+        description: object Id
+      objectName:
+        type: string
+        description: object Name
+      object:
+        type: object
+        description: object
+      descArg:
+        type: string
+        description: The description args
+      reasonArg:
+        type: string
+        description: The reason args
+      detailArg:
+        type: string
+        description: The detail args
+  ResultResponse:
+    type: object
+    description: Result response model
+    required:
+      - errorCode
+      - httpCode
+    properties:
+      errorCode:
+        type: string
+        description: result error code
+      descArg:
+        type: string
+        description: The description args
+      reasonArg:
+        type: string
+        description: The reason args
+      detailArg:
+        type: string
+        description: The detail args
+      adviceArg:
+        type: string
+        description: The advice args
+      httpCode:
+        type: integer
+        description: The http status code
+      message:
+        type: string
+        description: the exception message word
+      smallErrorCodeList:
+        $ref: "#/definitions/ErrorCodeInfo"
+
+  FailDataNbiVlanModel:
+    type: object
+    description: Fail data model
+    properties:
+      errcode:
+        type: string
+        description: result error code
+      errmsg:
+        type: string
+        description: error message
+      data:
+        $ref: "#/definitions/NbiVlanModel"
+  NbiVlanModelRsp:
+    description: NbiVlanModel result model
+    allOf:
+      - $ref: '#/definitions/ResultResponse'
+      - type: object
+        properties:
+          data:
+            $ref: "#/definitions/NbiVlanModel"
+          successed:
+            type: array
+            items:
+              $ref: "#/definitions/NbiVlanModel"
+            description: the successed list.
+          fail:
+            type: array
+            items:
+              $ref: "#/definitions/FailDataNbiVlanModel"
+            description: the failed list.
+  NbiVlanModel:
+    allOf:
+      - $ref: '#/definitions/BaseServiceModel'
+      - type: object
+        properties:
+          siteId:
+            type: string
+            description: site id
+          vlanId:
+            type: integer
+            format: int32
+            description: vlan id
+          ports:
+            type: array
+            items:
+              type: string
+            description: ports list
+          portNames:
+            type: array
+            items:
+              type: string
+            description: port name list
+          createtime:
+            type: integer
+            format: int64
+            description: create time
+          updatetime:
+            type: integer
+            format: int64
+            description: update time
+
+  FailDataNbiSubnetModel:
+    type: object
+    description: Fail data model
+    properties:
+      errcode:
+        type: string
+        description: result error code
+      errmsg:
+        type: string
+        description: error message
+      data:
+        $ref: "#/definitions/NbiSubnetModel"
+
+  NbiSubnetModelRsp:
+    description: NbiSubnetModel result model
+    allOf:
+      - $ref: '#/definitions/ResultResponse'
+      - type: object
+        properties:
+          data:
+            $ref: "#/definitions/NbiSubnetModel"
+          successed:
+            type: array
+            items:
+              $ref: "#/definitions/NbiSubnetModel"
+            description: the successed list.
+          fail:
+            type: array
+            items:
+              $ref: "#/definitions/FailDataNbiSubnetModel"
+            description: the failed list.
+
+  NbiSubnetModel:
+    allOf:
+      - $ref: '#/definitions/BaseServiceModel'
+      - type: object
+        properties:
+          siteId:
+            type: string
+            description: site id
+          cidrBlock:
+            type: string
+            description: cidr block
+          cidrBlockSize:
+            type: integer
+            format: int32
+            description: cidr block size 8~32
+          gatewayIp:
+            type: string
+            description: gateway ip
+          vlanId:
+            type: string
+            description: vlan id
+          vni:
+            type: string
+            description: vni
+          ports:
+            type: array
+            items:
+              type: string
+            description: ports list
+          portNames:
+            type: array
+            items:
+              type: string
+            description: port name list
+          ipv6Address:
+            type: string
+            description: ipv6 address
+          prefixLength:
+            type: string
+            description: length of prifix
+          dhcp6Enable:
+            type: string
+            description: whether enable dhcp6
+          dhcp6Mode:
+            type: string
+            description: dhcp mode scope ="server, relay"
+          enableDhcp:
+            type: string
+            description: whether enable dhcp
+          gatewayInterface:
+            type: string
+            description: BDIF interface name, when vni is not null and need to read from AC, pass this parameter to lower layer
+          createTime:
+            type: string
+            description: create time
+          updateTime:
+            type: string
+            description: update time
+
+  FailDataNbiCloudCpeModel:
+    type: object
+    description: Fail data model
+    properties:
+      errcode:
+        type: string
+        description: result error code
+      errmsg:
+        type: string
+        description: error message
+      data:
+        $ref: "#/definitions/NbiCloudCpeModel"
+
+  NbiCloudCpeModelRsp:
+    description: NbiCloudCpeModel result model
+    allOf:
+      - $ref: '#/definitions/ResultResponse'
+      - type: object
+        properties:
+          data:
+            $ref: "#/definitions/NbiCloudCpeModel"
+          successed:
+            type: array
+            items:
+              $ref: "#/definitions/NbiCloudCpeModel"
+            description: the successed list.
+          fail:
+            type: array
+            items:
+              $ref: "#/definitions/FailDataNbiCloudCpeModel"
+            description: the failed list.
+
+  NbiCloudCpeModel:
+    allOf:
+      - $ref: '#/definitions/UuidModel'
+      - type: object
+        required:
+          - tenantId
+          - siteId
+        properties:
+          tenantId:
+            type: string
+            description: tenant id
+          siteId:
+            type: string
+            description: site id
+          popId:
+            type: string
+            description: pop id
+          vCpeId:
+            type: string
+            description: vcpe id
+          name:
+            type: string
+            description: name
+          esn:
+            type: string
+            description: esn
+          mgrIp:
+            type: string
+            description: mgr ip
+          mgrMask:
+            type: string
+            description: mask of mgr ip
+          mgrGatewayIp:
+            type: string
+            description: mgr gateway ip
+          controllerId:
+            type: string
+            description: controller id
+          controllerIp:
+            type: string
+            description: controller ip
+          controllerMask:
+            type: string
+            description: controller mask
+          description:
+            type: string
+            description: description
+          vendor:
+            type: string
+            description: vendor
+          type:
+            type: string
+            description: type
+          vnfdVersion:
+            type: string
+            description: vnfd Version
+          callbackUrl:
+            type: string
+            description: callback Url
+          vnfdId:
+            type: string
+            description: vnfd id
+          vnfId:
+            type: string
+            description: vnf id
+          vnfmId:
+            type: string
+            description: vnfm id
+          dcLocation:
+            type: string
+            description: dc location
+          rangeId:
+            type: string
+            description: range id
+          referenceCount:
+            type: integer
+            format: int32
+            description: reference count
+          adminState:
+            type: string
+            description: scope = Active, Stopped, Building
+          actionState:
+            type: string
+            description: (scope = none, normal, creating, deleting, updating, create_exception, update_exception, delete_exception, deploying, deploy_exception, undeploying, undeploy_exception, checking, check_exception)
+          template:
+            type: string
+            description: template
+          additionalInfo:
+            type: array
+            items:
+              $ref: '#/definitions/NvString'
+            description: additional info
+
+  FailDataNbiLocalCpeModel:
+    type: object
+    description: Fail data model
+    properties:
+      errcode:
+        type: string
+        description: result error code
+      errmsg:
+        type: string
+        description: error message
+      data:
+        $ref: "#/definitions/NbiLocalCpeModel"
+  NbiLocalCpeModelRsp:
+    description: NbiLocalCpeModel result model
+    allOf:
+    - $ref: '#/definitions/ResultResponse'
+    - type: object
+      properties:
+        data:
+          $ref: "#/definitions/NbiLocalCpeModel"
+        successed:
+          type: array
+          items:
+            $ref: "#/definitions/NbiLocalCpeModel"
+          description: the successed list.
+        fail:
+          type: array
+          items:
+            $ref: "#/definitions/FailDataNbiLocalCpeModel"
+          description: the failed list.
+
+  NbiLocalCpeModel:
+    allOf:
+      - $ref: '#/definitions/UuidModel'
+      - type: object
+        required:
+          - tenantId
+          - siteId
+        properties:
+          tenantId:
+            type: string
+            description: tenant id
+          siteId:
+            type: string
+            description: site id
+          name:
+            type: string
+            description: name
+          esn:
+            type: string
+            description: esn
+          oldEsn:
+            type: string
+            description: old esn
+          controllerId:
+            type: string
+            description: controller id
+          localCpeType:
+            type: string
+            description: local cpe type
+          description:
+            type: string
+            description: description
+  BaseMo:
+    type: object
+    properties:
+      id:
+        type: string
+        description: the UUID of the model
+      name:
+        type: string
+        description: name of the object
+
+  NbiNeMo:
+    allOf:
+      - $ref: '#/definitions/BaseMo'
+      - type: object
+        required:
+          - ipAddress
+        properties:
+          version:
+            type: string
+            description: version
+          description:
+            type: string
+            description: description
+          logicId:
+            type: string
+            description: logic id of ne
+          phyNeId:
+            type: string
+            description: physical ne id
+          managementDomainId:
+            type: array
+            items:
+              type: string
+            description: management Domain Id
+          controllerId:
+            type: array
+            items:
+              type: string
+            description: controller Id list
+          siteId:
+            type: array
+            items:
+              type: string
+            description: site id list
+          productName:
+            type: string
+            description: product name
+          isVirtual:
+            type: string
+            description: whether is a virtual ne
+          ipAddress:
+            type: string
+            description: ip Address
+          source:
+            type: string
+            description: (scope=network_me,os,network_ems,user)
+          owner:
+            type: string
+            description: owner
+          location:
+            type: string
+            description: location
+          serialNumber:
+            type: string
+            description: serial Number
+          manufacturer:
+            type: string
+            description: manufacturer
+          manufactureDate:
+            type: string
+            description: manufacture Date
+          adminState:
+            type: string
+            description: (scope=active,inactive)
+          operState:
+            type: string
+            description: (scope=up,down,unknown)
+          nativeId:
+            type: string
+            description: native id
+          accessIpVersion:
+            type: string
+            description: (scope=ipv4,ipv6,ipv4/ipv6)
+          neRole:
+            type: string
+            description: ne role
+          additionalInfo:
+            type: array
+            items:
+              $ref: '#/definitions/NvString'
+            description: additional info
+
+  FailDataNbiInternetGatewayModel:
+    type: object
+    description: Fail data model
+    properties:
+      errcode:
+        type: string
+        description: result error code
+      errmsg:
+        type: string
+        description: error message
+      data:
+        $ref: "#/definitions/NbiInternetGatewayModel"
+
+  NbiInternetGatewayModelRsp:
+    description: NbiInternetGatewayModel result model
+    allOf:
+    - $ref: '#/definitions/ResultResponse'
+    - type: object
+      properties:
+        data:
+          $ref: "#/definitions/NbiInternetGatewayModel"
+        successed:
+          type: array
+          items:
+            $ref: "#/definitions/NbiInternetGatewayModel"
+          description: the successed list.
+        fail:
+          type: array
+          items:
+            $ref: "#/definitions/FailDataNbiInternetGatewayModel"
+          description: the failed list.
+
+  NbiRouteEntryModel:
+    allOf:
+      - $ref: '#/definitions/BaseServiceModel'
+      - type: object
+        required:
+          - siteId
+        properties:
+          siteId:
+            type: string
+            description: site id
+          subnetId:
+            type: string
+            description: subnet id
+          cidr:
+            type: string
+            description: cidr
+          vpnGatewayId:
+            type: string
+            description: vpn gateway id
+          internetGatewayId:
+            type: string
+            description: internet Gateway Id
+          nextHop:
+            type: string
+            description: next hop
+          precedence:
+            type: string
+            description: precedence
+          routeType:
+            type: string
+            description: only support static-routing for now
+
+  FailDataNbiSiteModel:
+    type: object
+    description: Fail data model
+    properties:
+      errcode:
+        type: string
+        description: result error code
+      errmsg:
+        type: string
+        description: error message
+      data:
+        $ref: "#/definitions/NbiSiteModel"
+
+  NbiSiteModelRsp:
+    description: NbiSiteModel result model
+    allOf:
+    - $ref: '#/definitions/ResultResponse'
+    - type: object
+      properties:
+        data:
+          $ref: "#/definitions/NbiSiteModel"
+        successed:
+          type: array
+          items:
+            $ref: "#/definitions/NbiSiteModel"
+          description: the successed list.
+        fail:
+          type: array
+          items:
+            $ref: "#/definitions/FailDataNbiSiteModel"
+          description: the failed list.
+
+  NbiSiteModel:
+    allOf:
+      - $ref: '#/definitions/UuidModel'
+      - type: object
+        required:
+          - tenantId
+          - name
+          - siteDescriptor
+          - reliability
+        properties:
+          name:
+            type: string
+            description: the name of the model
+          tenantId:
+            type: string
+            description: tenant ID
+          description:
+            type: string
+            description: description info
+          location:
+            type: string
+            description: location
+          actionState:
+            type: string
+            description: operation status(scope:none,normal,creating,deleting,updating,create_exception,update_exception,delete_exception,deploying,deploy_exception,undeploying,undeploy_exception,checking,check_exception)
+          deployCloudCpeByDeafult:
+            type: string
+            description: default=true
+          popId:
+            type: string
+            description: pop id
+          localCpeType:
+            type: string
+            description: local cpe type
+          siteDescriptor:
+            type: string
+            description: site Descriptor
+          reliability:
+            type: string
+            description: (scope:singleFixedNetwork,dualFixedNetwork,fixedAndWirelessNetwork,EthernetNetwork,VDSLNetwork,GSHDSLNetwork,EthernetAndLTENetwork,EthernetAndEthernetNetwork,EthernetAndVDSLNetwork,VDSLAndLTENetwork)
+          isEncrypt:
+            type: string
+            description: is encrypt
+          vpnUpstreamBandwidth:
+            type: integer
+            format: int64
+            description: vpn Upstream Bandwidth default=-2L
+          vpnDownstreamBandwidth:
+            type: integer
+            format: int64
+            description: vpn Downstream Bandwidth default=-2L
+          totalDownstreamBandwidth:
+            type: string
+            description: total Downstream Bandwidth
+          totalUpstreamBandwidth:
+            type: string
+            description: total Upstream Bandwidth
+          createtime:
+            type: integer
+            format: int64
+            description: create time
+          updatetime:
+            type: integer
+            format: int64
+            description: update time
+          localCpes:
+            type: array
+            items:
+              $ref: "#/definitions/NbiNeMo"
+          cloudCpes:
+            type: array
+            items:
+              $ref: "#/definitions/NbiNeMo"
+          subnets:
+            type: array
+            items:
+              $ref: "#/definitions/NbiSubnetModel"
+          vlans:
+            type: array
+            items:
+              $ref: "#/definitions/NbiVlanModel"
+          routes:
+            type: array
+            items:
+              $ref: "#/definitions/NbiRouteEntryModel"
+          internetGateway:
+            type: array
+            items:
+              $ref: "#/definitions/NbiInternetGatewayModel"
+  NbiInternetGatewayModel:
+    allOf:
+      - $ref: '#/definitions/BaseServiceModel'
+      - type: object
+        required:
+          - siteId
+        properties:
+          siteId:
+            type: string
+            description: site id
+          protectionType:
+            type: string
+            description: not support now
+          enableSnat:
+            type: string
+            description: default:true
+          upstreamBandwidth:
+            type: string
+            description: up stream Bandwidth
+          downstreamBandwidth:
+            type: string
+            description: down stream Bandwidth
+          vpnId:
+            type: string
+            description: vpn id
+          publicIp:
+            type: string
+            description: public ip
+          deployPosition:
+            type: string
+            description: (scope=localFirst, cloudFirst)
+          sourceSubnets:
+            type: array
+            items:
+              type: string
+            description: port name list
+          createtime:
+            type: integer
+            format: int64
+            description: create time
+          updatetime:
+            type: integer
+            format: int64
+            description: update time
