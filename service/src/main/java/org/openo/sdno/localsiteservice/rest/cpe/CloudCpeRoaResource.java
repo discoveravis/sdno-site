@@ -180,6 +180,7 @@ public class CloudCpeRoaResource {
      * @param request HttpServletRequest Object
      * @param response HttpServletResponse Object
      * @param cloudCpeUuid CloudCpe Uuid
+     * @return Uuid of NbiCloudCpeModel deleted
      * @throws ServiceException when delete failed
      * @since SDNO 0.5
      */
@@ -187,7 +188,7 @@ public class CloudCpeRoaResource {
     @Path("/{uuid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void delete(@Context HttpServletRequest request, @Context HttpServletResponse response,
+    public String delete(@Context HttpServletRequest request, @Context HttpServletResponse response,
             @PathParam("uuid") String cloudCpeUuid) throws ServiceException {
 
         long beginTime = System.currentTimeMillis();
@@ -205,13 +206,15 @@ public class CloudCpeRoaResource {
         // Check Existence
         if(!queryResultRsp.isValid()) {
             LOGGER.debug("Current  CloudCpeModel do not exist");
-            return;
+            return null;
         }
 
         // Delete CloudCpe
         service.delete(request, cloudCpeUuid);
 
         LOGGER.debug("Exit delete method cost time:" + (System.currentTimeMillis() - beginTime));
+
+        return cloudCpeUuid;
     }
 
 }

@@ -33,7 +33,6 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import org.openo.baseservice.remoteservice.exception.ServiceException;
-import org.openo.sdno.framework.container.util.JsonUtil;
 import org.openo.sdno.localsiteservice.checker.SubnetModelChecker;
 import org.openo.sdno.localsiteservice.inf.site.SubnetService;
 import org.openo.sdno.overlayvpn.consts.HttpCode;
@@ -142,7 +141,7 @@ public class SubnetRoaResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String, Object> create(@Context HttpServletRequest request, @Context HttpServletResponse response,
+    public Map<String, String> create(@Context HttpServletRequest request, @Context HttpServletResponse response,
             NbiSubnetModel subnetModel) throws ServiceException {
 
         long beginTime = System.currentTimeMillis();
@@ -158,9 +157,8 @@ public class SubnetRoaResource {
             throw new ServiceException("SubnetModel create failed");
         }
 
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+        Map<String, String> resultMap = new HashMap<String, String>();
         resultMap.put("id", resultRsp.getData().getUuid());
-        resultMap.put("properties", JsonUtil.fromJson(JsonUtil.toJson(resultRsp.getData()), Map.class));
 
         response.setStatus(HttpCode.CREATE_OK);
 

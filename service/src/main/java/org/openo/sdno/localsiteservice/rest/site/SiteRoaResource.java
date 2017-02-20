@@ -185,6 +185,7 @@ public class SiteRoaResource {
      * @param request HttpServletRequest Object
      * @param response HttpServletResponse Object
      * @param siteUuid Uuid of Site which need to delete
+     * @return SiteModel deleted
      * @throws ServiceException when delete failed
      * @since SDNO 0.5
      */
@@ -192,7 +193,7 @@ public class SiteRoaResource {
     @Path("/{uuid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void delete(@Context HttpServletRequest request, @Context HttpServletResponse response,
+    public NbiSiteModel delete(@Context HttpServletRequest request, @Context HttpServletResponse response,
             @PathParam("uuid") String siteUuid) throws ServiceException {
 
         long beginTime = System.currentTimeMillis();
@@ -209,7 +210,7 @@ public class SiteRoaResource {
 
         // Check Existence
         if(!queryResultRsp.isValid()) {
-            return;
+            return null;
         }
 
         // Check Resource Dependency
@@ -222,6 +223,8 @@ public class SiteRoaResource {
         service.delete(request, siteUuid);
 
         LOGGER.debug("Exit delete method cost time:" + (System.currentTimeMillis() - beginTime));
+
+        return queryResultRsp.getData();
     }
 
     /**
@@ -273,7 +276,6 @@ public class SiteRoaResource {
 
         Map<String, Object> resultMap = new HashMap<String, Object>();
         resultMap.put("id", updatedModel.getUuid());
-        resultMap.put("properties", JsonUtil.fromJson(JsonUtil.toJson(updatedModel), Map.class));
 
         LOGGER.debug("Exit update method cost time:" + (System.currentTimeMillis() - beginTime));
 

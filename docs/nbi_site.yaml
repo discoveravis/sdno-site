@@ -34,8 +34,8 @@ paths:
       tags:
       - SiteRoaResource
       operationId: batchQuerySites
-      summary: batch query  sites
-      description: batch query  sites
+      summary: batch query sites
+      description: batch query sites
       parameters:
         - name: uuids
           in: query
@@ -43,10 +43,10 @@ paths:
           required: true
           type: string
       responses:
-        201:
+        200:
           description: OK
           schema:
-            $ref: '#/definitions/NbiSiteModelRsp'
+            $ref: '#/definitions/NbiSiteModelComplexRsp'
         400:
           description: Bad Request
         401:
@@ -72,7 +72,7 @@ paths:
         201:
           description: OK
           schema:
-            $ref: '#/definitions/NbiSiteModelRsp'
+            $ref: '#/definitions/NbiModelCreateRsp'
         400:
           description: Bad Request
         401:
@@ -96,7 +96,7 @@ paths:
           type: string
           required: true
       responses:
-        201:
+        200:
           description: OK
           schema:
             $ref: '#/definitions/NbiSiteModel'
@@ -121,7 +121,7 @@ paths:
           type: string
           required: true
       responses:
-        201:
+        200:
           description: OK
           schema:
             $ref: '#/definitions/NbiSiteModel'
@@ -146,10 +146,10 @@ paths:
           type: string
           required: true
       responses:
-        201:
+        200:
           description: OK
           schema:
-            $ref: '#/definitions/NbiSiteModel'
+            $ref: '#/definitions/NbiSiteModelUpdateRsp'
         400:
           description: Bad Request
         401:
@@ -158,6 +158,7 @@ paths:
           description: Not Found
         500:
           description: Internal Server Error
+
   /internet-gateways:
     get:
       tags:
@@ -192,10 +193,10 @@ paths:
           required: true
           type: string
       responses:
-        201:
+        200:
           description: OK
           schema:
-            $ref: '#/definitions/NbiInternetGatewayModelRsp'
+            $ref: '#/definitions/NbiInternetGatewayModelComplexRsp'
         400:
           description: Bad Request
         401:
@@ -221,7 +222,7 @@ paths:
         201:
           description: OK
           schema:
-            $ref: '#/definitions/NbiInternetGatewayModelRsp'
+            $ref: '#/definitions/NbiModelCreateRsp'
         400:
           description: Bad Request
         401:
@@ -244,7 +245,7 @@ paths:
           type: string
           required: true
       responses:
-        201:
+        200:
           description: OK
           schema:
             $ref: '#/definitions/NbiInternetGatewayModel'
@@ -269,10 +270,8 @@ paths:
           type: string
           required: true
       responses:
-        201:
+        204:
           description: OK
-          schema:
-            $ref: '#/definitions/NbiInternetGatewayModel'
         400:
           description: Bad Request
         401:
@@ -294,7 +293,7 @@ paths:
           type: string
           required: true
       responses:
-        201:
+        200:
           description: OK
           schema:
             $ref: '#/definitions/NbiInternetGatewayModel'
@@ -336,10 +335,12 @@ paths:
           required: true
           type: string
       responses:
-        201:
+        200:
           description: OK
           schema:
-            $ref: '#/definitions/NbiNeMo'
+            type: array
+            items:
+              $ref: '#/definitions/NbiNeMo'
         400:
           description: Bad Request
         401:
@@ -365,7 +366,7 @@ paths:
         201:
           description: OK
           schema:
-            $ref: '#/definitions/NbiLocalCpeModelRsp'
+            $ref: '#/definitions/NbiModelCreateRsp'
         400:
           description: Bad Request
         401:
@@ -413,10 +414,8 @@ paths:
           type: string
           required: true
       responses:
-        201:
+        204:
           description: OK
-          schema:
-            $ref: '#/definitions/NbiLocalCpeModel'
         400:
           description: Bad Request
         401:
@@ -449,10 +448,12 @@ paths:
           required: true
           type: string
       responses:
-        201:
+        200:
           description: OK
           schema:
-            $ref: '#/definitions/NbiCloudCpeModelRsp'
+            type: array
+            items: 
+              $ref: '#/definitions/NbiCloudCpeModel'
         400:
           description: Bad Request
         401:
@@ -478,7 +479,7 @@ paths:
         201:
           description: OK
           schema:
-            $ref: '#/definitions/NbiCloudCpeModelRsp'
+            $ref: '#/definitions/NbiModelCreateRsp'
         400:
           description: Bad Request
         401:
@@ -501,7 +502,7 @@ paths:
           type: string
           required: true
       responses:
-        201:
+        200:
           description: OK
           schema:
             $ref: '#/definitions/NbiCloudCpeModel'
@@ -526,10 +527,10 @@ paths:
           type: string
           required: true
       responses:
-        201:
+        200:
           description: OK
           schema:
-            $ref: '#/definitions/NbiCloudCpeModel'
+            type: string
         400:
           description: Bad Request
         401:
@@ -538,31 +539,7 @@ paths:
           description: Not Found
         500:
           description: Internal Server Error
-    put:
-      tags:
-      - CloudCpeRoaResource
-      operationId: updateCloudCpe
-      summary: update  cloudcpes
-      description: update  cloudcpes
-      parameters:
-        - name: uuid
-          in: path
-          description: uuid of cloudcpe to update
-          type: string
-          required: true
-      responses:
-        201:
-          description: OK
-          schema:
-            $ref: '#/definitions/NbiCloudCpeModel'
-        400:
-          description: Bad Request
-        401:
-          description: Unauthorized
-        404:
-          description: Not Found
-        500:
-          description: Internal Server Error
+
   /subnets:
     get:
       tags:
@@ -573,7 +550,7 @@ paths:
       parameters:
         - name: name
           in: query
-          description: name
+          description: subnet name
           required: true
           type: string
         - name: tenantId
@@ -597,10 +574,10 @@ paths:
           required: true
           type: string
       responses:
-        201:
+        200:
           description: OK
           schema:
-            $ref: '#/definitions/NbiSubnetModelRsp'
+            $ref: '#/definitions/NbiSubnetModelComplexRsp'
         400:
           description: Bad Request
         401:
@@ -626,7 +603,7 @@ paths:
         201:
           description: OK
           schema:
-            $ref: '#/definitions/NbiSubnetModelRsp'
+            $ref: '#/definitions/NbiModelCreateRsp'
         400:
           description: Bad Request
         401:
@@ -649,7 +626,7 @@ paths:
           type: string
           required: true
       responses:
-        201:
+        200:
           description: OK
           schema:
             $ref: '#/definitions/NbiSubnetModel'
@@ -674,10 +651,8 @@ paths:
           type: string
           required: true
       responses:
-        201:
+        204:
           description: OK
-          schema:
-            $ref: '#/definitions/NbiSubnetModel'
         400:
           description: Bad Request
         401:
@@ -699,7 +674,7 @@ paths:
           type: string
           required: true
       responses:
-        201:
+        200:
           description: OK
           schema:
             $ref: '#/definitions/NbiSubnetModel'
@@ -711,6 +686,7 @@ paths:
           description: Not Found
         500:
           description: Internal Server Error
+
   /vlans:
     get:
       tags:
@@ -745,10 +721,10 @@ paths:
           required: true
           type: string
       responses:
-        201:
+        200:
           description: OK
           schema:
-            $ref: '#/definitions/NbiVlanModelRsp'
+            $ref: '#/definitions/NbiVlanModelComplexRsp'
         400:
           description: Bad Request
         401:
@@ -774,7 +750,7 @@ paths:
         201:
           description: OK
           schema:
-            $ref: '#/definitions/NbiVlanModelRsp'
+            $ref: '#/definitions/NbiModelCreateRsp'
         400:
           description: Bad Request
         401:
@@ -797,7 +773,7 @@ paths:
           type: string
           required: true
       responses:
-        201:
+        200:
           description: OK
           schema:
             $ref: '#/definitions/NbiVlanModel'
@@ -822,10 +798,10 @@ paths:
           type: string
           required: true
       responses:
-        201:
+        200:
           description: OK
           schema:
-            $ref: '#/definitions/NbiVlanModelRsp'
+            $ref: '#/definitions/NbiModelCreateRsp'
         400:
           description: Bad Request
         401:
@@ -847,10 +823,10 @@ paths:
           type: string
           required: true
       responses:
-        201:
+        200:
           description: OK
           schema:
-            $ref: '#/definitions/NbiVlanModelRsp'
+            $ref: '#/definitions/NbiVlanModel'
         400:
           description: Bad Request
         401:
@@ -926,104 +902,46 @@ definitions:
           createTime:
             type: string
             description: create time
-  ErrorCodeInfo:
-    type: object
-    description: Error code information model
-    required:
-      - errorCode
-      - description
-      - objectId
-      - objectName
-      - object
-      - descArg
-      - reasonArg
-      - detailArg
-    properties:
-      errorCode:
-        type: string
-        description: error code
-      description:
-        type: string
-        description: error description
-      objectId:
-        type: string
-        description: object Id
-      objectName:
-        type: string
-        description: object Name
-      object:
-        type: object
-        description: object
-      descArg:
-        type: string
-        description: The description args
-      reasonArg:
-        type: string
-        description: The reason args
-      detailArg:
-        type: string
-        description: The detail args
-  ResultResponse:
-    type: object
-    description: Result response model
-    required:
-      - errorCode
-      - httpCode
-    properties:
-      errorCode:
-        type: string
-        description: result error code
-      descArg:
-        type: string
-        description: The description args
-      reasonArg:
-        type: string
-        description: The reason args
-      detailArg:
-        type: string
-        description: The detail args
-      adviceArg:
-        type: string
-        description: The advice args
-      httpCode:
-        type: integer
-        description: The http status code
-      message:
-        type: string
-        description: the exception message word
-      smallErrorCodeList:
-        $ref: "#/definitions/ErrorCodeInfo"
 
-  FailDataNbiVlanModel:
+  NbiModelCreateRsp:
     type: object
-    description: Fail data model
+    description: create result response
     properties:
-      errcode:
+      id:
         type: string
-        description: result error code
-      errmsg:
-        type: string
-        description: error message
+        description: Uuid of Nbi Model created
+
+  ComplexResultResponse:
+    type: object
+    description: Complex Result Response, batch query result
+    required:
+      - total
+    properties:
+      total:
+        type: integer
+        format: int64
+        description: count of result data
+      curIndex:
+        type: integer
+        format: int32
+        description: current data index
+      pageCapacity:
+        type: integer
+        format: int32
+        description: page capacity
+
+  NbiVlanModelComplexRsp:
+   description: NbiVlanModel complex result response
+   allOf:
+   - $ref: '#/definitions/ComplexResultResponse'
+   - type: object
+     properties:
       data:
-        $ref: "#/definitions/NbiVlanModel"
-  NbiVlanModelRsp:
-    description: NbiVlanModel result model
-    allOf:
-      - $ref: '#/definitions/ResultResponse'
-      - type: object
-        properties:
-          data:
-            $ref: "#/definitions/NbiVlanModel"
-          successed:
-            type: array
-            items:
-              $ref: "#/definitions/NbiVlanModel"
-            description: the successed list.
-          fail:
-            type: array
-            items:
-              $ref: "#/definitions/FailDataNbiVlanModel"
-            description: the failed list.
+        type: array
+        items:
+          $ref: "#/definitions/NbiVlanModel"
+        description: List of NbiVlanModel returned
+
   NbiVlanModel:
     allOf:
       - $ref: '#/definitions/BaseServiceModel'
@@ -1055,37 +973,17 @@ definitions:
             format: int64
             description: update time
 
-  FailDataNbiSubnetModel:
-    type: object
-    description: Fail data model
-    properties:
-      errcode:
-        type: string
-        description: result error code
-      errmsg:
-        type: string
-        description: error message
+  NbiSubnetModelComplexRsp:
+   description: NbiSubnetModel complex result response
+   allOf:
+   - $ref: '#/definitions/ComplexResultResponse'
+   - type: object
+     properties:
       data:
-        $ref: "#/definitions/NbiSubnetModel"
-
-  NbiSubnetModelRsp:
-    description: NbiSubnetModel result model
-    allOf:
-      - $ref: '#/definitions/ResultResponse'
-      - type: object
-        properties:
-          data:
-            $ref: "#/definitions/NbiSubnetModel"
-          successed:
-            type: array
-            items:
-              $ref: "#/definitions/NbiSubnetModel"
-            description: the successed list.
-          fail:
-            type: array
-            items:
-              $ref: "#/definitions/FailDataNbiSubnetModel"
-            description: the failed list.
+        type: array
+        items:
+          $ref: "#/definitions/NbiSubnetModel"
+        description: List of NbiSubnetModel returned
 
   NbiSubnetModel:
     allOf:
@@ -1146,37 +1044,6 @@ definitions:
             type: string
             description: update time
 
-  FailDataNbiCloudCpeModel:
-    type: object
-    description: Fail data model
-    properties:
-      errcode:
-        type: string
-        description: result error code
-      errmsg:
-        type: string
-        description: error message
-      data:
-        $ref: "#/definitions/NbiCloudCpeModel"
-
-  NbiCloudCpeModelRsp:
-    description: NbiCloudCpeModel result model
-    allOf:
-      - $ref: '#/definitions/ResultResponse'
-      - type: object
-        properties:
-          data:
-            $ref: "#/definitions/NbiCloudCpeModel"
-          successed:
-            type: array
-            items:
-              $ref: "#/definitions/NbiCloudCpeModel"
-            description: the successed list.
-          fail:
-            type: array
-            items:
-              $ref: "#/definitions/FailDataNbiCloudCpeModel"
-            description: the failed list.
 
   NbiCloudCpeModel:
     allOf:
@@ -1270,37 +1137,6 @@ definitions:
             items:
               $ref: '#/definitions/NvString'
             description: additional info
-
-  FailDataNbiLocalCpeModel:
-    type: object
-    description: Fail data model
-    properties:
-      errcode:
-        type: string
-        description: result error code
-      errmsg:
-        type: string
-        description: error message
-      data:
-        $ref: "#/definitions/NbiLocalCpeModel"
-  NbiLocalCpeModelRsp:
-    description: NbiLocalCpeModel result model
-    allOf:
-    - $ref: '#/definitions/ResultResponse'
-    - type: object
-      properties:
-        data:
-          $ref: "#/definitions/NbiLocalCpeModel"
-        successed:
-          type: array
-          items:
-            $ref: "#/definitions/NbiLocalCpeModel"
-          description: the successed list.
-        fail:
-          type: array
-          items:
-            $ref: "#/definitions/FailDataNbiLocalCpeModel"
-          description: the failed list.
 
   NbiLocalCpeModel:
     allOf:
@@ -1426,37 +1262,17 @@ definitions:
               $ref: '#/definitions/NvString'
             description: additional info
 
-  FailDataNbiInternetGatewayModel:
-    type: object
-    description: Fail data model
-    properties:
-      errcode:
-        type: string
-        description: result error code
-      errmsg:
-        type: string
-        description: error message
-      data:
-        $ref: "#/definitions/NbiInternetGatewayModel"
-
-  NbiInternetGatewayModelRsp:
-    description: NbiInternetGatewayModel result model
-    allOf:
-    - $ref: '#/definitions/ResultResponse'
-    - type: object
-      properties:
+  NbiInternetGatewayModelComplexRsp:
+     description: NbiInternetGatewayModel complex result response
+     allOf:
+     - $ref: '#/definitions/ComplexResultResponse'
+     - type: object
+       properties:
         data:
-          $ref: "#/definitions/NbiInternetGatewayModel"
-        successed:
           type: array
           items:
             $ref: "#/definitions/NbiInternetGatewayModel"
-          description: the successed list.
-        fail:
-          type: array
-          items:
-            $ref: "#/definitions/FailDataNbiInternetGatewayModel"
-          description: the failed list.
+          description: List of NbiInternetGatewayModel returned
 
   NbiRouteEntryModel:
     allOf:
@@ -1490,37 +1306,27 @@ definitions:
             type: string
             description: only support static-routing for now
 
-  FailDataNbiSiteModel:
+  NbiSiteModelUpdateRsp:
+    description: NbiSiteModel update result response
     type: object
-    description: Fail data model
     properties:
-      errcode:
+      id:
         type: string
-        description: result error code
-      errmsg:
-        type: string
-        description: error message
-      data:
+        description: Uuid of NbiSiteModel updated
+      properties:
         $ref: "#/definitions/NbiSiteModel"
 
-  NbiSiteModelRsp:
-    description: NbiSiteModel result model
-    allOf:
-    - $ref: '#/definitions/ResultResponse'
-    - type: object
-      properties:
+  NbiSiteModelComplexRsp:
+     description: NbiSiteModel complex result response
+     allOf:
+     - $ref: '#/definitions/ComplexResultResponse'
+     - type: object
+       properties:
         data:
-          $ref: "#/definitions/NbiSiteModel"
-        successed:
           type: array
           items:
             $ref: "#/definitions/NbiSiteModel"
-          description: the successed list.
-        fail:
-          type: array
-          items:
-            $ref: "#/definitions/FailDataNbiSiteModel"
-          description: the failed list.
+          description: List of NbiSiteModel returned
 
   NbiSiteModel:
     allOf:

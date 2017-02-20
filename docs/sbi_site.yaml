@@ -57,9 +57,7 @@ paths:
         201:
           description: OK
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/SbiIfVlanResultRsp'
+            $ref: '#/definitions/SbiIfVlanResultRsp'
         400:
           description: Bad Request
         401:
@@ -92,12 +90,10 @@ paths:
             items:
               $ref: '#/definitions/SbiIfVlan'
       responses:
-        201:
+        200:
           description: OK
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/SbiIfVlanResultRsp'
+            $ref: '#/definitions/SbiIfVlanResultRsp'
         400:
           description: Bad Request
         401:
@@ -106,7 +102,6 @@ paths:
           description: Not Found
         500:
           description: Internal Server Error
-
   /device/{deviceuuid}/vlan/{ids}:
     get:
       summary: query interface vlan
@@ -129,12 +124,10 @@ paths:
           required: true
           type: string
       responses:
-        201:
+        200:
           description: OK
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/SbiIfVlanResultRsp'
+            $ref: '#/definitions/SbiIfVlanResultRsp'
         400:
           description: Bad Request
         401:
@@ -201,7 +194,7 @@ paths:
           schema:
             $ref: '#/definitions/SbiSubnetNetModel'
       responses:
-        201:
+        200:
           description: OK
           schema:
             $ref: '#/definitions/SbiSubnetNetModelResultRsp'
@@ -213,7 +206,6 @@ paths:
           description: Not Found
         500:
           description: Internal Server Error
-
   /device/{deviceuuid}/subnet/{networkid}:
     delete:
       summary: delete subnet
@@ -236,7 +228,7 @@ paths:
           required: true
           type: string
       responses:
-        201:
+        200:
           description: OK
           schema:
             $ref: '#/definitions/SbiSubnetNetModelResultRsp'
@@ -269,7 +261,7 @@ paths:
           required: true
           type: string
       responses:
-        201:
+        200:
           description: OK
           schema:
             $ref: '#/definitions/SbiSubnetNetModelResultRsp'
@@ -300,14 +292,14 @@ paths:
           type: string
         - name: vni
           in: path
-          description: vni
+          description: vxlan network identifier
           required: true
           type: string
       responses:
-        201:
+        200:
           description: OK
           schema:
-            $ref: '#/definitions/SbiSubnetBdInfoModel'
+            $ref: '#/definitions/SbiSubnetBdInfoModelResultRsp'
         400:
           description: Bad Request
         401:
@@ -374,7 +366,7 @@ paths:
           schema:
             $ref: '#/definitions/SbiSnatNetModel'
       responses:
-        201:
+        200:
           description: OK
           schema:
             $ref: '#/definitions/SbiSnatNetModelResultRsp'
@@ -386,7 +378,6 @@ paths:
           description: Not Found
         500:
           description: Internal Server Error
-
   /device/{deviceuuid}/snat/{natid}/acl/{aclid}:
     delete:
       summary: delete snat
@@ -414,7 +405,7 @@ paths:
           required: true
           type: string
       responses:
-        201:
+        200:
           description: OK
           schema:
             $ref: '#/definitions/StringResultRsp'
@@ -452,7 +443,7 @@ paths:
           required: true
           type: string
       responses:
-        201:
+        200:
           description: OK
           schema:
             $ref: '#/definitions/StringResultRsp'
@@ -490,7 +481,7 @@ paths:
             items:
               $ref: '#/definitions/SbiInterfaceIpConfig'
       responses:
-        201:
+        200:
           description: OK
           schema:
             $ref: '#/definitions/SbiInterfaceIpConfigResultRsp'
@@ -505,7 +496,7 @@ paths:
 
   /devices:
     get:
-      summary: query CPE info
+      summary: query Cpe info
       description: query CPE info
       operationId: queryCpes
       parameters:
@@ -514,11 +505,16 @@ paths:
           description: additional driver-related parameters, current format is "extSysId={ctrlUuid}",and drivermgr will find out driver instance by controller 
           required: true
           type: string
+        - name: esn
+          in: query
+          description: Esn of cpe device
+          required: true
+          type: string
       responses:
-        201:
+        200:
           description: OK
           schema:
-            $ref: '#/definitions/SbiDeviceInfoResultRsp'
+            $ref: '#/definitions/SbiDeviceInfoListResultRsp'
         400:
           description: Bad Request
         401:
@@ -570,13 +566,13 @@ paths:
           type: string
         - name: deviceIds
           in: query
-          description: device Id list
+          description: device id list
           required: true
           type: array
           items:
             type: string
       responses:
-        201:
+        200:
           description: OK
           schema:
             $ref: '#/definitions/StringResultRsp'
@@ -591,8 +587,8 @@ paths:
 
   /devices/{deviceuuid}:
     put:
-      summary: update CPE info
-      description: update CPE info
+      summary: update Cpe info
+      description: update Cpe info
       parameters:
         - name: X-Driver-Parameter
           in: header
@@ -611,7 +607,7 @@ paths:
           schema:
             $ref: '#/definitions/SbiDeviceInfo'
       responses:
-        201:
+        200:
           description: OK
           schema:
             $ref: '#/definitions/StringResultRsp'
@@ -779,6 +775,44 @@ definitions:
         type: string
         description: The interface name of broadcast domain
 
+  SbiSubnetBdInfoModelResultRsp:
+    description: SbiSubnetBdInfoModel result response model
+    allOf:
+      - $ref: '#/definitions/ResultResponse'
+      - type: object
+        properties:
+          data:
+            type: array
+            items:
+              $ref: "#/definitions/SbiSubnetBdInfoModel"
+          successed:
+            type: array
+            items:
+              type: array
+              items:
+                $ref: "#/definitions/SbiSubnetBdInfoModel"
+            description: the successed list.
+          fail:
+            type: array
+            items:
+              $ref: "#/definitions/SbiSubnetBdInfoFailData"
+            description: the failed list.
+
+  SbiSubnetBdInfoFailData:
+    type: object
+    description: fail data model
+    properties:
+      errorCode:
+        type: string
+        description: result error code
+      message:
+        type: string
+        description: the error message word
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/SbiSubnetBdInfoModel"
+
   SbiSnatNetModel:
     allOf:
       - $ref: '#/definitions/BaseServiceModel'
@@ -845,6 +879,11 @@ definitions:
             type: string
             description: the scope is none,create,updateIp
 
+  SbiInterfaceIpConfigList:
+    type: array
+    items:
+      $ref: "#/definitions/SbiInterfaceIpConfig"
+
   SbiInterfaceIpConfig:
     type: object
     required:
@@ -880,6 +919,7 @@ definitions:
       id:
         type: string
         description: the UUID of the model
+
   ModelBase:
     allOf:
       - $ref: '#/definitions/UuidModel'
@@ -898,6 +938,7 @@ definitions:
             type: array
             items:
               $ref: '#/definitions/NvString'
+
   BaseServiceModel:
     allOf:
       - $ref: '#/definitions/ModelBase'
@@ -918,6 +959,7 @@ definitions:
           createTime:
             type: string
             description: create time
+
   SbiDeviceCreateBasicInfo:
     allOf:
       - $ref: '#/definitions/UuidModel'
@@ -937,6 +979,13 @@ definitions:
           description:
             type: string
             description: description info
+
+  SbiDeviceInfoList:
+    description : List of SbiDeviceInfo
+    type: array
+    items:
+      $ref: "#/definitions/SbiDeviceInfo"
+
   SbiDeviceInfo:
     allOf:
       - $ref: '#/definitions/SbiDeviceCreateBasicInfo'
@@ -1022,7 +1071,10 @@ definitions:
         type: string
         description: the exception message word
       smallErrorCodeList:
-        $ref: "#/definitions/ErrorCodeInfo"               
+        type: array
+        items:
+          $ref: "#/definitions/ErrorCodeInfo"
+
   SbiIfVlanResultRsp:
     description: String result model
     allOf:
@@ -1030,21 +1082,26 @@ definitions:
       - type: object
         properties:
           data:
-            type: array
-            items:
-              $ref: "#/definitions/SbiIfVlan"
+              $ref: "#/definitions/SbiIfVlanList"
           successed:
             type: array
             items:
               type: array
               items:
-                $ref: "#/definitions/SbiIfVlan"
+                $ref: "#/definitions/SbiIfVlanList"
             description: the successed list.
           fail:
             type: array
             items:
               $ref: "#/definitions/SbiIfVlanFailData"
             description: the failed list.
+
+  SbiIfVlanList:
+    description : List of SbiIfVlan
+    type: array
+    items:
+      $ref: "#/definitions/SbiIfVlan"
+
   SbiIfVlanFailData:
     type: object
     description: fail data model
@@ -1056,9 +1113,7 @@ definitions:
         type: string
         description: the error message word
       data:
-        type: array
-        items:
-          $ref: "#/definitions/SbiIfVlan"
+        $ref: "#/definitions/SbiIfVlanList"
 
   SbiInterfaceIpConfigResultRsp:
     description: String result model
@@ -1067,21 +1122,20 @@ definitions:
       - type: object
         properties:
           data:
-            type: array
-            items:
-              $ref: "#/definitions/SbiInterfaceIpConfig"
+            $ref: "#/definitions/SbiInterfaceIpConfigList"
           successed:
             type: array
             items:
               type: array
               items:
-                $ref: "#/definitions/SbiInterfaceIpConfig"
+                $ref: "#/definitions/SbiInterfaceIpConfigList"
             description: the successed list.
           fail:
             type: array
             items:
               $ref: "#/definitions/SbiInterfaceIpConfigFailData"
             description: the failed list.
+
   SbiInterfaceIpConfigFailData:
     type: object
     description: fail data model
@@ -1093,9 +1147,28 @@ definitions:
         type: string
         description: the error message word
       data:
-        type: array
-        items:
-          $ref: "#/definitions/SbiInterfaceIpConfig"
+        $ref: "#/definitions/SbiInterfaceIpConfigList"
+
+  SbiDeviceInfoListResultRsp:
+    description: String result model
+    allOf:
+      - $ref: '#/definitions/ResultResponse'
+      - type: object
+        properties:
+          data:
+              $ref: "#/definitions/SbiDeviceInfoList"
+          successed:
+            type: array
+            items:
+              type: array
+              items:
+                $ref: "#/definitions/SbiDeviceInfoList"
+            description: the successed list.
+          fail:
+            type: array
+            items:
+              $ref: "#/definitions/SbiDeviceInfoFailData"
+            description: the failed list.
 
   SbiDeviceInfoResultRsp:
     description: String result model
@@ -1119,6 +1192,7 @@ definitions:
             items:
               $ref: "#/definitions/SbiDeviceInfoFailData"
             description: the failed list.
+
   SbiDeviceInfoFailData:
     type: object
     description: fail data model
@@ -1133,6 +1207,21 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/SbiDeviceInfo"
+
+  SbiDeviceInfoListFailData:
+    type: object
+    description: fail data model
+    properties:
+      errorCode:
+        type: string
+        description: result error code
+      message:
+        type: string
+        description: the error message word
+      data:
+        type: array
+        items:
+          $ref: "#/definitions/SbiDeviceInfoList"
 
   SbiSubnetNetModelResultRsp:
     description: String result model
@@ -1152,6 +1241,7 @@ definitions:
             items:
               $ref: "#/definitions/SbiSubnetNetModelFailData"
             description: the failed list.
+
   SbiSubnetNetModelFailData:
     type: object
     description: fail data model
@@ -1183,6 +1273,7 @@ definitions:
             items:
               $ref: "#/definitions/SbiSnatNetModelFailData"
             description: the failed list.
+
   SbiSnatNetModelFailData:
     type: object
     description: fail data model
@@ -1215,6 +1306,7 @@ definitions:
             items:
               $ref: '#/definitions/StringFailData'
             description: the failed list.
+
   StringFailData:
     type: object
     description: fail data model
@@ -1227,6 +1319,7 @@ definitions:
         description: the error message word
       data:
         type: string
+
   ErrorCodeInfo:
     type: object
     description: Error code information model

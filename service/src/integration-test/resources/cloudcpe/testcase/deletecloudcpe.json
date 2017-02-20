@@ -7,6 +7,6 @@
 		}
 	},
 	"response": {
-		"status": 204
+		"status": 200
 	}
 }

@@ -48,30 +48,30 @@ public class VlanSbiService {
 
     private static final String VLAN_BASE_URL = "/openoapi/sbi-localsite/v1/device/{0}/vlan";
 
-    private static final String VLAN_OPERATION_URL = "/openoapi/sbi-localsite/v1/device/{0}/vlan";
+    private static final String VLAN_QUERY_URL = "/openoapi/sbi-localsite/v1/device/{0}/vlan/{1}";
 
     /**
      * Query Interface Vlan.<br>
      * 
      * @param ctrlUuid Controller Uuid
      * @param deviceId Device Id
-     * @param PortId Port Id
+     * @param portId Port Id
      * @return IfVlan List queried
      * @throws ServiceException when query failed
      * @since SDNO 0.5
      */
-    public ResultRsp<List<SbiIfVlan>> query(String ctrlUuid, String deviceId, String PortId) throws ServiceException {
+    public ResultRsp<List<SbiIfVlan>> query(String ctrlUuid, String deviceId, String portId) throws ServiceException {
         if(StringUtils.isBlank(ctrlUuid) || StringUtils.isBlank(deviceId)) {
             LOGGER.error("Controller Uuid or Device Uuid is invalid");
             return new ResultRsp<List<SbiIfVlan>>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
-        if(StringUtils.isBlank(PortId)) {
-            LOGGER.error("Port Id is invalid");
+        if(StringUtils.isBlank(portId)) {
+            LOGGER.error("portId is invalid");
             return new ResultRsp<List<SbiIfVlan>>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
-        String queryUrl = MessageFormat.format(VLAN_OPERATION_URL, deviceId, PortId);
+        String queryUrl = MessageFormat.format(VLAN_QUERY_URL, deviceId, portId);
 
         RestfulParametes restfulParameters = new RestfulParametes();
         RestfulParameterUtil.setContentType(restfulParameters);
@@ -135,7 +135,7 @@ public class VlanSbiService {
             return new ResultRsp<List<SbiIfVlan>>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
-        String updateUrl = MessageFormat.format(VLAN_OPERATION_URL, deviceId);
+        String updateUrl = MessageFormat.format(VLAN_BASE_URL, deviceId);
 
         RestfulParametes restfulParameters = new RestfulParametes();
         RestfulParameterUtil.setContentType(restfulParameters);
