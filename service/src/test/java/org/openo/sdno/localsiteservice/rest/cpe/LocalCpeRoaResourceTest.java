@@ -87,6 +87,27 @@ public class LocalCpeRoaResourceTest extends SpringTest {
     }
 
     @Test
+    public void batchQueryPageSizeZeroTest() throws ServiceException {
+        List<NetworkElementMO> localCpeMOList = localCpeRoaResource.batchQuery("siteId", "cpeType", 0, 0);
+        assertTrue(1 == localCpeMOList.size());
+        assertTrue("neName".equals(localCpeMOList.get(0).getName()));
+    }
+
+    @Test
+    public void batchQuerySiteIdNullTest() throws ServiceException {
+        List<NetworkElementMO> localCpeMOList = localCpeRoaResource.batchQuery(null, "cpeType", 12, 13);
+        assertTrue(1 == localCpeMOList.size());
+        assertTrue("neName".equals(localCpeMOList.get(0).getName()));
+    }
+
+    @Test
+    public void batchQueryCpeTypeNullTest() throws ServiceException {
+        List<NetworkElementMO> localCpeMOList = localCpeRoaResource.batchQuery("siteId", null, 12, 13);
+        assertTrue(1 == localCpeMOList.size());
+        assertTrue("neName".equals(localCpeMOList.get(0).getName()));
+    }
+
+    @Test
     public void createTest() throws ServiceException {
         new MockUp<NbiSiteModel>() {
 

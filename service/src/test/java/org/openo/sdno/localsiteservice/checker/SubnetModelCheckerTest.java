@@ -83,6 +83,15 @@ public class SubnetModelCheckerTest extends SpringTest {
         }
     }
 
+    public final class MockNotExistInventoryDao extends MockUp<ModelDataDao<NbiSubnetModel>> {
+
+        @Mock
+        ResultRsp<List<NbiSubnetModel>> queryByFilter(Class<NbiSubnetModel> clazz, Map<String, Object> filterMap,
+                String queryResultFields) throws ServiceException {
+            return new ResultRsp<List<NbiSubnetModel>>(ErrorCode.OVERLAYVPN_SUCCESS, new ArrayList<NbiSubnetModel>());
+        }
+    }
+
     @Test(expected = ServiceException.class)
     public void cidrExistCheckTest() throws ServiceException {
         new MockCidrExistInventoryDao();
@@ -92,6 +101,27 @@ public class SubnetModelCheckerTest extends SpringTest {
     @Test(expected = ServiceException.class)
     public void nameExistCheckTest() throws ServiceException {
         new MockNameExistInventoryDao();
+        modelChecker.check(subnetModel);
+    }
+
+    @Test(expected = ServiceException.class)
+    public void vniAndVlanIdBothExistTest() throws ServiceException {
+        new MockNotExistInventoryDao();
+        subnetModel.setCidrBlockSize(null);
+        subnetModel.setVlanId("23");
+        modelChecker.check(subnetModel);
+    }
+
+    @Test(expected = ServiceException.class)
+    public void cidrBlockAndcidrBlockSizeBothExistTest() throws ServiceException {
+        new MockNotExistInventoryDao();
+        subnetModel.setVlanId(null);
+        subnetModel.setCidrBlockSize(24);
+        modelChecker.check(subnetModel);
+    }
+
+    public void successCheckTest() throws ServiceException {
+        new MockNotExistInventoryDao();
         modelChecker.check(subnetModel);
     }
 

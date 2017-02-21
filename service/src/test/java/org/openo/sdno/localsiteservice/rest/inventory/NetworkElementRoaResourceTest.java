@@ -21,8 +21,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
 import org.openo.sdno.localsiteservice.moco.inventorydao.MockNetworkElementInvDao;
@@ -40,14 +40,20 @@ public class NetworkElementRoaResourceTest extends SpringTest {
     @Mocked
     private HttpServletRequest httpRequest;
 
-    @Mocked
-    private HttpServletResponse httpResponse;
+    @Before
+    public void setUp() {
+        new MockNetworkElementInvDao();
+    }
 
     @Test
     public void queryTest() throws ServiceException {
-        new MockNetworkElementInvDao();
         List<NetworkElementMO> neList = networkElementRoaResource.query(httpRequest, "[\"NeId\"]");
         assertTrue("neName".equals(neList.get(0).getName()));
+    }
+
+    @Test(expected = ServiceException.class)
+    public void neUuidsQueryTest() throws ServiceException {
+        networkElementRoaResource.query(httpRequest, null);
     }
 
 }

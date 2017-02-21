@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.junit.Before;
 import org.junit.Test;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
+import org.openo.sdno.localsiteservice.moco.inventorydao.MockEmptyNetworkElementInvDao;
 import org.openo.sdno.localsiteservice.moco.inventorydao.MockNetworkElementInvDao;
 import org.openo.sdno.localsiteservice.model.inf.InterfaceModel;
 import org.openo.sdno.localsiteservice.springtest.SpringTest;
@@ -42,15 +43,21 @@ public class InterfaceRoaResourceTest extends SpringTest {
 
     @Before
     public void setUp() {
-        new MockNetworkElementInvDao();
         new MockInterfaceRestfulProxy();
     }
 
     @Test
     public void queryTest() throws ServiceException {
+        new MockNetworkElementInvDao();
         List<InterfaceModel> interfaceModelList = interfaceRoaResource.query(httpRequest, "deviceUuid");
         assertTrue(1 == interfaceModelList.size());
         assertTrue("TestInterface".equals(interfaceModelList.get(0).getName()));
+    }
+
+    @Test(expected = ServiceException.class)
+    public void neNotExistQueryTest() throws ServiceException {
+        new MockEmptyNetworkElementInvDao();
+        interfaceRoaResource.query(httpRequest, "deviceUuid");
     }
 
 }

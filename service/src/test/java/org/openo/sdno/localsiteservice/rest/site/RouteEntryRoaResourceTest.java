@@ -76,6 +76,27 @@ public class RouteEntryRoaResourceTest extends SpringTest {
     }
 
     @Test
+    public void nameEmptyBatchQueryTest() throws ServiceException {
+        ComplexResult<NbiRouteEntryModel> queryResult =
+                routeEntryRoaResource.batchQuery("", "TenantId", "SiteId", "0", "0");
+        assertTrue(2 == queryResult.getTotal());
+    }
+
+    @Test
+    public void tenantIdEmptyBatchQueryTest() throws ServiceException {
+        ComplexResult<NbiRouteEntryModel> queryResult =
+                routeEntryRoaResource.batchQuery("RouteEntry1", null, "SiteId", "0", "0");
+        assertTrue(2 == queryResult.getTotal());
+    }
+
+    @Test
+    public void siteIdEmptyBatchQueryTest() throws ServiceException {
+        ComplexResult<NbiRouteEntryModel> queryResult =
+                routeEntryRoaResource.batchQuery("RouteEntry1", "TenantId", "", "0", "0");
+        assertTrue(2 == queryResult.getTotal());
+    }
+
+    @Test
     public void createTest() throws ServiceException {
         Map<String, String> createResult = routeEntryRoaResource.create(httpRequest, httpResponse, routeEntryModel);
         assertTrue("RouteEntryId".equals(createResult.get("id")));

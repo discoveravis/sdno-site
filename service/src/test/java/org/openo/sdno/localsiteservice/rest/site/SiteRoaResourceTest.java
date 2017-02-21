@@ -30,10 +30,14 @@ import org.openo.sdno.localsiteservice.moco.inventorydao.MockInventoryDao;
 import org.openo.sdno.localsiteservice.moco.inventorydao.MockNetworkElementInvDao;
 import org.openo.sdno.localsiteservice.moco.inventorydao.MockSiteInvDao;
 import org.openo.sdno.localsiteservice.springtest.SpringTest;
+import org.openo.sdno.overlayvpn.brs.invdao.SiteInvDao;
+import org.openo.sdno.overlayvpn.brs.model.SiteMO;
 import org.openo.sdno.overlayvpn.model.v2.result.ComplexResult;
 import org.openo.sdno.overlayvpn.model.v2.site.NbiSiteModel;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import mockit.Mock;
+import mockit.MockUp;
 import mockit.Mocked;
 
 public class SiteRoaResourceTest extends SpringTest {
@@ -73,6 +77,18 @@ public class SiteRoaResourceTest extends SpringTest {
         assertTrue(null != siteModel);
     }
 
+    @Test(expected = ServiceException.class)
+    public void siteNotExistQueryTest() throws ServiceException {
+        new MockUp<SiteInvDao>() {
+
+            @Mock
+            public SiteMO query(String id) throws ServiceException {
+                return null;
+            }
+        };
+        siteRoaResource.query(httpRequest, "SiteId");
+    }
+
     @Test
     public void batchQueryTest() throws ServiceException {
         ComplexResult<NbiSiteModel> queryResult = siteRoaResource.batchQuery(httpRequest, "[\"SiteId\",\"SiteId2\"]");
@@ -91,7 +107,15 @@ public class SiteRoaResourceTest extends SpringTest {
     }
 
     @Test
+    public void updateLocationEmptyTest() throws ServiceException {
+        siteModel.setLocation(null);
+        Map<String, Object> updateResult = siteRoaResource.update(httpRequest, "SiteId", siteModel);
+        assertTrue(!updateResult.isEmpty());
+    }
+
+    @Test
     public void updateTest() throws ServiceException {
+        siteModel.setLocation("China");
         Map<String, Object> updateResult = siteRoaResource.update(httpRequest, "SiteId", siteModel);
         assertTrue(!updateResult.isEmpty());
     }

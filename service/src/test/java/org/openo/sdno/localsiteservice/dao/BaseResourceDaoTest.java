@@ -14,46 +14,43 @@
  * limitations under the License.
  */
 
-package org.openo.sdno.localsiteservice.rest.inventory;
+package org.openo.sdno.localsiteservice.dao;
 
 import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
 import org.openo.sdno.localsiteservice.moco.inventorydao.MockLtpInvDao;
+import org.openo.sdno.localsiteservice.moco.inventorydao.MockNetworkElementInvDao;
 import org.openo.sdno.localsiteservice.springtest.SpringTest;
 import org.openo.sdno.overlayvpn.brs.model.LogicalTernminationPointMO;
+import org.openo.sdno.overlayvpn.brs.model.NetworkElementMO;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import mockit.Mocked;
-
-public class LtpRoaResourceTest extends SpringTest {
+public class BaseResourceDaoTest extends SpringTest {
 
     @Autowired
-    private LtpRoaResource ltpRoaResource;
-
-    @Mocked
-    private HttpServletRequest httpRequest;
+    private BaseResourceDao baseResourceDao;
 
     @Before
     public void setUp() {
+        new MockNetworkElementInvDao();
         new MockLtpInvDao();
     }
 
     @Test
-    public void queryTest() throws ServiceException {
-        List<LogicalTernminationPointMO> ltpMOList = ltpRoaResource.query(httpRequest, "[\"LtpId\"]");
-        assertTrue("ltpName".equals(ltpMOList.get(0).getName()));
+    public void queryNeBySiteIdTest() throws ServiceException {
+        List<NetworkElementMO> neMOList = baseResourceDao.queryNeBySiteId("SiteId");
+        assertTrue(1 == neMOList.size());
     }
 
-    @Test(expected = ServiceException.class)
-    public void portsUuidsEmptyQueryTest() throws ServiceException {
-        ltpRoaResource.query(httpRequest, null);
+    @Test
+    public void queryInterfaceByNameTest() throws ServiceException {
+        LogicalTernminationPointMO ltpMO = baseResourceDao.queryInterfaceByName("neId", "infName");
+        assertTrue(null != ltpMO);
     }
 
 }

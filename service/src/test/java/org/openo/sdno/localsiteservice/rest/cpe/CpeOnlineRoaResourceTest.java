@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.junit.Before;
 import org.junit.Test;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
+import org.openo.sdno.localsiteservice.moco.inventorydao.MockEmptyNetworkElementInvDao;
 import org.openo.sdno.localsiteservice.moco.inventorydao.MockNetworkElementInvDao;
 import org.openo.sdno.localsiteservice.moco.inventorydao.MockSiteInvDao;
 import org.openo.sdno.localsiteservice.model.cpe.VCpePlanInfo;
@@ -34,7 +35,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import mockit.Mocked;
 
-public class CpeOnlineRoaResourceTest extends SpringTest{
+public class CpeOnlineRoaResourceTest extends SpringTest {
 
     @Mocked
     private HttpServletRequest httpRequest;
@@ -52,22 +53,30 @@ public class CpeOnlineRoaResourceTest extends SpringTest{
         vCpePlanInfo.setSiteId("SiteId");
         vCpePlanInfo.setUuid("vCpePlanInfoId");
     }
-    
+
     @Before
     public void setUp() {
         new MockSiteInvDao();
-        new MockNetworkElementInvDao();
         new MockCpeOnlineRestfulProxy();
     }
 
     @Test
-    public void createTest() throws ServiceException {
+    public void createNeExistTest() throws ServiceException {
+        new MockNetworkElementInvDao();
+        Map<String, String> createResult = cpeOnlineRoaResource.create(httpRequest, httpResponse, vCpePlanInfo);
+        assertTrue("NeId".equals(createResult.get("id")));
+    }
+
+    @Test
+    public void createNeNotExistTest() throws ServiceException {
+        new MockEmptyNetworkElementInvDao();
         Map<String, String> createResult = cpeOnlineRoaResource.create(httpRequest, httpResponse, vCpePlanInfo);
         assertTrue("NeId".equals(createResult.get("id")));
     }
 
     @Test
     public void deleteTest() throws ServiceException {
+        new MockNetworkElementInvDao();
         cpeOnlineRoaResource.delete(httpRequest, "[\"vCpePlanInfoId\"]");
     }
 
