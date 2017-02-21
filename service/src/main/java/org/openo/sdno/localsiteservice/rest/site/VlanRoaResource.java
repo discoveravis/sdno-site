@@ -29,6 +29,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
@@ -99,7 +100,11 @@ public class VlanRoaResource {
     /**
      * Batch query Vlans.<br>
      * 
-     * @param request HttpServletRequest Object
+     * @param name Vlan name
+     * @param tenantId Tenant Id
+     * @param siteId Site Id
+     * @param pageNum Page Number
+     * @param pageSize Page Size
      * @return List of VlanModel queried out
      * @throws ServiceException when query failed
      * @since SDNO 0.5
@@ -107,17 +112,12 @@ public class VlanRoaResource {
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ComplexResult<NbiVlanModel> batchQuery(@Context HttpServletRequest request) throws ServiceException {
+    public ComplexResult<NbiVlanModel> batchQuery(@QueryParam("name") String name,
+            @QueryParam("tenantId") String tenantId, @QueryParam("siteId") String siteId,
+            @QueryParam("pageNum") String pageNum, @QueryParam("pageSize") String pageSize) throws ServiceException {
 
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter batch query method");
-
-        // Extract query parameter
-        String name = request.getParameter("name");
-        String tenantId = request.getParameter("tenantId");
-        String siteId = request.getParameter("siteId");
-        String pageNum = request.getParameter("pageNum");
-        String pageSize = request.getParameter("pageSize");
 
         ComplexResult<NbiVlanModel> resultRsp = service.batchQuery(name, tenantId, siteId, pageNum, pageSize);
 
@@ -143,7 +143,7 @@ public class VlanRoaResource {
             NbiVlanModel vlanModel) throws ServiceException {
 
         long beginTime = System.currentTimeMillis();
-        LOGGER.debug("Enter create method");
+        LOGGER.debug("Enter create vlan method");
 
         // Check VlanMode Data
         ValidationUtil.validateModel(vlanModel);
@@ -155,14 +155,14 @@ public class VlanRoaResource {
             throw new ServiceException("VlanModel create failed");
         }
 
-        Map<String, String> result = new HashMap<String, String>();
-        result.put("id", resultRsp.getData().getUuid());
+        Map<String, String> resultMap = new HashMap<>();
+        resultMap.put("id", resultRsp.getData().getUuid());
 
         response.setStatus(HttpCode.CREATE_OK);
 
-        LOGGER.debug("Exit create method cost time:" + (System.currentTimeMillis() - beginTime));
+        LOGGER.debug("Exit create vlan method cost time:" + (System.currentTimeMillis() - beginTime));
 
-        return result;
+        return resultMap;
     }
 
     /**

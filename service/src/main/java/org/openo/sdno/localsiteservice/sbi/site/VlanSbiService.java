@@ -62,7 +62,7 @@ public class VlanSbiService {
      */
     public ResultRsp<List<SbiIfVlan>> query(String ctrlUuid, String deviceId, String portId) throws ServiceException {
         if(StringUtils.isBlank(ctrlUuid) || StringUtils.isBlank(deviceId)) {
-            LOGGER.error("Controller Uuid or Device Uuid is invalid");
+            LOGGER.error("Controller or device parameter is invalid");
             return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 

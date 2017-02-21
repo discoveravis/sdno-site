@@ -68,7 +68,7 @@ public class SubnetBdInfoSbiService {
         RestfulResponse response = RestfulProxy.get(queryUrl, restfulParameters);
         if(!HttpCode.isSucess(response.getStatus())) {
             LOGGER.error("Query BdInfo from driver failed");
-            return new ResultRsp<SbiSubnetBdInfoModel>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         return JsonUtil.fromJson(response.getResponseContent(),

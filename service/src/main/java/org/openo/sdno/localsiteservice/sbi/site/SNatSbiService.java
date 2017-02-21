@@ -64,7 +64,7 @@ public class SNatSbiService {
 
         if(StringUtils.isBlank(controllerId) || StringUtils.isBlank(deviceId)) {
             LOGGER.error("Controller Uuid or Device Uuid is invalid");
-            return new ResultRsp<SbiSnatNetModel>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         String createUrl = MessageFormat.format(SNAT_BASE_URL, deviceId);
@@ -76,7 +76,7 @@ public class SNatSbiService {
         RestfulResponse response = RestfulProxy.post(createUrl, restfulParameters);
         if(!HttpCode.isSucess(response.getStatus())) {
             LOGGER.error("Create Snat in Driver failed");
-            return new ResultRsp<SbiSnatNetModel>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         return JsonUtil.fromJson(response.getResponseContent(), new TypeReference<ResultRsp<SbiSnatNetModel>>() {});
@@ -97,7 +97,7 @@ public class SNatSbiService {
 
         if(StringUtils.isBlank(controllerId) || StringUtils.isBlank(deviceId)) {
             LOGGER.error("Controller Uuid or Device Uuid is invalid");
-            return new ResultRsp<String>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         String deleteUrl =
@@ -109,7 +109,7 @@ public class SNatSbiService {
         RestfulResponse response = RestfulProxy.delete(deleteUrl, restfulParameters);
         if(!HttpCode.isSucess(response.getStatus())) {
             LOGGER.error("Delete Snat Model failed");
-            return new ResultRsp<String>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         return JsonUtil.fromJson(response.getResponseContent(), new TypeReference<ResultRsp<String>>() {});

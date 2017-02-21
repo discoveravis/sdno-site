@@ -86,7 +86,7 @@ public class SiteServiceImpl implements SiteService {
         // Query InternetGateway Info
         siteModel.setInternetGateway(siteModelDao.querySiteInternetGateways(siteUuid));
 
-        return new ResultRsp<NbiSiteModel>(ErrorCode.OVERLAYVPN_SUCCESS, siteModel);
+        return new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS, siteModel);
     }
 
     @Override

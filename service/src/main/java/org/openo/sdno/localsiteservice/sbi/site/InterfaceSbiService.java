@@ -60,7 +60,7 @@ public class InterfaceSbiService {
     public ResultRsp<List<InterfaceModel>> query(String ctrlUuid, String deviceId) throws ServiceException {
         if(StringUtils.isBlank(ctrlUuid) || StringUtils.isBlank(deviceId)) {
             LOGGER.error("Controller Uuid or Device Uuid is invalid");
-            return new ResultRsp<List<InterfaceModel>>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         String queryUrl = MessageFormat.format(INTERFACE_QUERY_URL, deviceId);
@@ -71,7 +71,7 @@ public class InterfaceSbiService {
         RestfulResponse response = RestfulProxy.get(queryUrl, restfulParameters);
         if(!HttpCode.isSucess(response.getStatus())) {
             LOGGER.error("Query interface from driver failed");
-            return new ResultRsp<List<InterfaceModel>>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         return JsonUtil.fromJson(response.getResponseContent(),

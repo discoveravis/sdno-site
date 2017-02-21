@@ -35,7 +35,7 @@ public class ComplexVpnResult<T> {
 
     private int currentPage;
 
-    private List<T> objects = new ArrayList<T>();
+    private List<T> objects = new ArrayList<>();
 
     public long getTotal() {
         return total;

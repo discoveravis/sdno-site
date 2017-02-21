@@ -151,7 +151,7 @@ public class SiteRoaResource {
             NbiSiteModel siteModel) throws ServiceException {
 
         long beginTime = System.currentTimeMillis();
-        LOGGER.debug("Enter create method");
+        LOGGER.debug("Enter create site method");
 
         // Check SiteModel
         ValidationUtil.validateModel(siteModel);
@@ -168,13 +168,14 @@ public class SiteRoaResource {
             throw new ServiceException("NbiSiteModel create failed");
         }
 
-        Map<String, String> result = new HashMap<>();
-        result.put("id", resultRsp.getData().getUuid());
+        Map<String, String> resultMap = new HashMap<>();
+        resultMap.put("id", resultRsp.getData().getUuid());
 
         response.setStatus(HttpCode.CREATE_OK);
 
-        LOGGER.debug("Exit create method cost time:" + (System.currentTimeMillis() - beginTime));
-        return result;
+        LOGGER.debug("Exit create site method cost time:" + (System.currentTimeMillis() - beginTime));
+
+        return resultMap;
     }
 
     /**
@@ -201,8 +202,8 @@ public class SiteRoaResource {
 
         ResultRsp<NbiSiteModel> queryResultRsp = service.query(request, siteUuid);
         if(!queryResultRsp.isSuccess()) {
-            LOGGER.error("VlanModel query failed");
-            throw new ServiceException("VlanModel query failed");
+            LOGGER.error("Current VlanModel query failed, can not delete");
+            throw new ServiceException("Current VlanModel query failed");
         }
 
         // Check Existence
@@ -249,8 +250,8 @@ public class SiteRoaResource {
 
         ResultRsp<NbiSiteModel> queryResultRsp = service.query(request, siteUuid);
         if(!queryResultRsp.isSuccess()) {
-            LOGGER.error("VlanModel query failed");
-            throw new ServiceException("VlanModel query failed");
+            LOGGER.error("Current VlanModel query failed, can not update");
+            throw new ServiceException("Current VlanModel query failed");
         }
 
         // Check Existence

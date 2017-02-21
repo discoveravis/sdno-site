@@ -116,7 +116,7 @@ public class CloudCpeRoaResource {
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter batch query method");
 
-        Map<String, Object> filterMap = new HashMap<String, Object>();
+        Map<String, Object> filterMap = new HashMap<>();
         if(StringUtils.hasLength(tenantId)) {
             filterMap.put("tenantId", Arrays.asList(tenantId));
         }
@@ -163,7 +163,7 @@ public class CloudCpeRoaResource {
             throw new ServiceException("Create CloudCpe failed");
         }
 
-        Map<String, String> resultMap = new HashMap<String, String>();
+        Map<String, String> resultMap = new HashMap<>();
         resultMap.put("id", resultRsp.getData().getUuid());
 
         response.setStatus(HttpCode.CREATE_OK);

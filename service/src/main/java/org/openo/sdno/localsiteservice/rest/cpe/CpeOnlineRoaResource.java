@@ -104,7 +104,7 @@ public class CpeOnlineRoaResource {
             throw new ServiceException("Cpe Device create failed");
         }
 
-        Map<String, String> resultMap = new HashMap<String, String>();
+        Map<String, String> resultMap = new HashMap<>();
         resultMap.put("id", cpeNetworkElement.getId());
 
         response.setStatus(HttpCode.CREATE_OK);
@@ -125,8 +125,8 @@ public class CpeOnlineRoaResource {
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void delete(@Context HttpServletRequest request,
-            @QueryParam("uuids") String inputUuids) throws ServiceException {
+    public void delete(@Context HttpServletRequest request, @QueryParam("uuids") String inputUuids)
+            throws ServiceException {
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter delete method");
 

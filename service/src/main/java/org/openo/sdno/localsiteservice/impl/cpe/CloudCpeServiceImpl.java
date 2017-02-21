@@ -124,7 +124,7 @@ public class CloudCpeServiceImpl implements CloudCpeService {
             return;
         }
 
-        // Delete CloudCpeModel in database
+        // Delete CloudCpeModel from database
         InventoryDao<NbiCloudCpeModel> cloudCpeModelDao = new InventoryDaoUtil<NbiCloudCpeModel>().getInventoryDao();
         cloudCpeModelDao.delete(NbiCloudCpeModel.class, cloudCpeUuid);
 

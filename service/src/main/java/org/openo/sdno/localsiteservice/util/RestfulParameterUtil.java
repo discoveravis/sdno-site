@@ -27,6 +27,10 @@ import org.openo.sdno.overlayvpn.security.authentication.HttpContext;
  */
 public class RestfulParameterUtil {
 
+    private RestfulParameterUtil() {
+        // empty constructor
+    }
+
     /**
      * Set Content Type.<br>
      * 

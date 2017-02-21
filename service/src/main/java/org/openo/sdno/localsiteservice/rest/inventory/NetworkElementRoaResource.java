@@ -63,8 +63,8 @@ public class NetworkElementRoaResource {
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<NetworkElementMO> query(@Context HttpServletRequest request,
-            @QueryParam("uuids") String neUuids) throws ServiceException {
+    public List<NetworkElementMO> query(@Context HttpServletRequest request, @QueryParam("uuids") String neUuids)
+            throws ServiceException {
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter query method");
 

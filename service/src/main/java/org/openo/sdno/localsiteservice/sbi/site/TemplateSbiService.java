@@ -87,14 +87,14 @@ public class TemplateSbiService {
 
         String lanInfNameStr = infNameList.get(FIELD_THINCPE_LAN);
         if(StringUtils.isEmpty(lanInfNameStr)) {
-            LOGGER.error("Current LocalCpe type do not have Lan Interface");
-            throw new ServiceException("Current LocalCpe type do not have Lan Interface");
+            LOGGER.error("LocalCpe does not have Lan Interfaces, the template configuration is wrong");
+            throw new ServiceException("LocalCpe LocalCpe  does not have Lan Interfaces");
         }
 
         String[] lanInfNameList = lanInfNameStr.split(",");
         if(null == lanInfNameList || 0 == lanInfNameList.length) {
-            LOGGER.error("Current LocalCpe type do not have Lan Interface");
-            throw new ServiceException("Current LocalCpe type do not have Lan Interface");
+            LOGGER.error("LocalCpe does not have Lan Interfaces, the template fomat may be wrong");
+            throw new ServiceException("LocalCpe does not have Lan Interfaces");
         }
 
         return Arrays.asList(lanInfNameList);
@@ -158,8 +158,8 @@ public class TemplateSbiService {
         RestfulParameterUtil.setContentType(restfulParameters);
         RestfulResponse response = RestfulProxy.get(queryUrl, restfulParameters);
         if(!HttpCode.isSucess(response.getStatus())) {
-            LOGGER.error("Query Template data failed");
-            throw new ServiceException("Query Template data failed");
+            LOGGER.error("Query Template configuration failed");
+            throw new ServiceException("Query Template configuration failed");
         }
 
         return JsonUtil.fromJson(response.getResponseContent(), Map.class);

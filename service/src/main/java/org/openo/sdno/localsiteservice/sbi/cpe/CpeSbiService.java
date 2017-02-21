@@ -68,7 +68,7 @@ public class CpeSbiService {
 
         @SuppressWarnings("unchecked")
         Map<String, String> resultMap = JsonUtil.fromJson(response.getResponseContent(), Map.class);
-        return new ResultRsp<Map<String, String>>(ErrorCode.OVERLAYVPN_SUCCESS, resultMap);
+        return new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS, resultMap);
     }
 
     /**

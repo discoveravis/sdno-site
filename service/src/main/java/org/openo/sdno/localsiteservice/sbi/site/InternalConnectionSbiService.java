@@ -64,13 +64,13 @@ public class InternalConnectionSbiService {
         RestfulResponse response = RestfulProxy.post(INTERNALCONNECTION_BASE_URL, restfulParameters);
         if(!HttpCode.isSucess(response.getStatus())) {
             LOGGER.error("Create Internal Connection failed");
-            return new ResultRsp<InternalConnectionModel>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         InternalConnectionModel internalConnectionRsp =
                 JsonUtil.fromJson(response.getResponseContent(), InternalConnectionModel.class);
 
-        return new ResultRsp<InternalConnectionModel>(ErrorCode.OVERLAYVPN_SUCCESS, internalConnectionRsp);
+        return new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS, internalConnectionRsp);
     }
 
     /**
@@ -90,13 +90,13 @@ public class InternalConnectionSbiService {
         RestfulResponse response = RestfulProxy.delete(deleteUrl, restfulParameters);
         if(!HttpCode.isSucess(response.getStatus())) {
             LOGGER.error("Delete Internal Connection failed");
-            return new ResultRsp<InternalConnectionModel>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         InternalConnectionModel internalConnectionRsp =
                 JsonUtil.fromJson(response.getResponseContent(), InternalConnectionModel.class);
 
-        return new ResultRsp<InternalConnectionModel>(ErrorCode.OVERLAYVPN_SUCCESS, internalConnectionRsp);
+        return new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS, internalConnectionRsp);
     }
 
 }

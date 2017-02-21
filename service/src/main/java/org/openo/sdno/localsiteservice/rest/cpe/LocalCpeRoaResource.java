@@ -104,7 +104,6 @@ public class LocalCpeRoaResource {
     /**
      * Batch query LocalCpes.<br>
      * 
-     * @param request HttpServletRequest Object
      * @param siteId Site Uuid
      * @param cpeType LocalCpe type
      * @param pageSize page size
@@ -116,9 +115,8 @@ public class LocalCpeRoaResource {
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<NetworkElementMO> batchQuery(@Context HttpServletRequest request, @QueryParam("siteId") String siteId,
-            @QueryParam("cpeType") String cpeType, @QueryParam("pageSize") int pageSize,
-            @QueryParam("pageNum") int pageNum) throws ServiceException {
+    public List<NetworkElementMO> batchQuery(@QueryParam("siteId") String siteId, @QueryParam("cpeType") String cpeType,
+            @QueryParam("pageSize") int pageSize, @QueryParam("pageNum") int pageNum) throws ServiceException {
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter batch query method");
 
@@ -169,7 +167,7 @@ public class LocalCpeRoaResource {
             throw new ServiceException("Create CloudCpe failed");
         }
 
-        Map<String, String> resultMap = new HashMap<String, String>();
+        Map<String, String> resultMap = new HashMap<>();
         resultMap.put("id", resultRsp.getData().getId());
 
         response.setStatus(HttpCode.CREATE_OK);

@@ -29,6 +29,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
@@ -98,25 +99,24 @@ public class SubnetRoaResource {
     /**
      * Batch query Subnets.<br>
      * 
-     * @param request HttpServletRequest Object
-     * @return List of Subnets queried out
+     * @param name Subnet name
+     * @param tenantId Tenant Id
+     * @param siteId Site Id
+     * @param pageNum Page Number
+     * @param pageSize Page Size
+     * @return List of subnets queried out
      * @throws ServiceException when query failed
      * @since SDNO 0.5
      */
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ComplexResult<NbiSubnetModel> batchQuery(@Context HttpServletRequest request) throws ServiceException {
+    public ComplexResult<NbiSubnetModel> batchQuery(@QueryParam("name") String name,
+            @QueryParam("tenantId") String tenantId, @QueryParam("siteId") String siteId,
+            @QueryParam("pageNum") String pageNum, @QueryParam("pageSize") String pageSize) throws ServiceException {
 
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter batch query subnet method");
-
-        // Extract query parameter
-        String name = request.getParameter("name");
-        String tenantId = request.getParameter("tenantId");
-        String siteId = request.getParameter("siteId");
-        String pageNum = request.getParameter("pageNum");
-        String pageSize = request.getParameter("pageSize");
 
         ComplexResult<NbiSubnetModel> result = service.batchQuery(name, tenantId, siteId, pageNum, pageSize);
 
@@ -188,7 +188,7 @@ public class SubnetRoaResource {
         // Check whether this data exist
         ResultRsp<NbiSubnetModel> queryResultRsp = service.query(request, subnetUuid);
         if(!queryResultRsp.isSuccess()) {
-            LOGGER.error("NbiSubnetModel query failed");
+            LOGGER.error("Current SubnetModel query failed, can not delete");
             throw new ServiceException("NbiSubnetModel query failed");
         }
 
@@ -233,7 +233,7 @@ public class SubnetRoaResource {
 
         ResultRsp<NbiSubnetModel> queryResultRsp = service.query(request, subnetUuid);
         if(!queryResultRsp.isSuccess()) {
-            LOGGER.error("NbiSubnetModel query failed");
+            LOGGER.error("SubnetModel query failed, can not update");
             throw new ServiceException("NbiSubnetModel query failed");
         }
 

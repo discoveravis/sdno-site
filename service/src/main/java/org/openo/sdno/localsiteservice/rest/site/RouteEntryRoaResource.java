@@ -29,6 +29,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
@@ -84,8 +85,8 @@ public class RouteEntryRoaResource {
         // Query RouteEntry
         ResultRsp<NbiRouteEntryModel> resutRsp = service.query(request, routeEntryUuid);
         if(!resutRsp.isValid()) {
-            LOGGER.error("Query RouteEntry failed");
-            throw new ServiceException("Query RouteEntry failed");
+            LOGGER.error("Query RouteEntry failed or does not exist,exception will be throwed");
+            throw new ServiceException("Query RouteEntry failed or does not exist");
         }
 
         LOGGER.debug("Exit query method cost time:" + (System.currentTimeMillis() - beginTime));
@@ -95,7 +96,11 @@ public class RouteEntryRoaResource {
     /**
      * Batch query RouteEntitys.<br>
      * 
-     * @param request HttpServletRequest Object
+     * @param name RouteEntry name
+     * @param tenantId Tenant Id
+     * @param siteId Site Id
+     * @param pageNum Page Number
+     * @param pageSize Page Size
      * @return List of RouteEntitys queried out
      * @throws ServiceException when query failed
      * @since SDNO 0.5
@@ -103,17 +108,12 @@ public class RouteEntryRoaResource {
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ComplexResult<NbiRouteEntryModel> batchQuery(@Context HttpServletRequest request) throws ServiceException {
+    public ComplexResult<NbiRouteEntryModel> batchQuery(@QueryParam("name") String name,
+            @QueryParam("tenantId") String tenantId, @QueryParam("siteId") String siteId,
+            @QueryParam("pageNum") String pageNum, @QueryParam("pageSize") String pageSize) throws ServiceException {
 
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter batch query method");
-
-        // Extract query parameter
-        String name = request.getParameter("name");
-        String tenantId = request.getParameter("tenantId");
-        String siteId = request.getParameter("siteId");
-        String pageNum = request.getParameter("pageNum");
-        String pageSize = request.getParameter("pageSize");
 
         ComplexResult<NbiRouteEntryModel> result = service.batchQuery(name, tenantId, siteId, pageNum, pageSize);
 
@@ -139,7 +139,7 @@ public class RouteEntryRoaResource {
             NbiRouteEntryModel routeEntryModel) throws ServiceException {
 
         long beginTime = System.currentTimeMillis();
-        LOGGER.debug("Enter create method");
+        LOGGER.debug("Enter create route entry method");
 
         // Check RouteEntryModel
         ValidationUtil.validateModel(routeEntryModel);
@@ -151,14 +151,14 @@ public class RouteEntryRoaResource {
             throw new ServiceException("SubnetModel create failed");
         }
 
-        Map<String, String> result = new HashMap<>();
-        result.put("id", resultRsp.getData().getUuid());
+        Map<String, String> resultMap = new HashMap<>();
+        resultMap.put("id", resultRsp.getData().getUuid());
 
         response.setStatus(HttpCode.CREATE_OK);
 
-        LOGGER.debug("Exit create method cost time:" + (System.currentTimeMillis() - beginTime));
+        LOGGER.debug("Exit create route entry method cost time:" + (System.currentTimeMillis() - beginTime));
 
-        return result;
+        return resultMap;
     }
 
     /**
@@ -184,8 +184,8 @@ public class RouteEntryRoaResource {
         // Query RouteEntryModel
         ResultRsp<NbiRouteEntryModel> resutRsp = service.query(request, routeEntryUuid);
         if(!resutRsp.isValid()) {
-            LOGGER.error("Query RouteEntry failed");
-            throw new ServiceException("Query RouteEntry failed");
+            LOGGER.error("Current RouteEntry query failed or does not exist,can not delete");
+            throw new ServiceException("Current RouteEntry query failed or does not exist");
         }
 
         // Delete RouteEntry Model
@@ -218,8 +218,8 @@ public class RouteEntryRoaResource {
         // Query RouteEntryModel
         ResultRsp<NbiRouteEntryModel> queryResutRsp = service.query(request, routeEntryUuid);
         if(!queryResutRsp.isValid()) {
-            LOGGER.error("Current RouteEntry not exist");
-            throw new ServiceException("Current RouteEntry not exist");
+            LOGGER.error("Current RouteEntry does not exist");
+            throw new ServiceException("Current RouteEntry does not exist");
         }
 
         NbiRouteEntryModel updateRouteEntryModel = queryResutRsp.getData();

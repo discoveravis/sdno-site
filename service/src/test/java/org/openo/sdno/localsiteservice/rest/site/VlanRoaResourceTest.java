@@ -89,14 +89,7 @@ public class VlanRoaResourceTest extends SpringTest {
 
     @Test
     public void batchQueryTest() throws ServiceException {
-        new MockUp<HttpServletRequest>() {
-
-            @Mock
-            public String getParameter(String parameter) {
-                return parameter;
-            }
-        };
-        ComplexResult<NbiVlanModel> queryResult = vlanRoaResource.batchQuery(httpRequest);
+        ComplexResult<NbiVlanModel> queryResult = vlanRoaResource.batchQuery("Vlan1", "TenantId", "SiteId", "0", "0");
         assertTrue(2 == queryResult.getTotal());
     }
 

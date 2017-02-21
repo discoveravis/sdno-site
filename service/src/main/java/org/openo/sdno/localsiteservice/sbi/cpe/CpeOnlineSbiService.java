@@ -66,13 +66,10 @@ public class CpeOnlineSbiService {
         RestfulResponse response = RestfulProxy.post(DEVICE_BASIC_URL, restfulParameters);
         if(!HttpCode.isSucess(response.getStatus())) {
             LOGGER.error("Create device failed");
-            return new ResultRsp<SbiDeviceInfo>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
-        ResultRsp<SbiDeviceInfo> resultRsp =
-                JsonUtil.fromJson(response.getResponseContent(), new TypeReference<ResultRsp<SbiDeviceInfo>>() {});
-
-        return resultRsp;
+        return JsonUtil.fromJson(response.getResponseContent(), new TypeReference<ResultRsp<SbiDeviceInfo>>() {});
     }
 
     /**
@@ -93,13 +90,10 @@ public class CpeOnlineSbiService {
         RestfulResponse response = RestfulProxy.delete(DEVICE_BASIC_URL, restfulParameters);
         if(!HttpCode.isSucess(response.getStatus())) {
             LOGGER.error("Delete device failed");
-            return new ResultRsp<String>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
-        ResultRsp<String> resultRsp =
-                JsonUtil.fromJson(response.getResponseContent(), new TypeReference<ResultRsp<String>>() {});
-
-        return resultRsp;
+        return JsonUtil.fromJson(response.getResponseContent(), new TypeReference<ResultRsp<String>>() {});
     }
 
 }

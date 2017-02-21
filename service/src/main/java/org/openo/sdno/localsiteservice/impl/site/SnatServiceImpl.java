@@ -46,7 +46,7 @@ public class SnatServiceImpl implements SnatService {
     @Override
     public List<SbiSnatNetModel> query(HttpServletRequest req, String internetGatewayId) throws ServiceException {
 
-        ModelDataDao<SbiSnatNetModel> sNatNetModelInvDao = new ModelDataDao<SbiSnatNetModel>();
+        ModelDataDao<SbiSnatNetModel> sNatNetModelInvDao = new ModelDataDao<>();
 
         Map<String, Object> filterMap = new HashMap<>();
         filterMap.put("internetGatewayId", Arrays.asList(internetGatewayId));

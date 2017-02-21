@@ -69,6 +69,8 @@ public class SiteModelDao {
 
     private static final String SUBNET_QUERY_URL = "/openoapi/sdnolocalsite/v1/subnets";
 
+    private static final String SITEID_KEY = "siteId";
+
     @Autowired
     private TemplateSbiService templateSbiSrevice;
 
@@ -261,7 +263,7 @@ public class SiteModelDao {
     public NbiInternetGatewayModel querySiteInternetGateways(String siteId) throws ServiceException {
         RestfulParametes restfulParameters = new RestfulParametes();
         RestfulParameterUtil.setContentType(restfulParameters);
-        restfulParameters.put("siteId", siteId);
+        restfulParameters.put(SITEID_KEY, siteId);
         RestfulResponse response = RestfulProxy.get(INTERNETGATEWAY_QUERY_URL, restfulParameters);
         if(!HttpCode.isSucess(response.getStatus())) {
             LOGGER.error("Query Internet Gateways failed");
@@ -289,7 +291,7 @@ public class SiteModelDao {
     public List<NbiRouteEntryModel> querySiteRouteEntrys(String siteId) throws ServiceException {
         RestfulParametes restfulParameters = new RestfulParametes();
         RestfulParameterUtil.setContentType(restfulParameters);
-        restfulParameters.put("siteId", siteId);
+        restfulParameters.put(SITEID_KEY, siteId);
         RestfulResponse response = RestfulProxy.get(ROUTEENRTY_QUERY_URL, restfulParameters);
         if(!HttpCode.isSucess(response.getStatus())) {
             LOGGER.error("Query RouteEntry failed");
@@ -313,7 +315,7 @@ public class SiteModelDao {
     public List<NbiSubnetModel> querySiteSubnets(String siteId) throws ServiceException {
         RestfulParametes restfulParameters = new RestfulParametes();
         RestfulParameterUtil.setContentType(restfulParameters);
-        restfulParameters.put("siteId", siteId);
+        restfulParameters.put(SITEID_KEY, siteId);
         RestfulResponse response = RestfulProxy.get(SUBNET_QUERY_URL, restfulParameters);
         if(!HttpCode.isSucess(response.getStatus())) {
             LOGGER.error("Query Subnets failed");
@@ -337,7 +339,7 @@ public class SiteModelDao {
     public List<NbiVlanModel> querySiteVlans(String siteId) throws ServiceException {
         RestfulParametes restfulParameters = new RestfulParametes();
         RestfulParameterUtil.setContentType(restfulParameters);
-        restfulParameters.put("siteId", siteId);
+        restfulParameters.put(SITEID_KEY, siteId);
         RestfulResponse response = RestfulProxy.get(VLAN_QUERY_URL, restfulParameters);
         if(!HttpCode.isSucess(response.getStatus())) {
             LOGGER.error("Query Vlans failed");

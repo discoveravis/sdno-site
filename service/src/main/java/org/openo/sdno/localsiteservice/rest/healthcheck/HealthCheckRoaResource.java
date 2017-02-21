@@ -16,7 +16,6 @@
 
 package org.openo.sdno.localsiteservice.rest.healthcheck;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -36,7 +35,6 @@ public class HealthCheckRoaResource {
     /**
      * Service health check.<br>
      * 
-     * @param req HttpServletRequest Object
      * @param resp HttpServletResponse Object
      * @throws ServiceException when health check failed
      * @since SDNO 0.5
@@ -45,7 +43,7 @@ public class HealthCheckRoaResource {
     @Path("/healthcheck")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void healthCheck(@Context HttpServletRequest req, @Context HttpServletResponse resp)
+    public void healthCheck(@Context HttpServletResponse resp)
             throws ServiceException {
         resp.setStatus(HttpCode.RESPOND_OK);
         return;

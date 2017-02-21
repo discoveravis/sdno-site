@@ -32,8 +32,6 @@ import org.openo.sdno.overlayvpn.model.v2.result.ComplexResult;
 import org.openo.sdno.overlayvpn.model.v2.routeentry.NbiRouteEntryModel;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import mockit.Mock;
-import mockit.MockUp;
 import mockit.Mocked;
 
 public class RouteEntryRoaResourceTest extends SpringTest {
@@ -72,14 +70,8 @@ public class RouteEntryRoaResourceTest extends SpringTest {
 
     @Test
     public void batchQueryTest() throws ServiceException {
-        new MockUp<HttpServletRequest>() {
-
-            @Mock
-            public String getParameter(String parameter) {
-                return parameter;
-            }
-        };
-        ComplexResult<NbiRouteEntryModel> queryResult = routeEntryRoaResource.batchQuery(httpRequest);
+        ComplexResult<NbiRouteEntryModel> queryResult =
+                routeEntryRoaResource.batchQuery("RouteEntry1", "TenantId", "SiteId", "0", "0");
         assertTrue(2 == queryResult.getTotal());
     }
 

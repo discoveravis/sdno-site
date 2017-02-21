@@ -75,7 +75,7 @@ public class SubnetSbiService {
         RestfulResponse response = RestfulProxy.get(queryUrl, restfulParameters);
         if(!HttpCode.isSucess(response.getStatus())) {
             LOGGER.error("Query SbiSubnetNetModel failed");
-            return new ResultRsp<SbiSubnetNetModel>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         return JsonUtil.fromJson(response.getResponseContent(), new TypeReference<ResultRsp<SbiSubnetNetModel>>() {});
@@ -96,7 +96,7 @@ public class SubnetSbiService {
 
         if(StringUtils.isBlank(controllerId) || StringUtils.isBlank(deviceId)) {
             LOGGER.error("Controller Uuid or Device Uuid is invalid");
-            return new ResultRsp<SbiSubnetNetModel>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         String createUrl = MessageFormat.format(SUBNET_BASE_URL, deviceId);
@@ -108,7 +108,7 @@ public class SubnetSbiService {
         RestfulResponse response = RestfulProxy.post(createUrl, restfulParameters);
         if(!HttpCode.isSucess(response.getStatus())) {
             LOGGER.error("Create SubnetModel failed");
-            return new ResultRsp<SbiSubnetNetModel>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         return JsonUtil.fromJson(response.getResponseContent(), new TypeReference<ResultRsp<SbiSubnetNetModel>>() {});
@@ -135,7 +135,7 @@ public class SubnetSbiService {
         RestfulResponse response = RestfulProxy.delete(deleteUrl, restfulParameters);
         if(!HttpCode.isSucess(response.getStatus())) {
             LOGGER.error("Delete SbiSubnetNetModel failed");
-            return new ResultRsp<SbiSubnetNetModel>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         return JsonUtil.fromJson(response.getResponseContent(), new TypeReference<ResultRsp<SbiSubnetNetModel>>() {});
@@ -163,7 +163,7 @@ public class SubnetSbiService {
         RestfulResponse response = RestfulProxy.put(updateUrl, restfulParameters);
         if(!HttpCode.isSucess(response.getStatus())) {
             LOGGER.error("Update SbiSubnetNetModel failed");
-            return new ResultRsp<SbiSubnetNetModel>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         return JsonUtil.fromJson(response.getResponseContent(), new TypeReference<ResultRsp<SbiSubnetNetModel>>() {});

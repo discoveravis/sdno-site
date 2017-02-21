@@ -29,6 +29,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
@@ -93,25 +94,23 @@ public class InternetGatewayRoaResource {
     /**
      * Batch Query Internet Gateway data.<br>
      * 
-     * @param request HttpServletRequest Object
-     * @return NbiInternetGatewayModel queried out
+     * @param name InternetGateway name
+     * @param tenantId Tenant id
+     * @param siteId Site id
+     * @param pageNum Page number
+     * @param pageSize Page size
+     * @return InternetGateway queried out
      * @throws ServiceException when query failed
      * @since SDNO 0.5
      */
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ComplexResult<NbiInternetGatewayModel> batchQuery(@Context HttpServletRequest request)
-            throws ServiceException {
+    public ComplexResult<NbiInternetGatewayModel> batchQuery(@QueryParam("name") String name,
+            @QueryParam("tenantId") String tenantId, @QueryParam("siteId") String siteId,
+            @QueryParam("pageNum") String pageNum, @QueryParam("pageSize") String pageSize) throws ServiceException {
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter batch query method");
-
-        // Extract query parameter
-        String name = request.getParameter("name");
-        String tenantId = request.getParameter("tenantId");
-        String siteId = request.getParameter("siteId");
-        String pageNum = request.getParameter("pageNum");
-        String pageSize = request.getParameter("pageSize");
 
         // Batch Query InternetGateway Models
         ComplexResult<NbiInternetGatewayModel> result = service.batchQuery(name, tenantId, siteId, pageNum, pageSize);
@@ -150,13 +149,14 @@ public class InternetGatewayRoaResource {
             throw new ServiceException("NbiInternetGatewayModel create failed");
         }
 
-        Map<String, String> result = new HashMap<>();
-        result.put("id", resultRsp.getData().getUuid());
-
         response.setStatus(HttpCode.CREATE_OK);
 
+        Map<String, String> resultMap = new HashMap<>();
+        resultMap.put("id", resultRsp.getData().getUuid());
+
         LOGGER.debug("Exit InternetGateway Create method:" + (System.currentTimeMillis() - beginTime));
-        return result;
+
+        return resultMap;
     }
 
     /**
@@ -182,7 +182,7 @@ public class InternetGatewayRoaResource {
         // Check Existence
         NbiInternetGatewayModel internetGatewayModel = service.query(request, internetGatewayId);
         if(null == internetGatewayModel) {
-            LOGGER.error("NbiInternetGatewayModel does not exist");
+            LOGGER.error("InternetGatewayModel does not exist");
             return;
         }
 
@@ -221,7 +221,7 @@ public class InternetGatewayRoaResource {
         // Check Existence
         NbiInternetGatewayModel existedNbiInternetGatewayModel = service.query(request, internetGatewayId);
         if(null == existedNbiInternetGatewayModel) {
-            LOGGER.error("NbiInternetGatewayModel does not exist");
+            LOGGER.error("Current InternetGatewayModel does not exist, can not update");
             throw new ServiceException("NbiInternetGatewayModel does not exist");
         }
 
