@@ -48,7 +48,7 @@ public class SnatServiceImpl implements SnatService {
 
         ModelDataDao<SbiSnatNetModel> sNatNetModelInvDao = new ModelDataDao<SbiSnatNetModel>();
 
-        Map<String, Object> filterMap = new HashMap<String, Object>();
+        Map<String, Object> filterMap = new HashMap<>();
         filterMap.put("internetGatewayId", Arrays.asList(internetGatewayId));
 
         ResultRsp<List<SbiSnatNetModel>> resultRsp =

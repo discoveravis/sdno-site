@@ -83,7 +83,7 @@ public class VlanRoaResourceTest extends SpringTest {
 
     @Test
     public void queryTest() throws ServiceException {
-        NbiVlanModel vlanModel = vlanRoaResource.query(httpRequest, httpResponse, "vlanUuid");
+        NbiVlanModel vlanModel = vlanRoaResource.query(httpRequest, "vlanUuid");
         assertTrue(null != vlanModel);
     }
 
@@ -96,7 +96,7 @@ public class VlanRoaResourceTest extends SpringTest {
                 return parameter;
             }
         };
-        ComplexResult<NbiVlanModel> queryResult = vlanRoaResource.batchQuery(httpRequest, httpResponse);
+        ComplexResult<NbiVlanModel> queryResult = vlanRoaResource.batchQuery(httpRequest);
         assertTrue(2 == queryResult.getTotal());
     }
 
@@ -108,7 +108,7 @@ public class VlanRoaResourceTest extends SpringTest {
 
     @Test
     public void deleteTest() throws ServiceException {
-        Map<String, String> deleteResult = vlanRoaResource.delete(httpRequest, httpResponse, "VlanId");
+        Map<String, String> deleteResult = vlanRoaResource.delete(httpRequest, "VlanId");
         assertFalse(deleteResult.isEmpty());
     }
 
@@ -126,7 +126,7 @@ public class VlanRoaResourceTest extends SpringTest {
         NbiVlanModel vlanModel = new NbiVlanModel();
         vlanModel.setName("Vlan2");
         vlanModel.setDescription("Test for New Vlan Model data");
-        NbiVlanModel updatedModel = vlanRoaResource.update(httpRequest, httpResponse, "VlanId", vlanModel);
+        NbiVlanModel updatedModel = vlanRoaResource.update(httpRequest, "VlanId", vlanModel);
         assertTrue(null != updatedModel);
     }
 

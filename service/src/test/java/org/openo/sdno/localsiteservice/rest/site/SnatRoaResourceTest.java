@@ -21,7 +21,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -41,9 +40,6 @@ public class SnatRoaResourceTest extends SpringTest {
     @Mocked
     private HttpServletRequest httpRequest;
 
-    @Mocked
-    private HttpServletResponse httpResponse;
-
     @Before
     public void setUp() {
         new MockInventoryDao<SbiSnatNetModel>();
@@ -52,7 +48,7 @@ public class SnatRoaResourceTest extends SpringTest {
     @Test
     public void batchQueryTest() throws ServiceException {
         List<SbiSnatNetModel> sNatNetModelList =
-                snatRoaResource.batchQuery(httpRequest, httpResponse, "internetGatewayId");
+                snatRoaResource.batchQuery(httpRequest, "internetGatewayId");
         assertTrue(2 == sNatNetModelList.size());
     }
 

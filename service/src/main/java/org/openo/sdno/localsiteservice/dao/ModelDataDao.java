@@ -165,7 +165,7 @@ public class ModelDataDao<T extends UuidModel> {
     public ResultRsp<String> batchDelete(Class<T> clazz, List<T> modelDataList) throws ServiceException {
 
         @SuppressWarnings("unchecked")
-        List<String> modelDataUuids = new ArrayList<String>(CollectionUtils.collect(modelDataList, new Transformer() {
+        List<String> modelDataUuids = new ArrayList<>(CollectionUtils.collect(modelDataList, new Transformer() {
 
             @Override
             public Object transform(Object arg0) {

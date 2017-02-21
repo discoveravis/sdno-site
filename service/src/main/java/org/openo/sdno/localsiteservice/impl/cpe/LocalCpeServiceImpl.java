@@ -58,13 +58,13 @@ public class LocalCpeServiceImpl implements LocalCpeService {
     @Override
     public ResultRsp<NetworkElementMO> query(HttpServletRequest req, String localCpeUuid) throws ServiceException {
         NetworkElementMO networkElement = neInvDao.query(localCpeUuid);
-        return new ResultRsp<NetworkElementMO>(ErrorCode.OVERLAYVPN_SUCCESS, networkElement);
+        return new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS, networkElement);
     }
 
     @Override
     public ResultRsp<List<NetworkElementMO>> batchQuery(String siteId, String cpeType, int pageNum, int pageSize)
             throws ServiceException {
-        Map<String, String> filterMap = new HashMap<String, String>();
+        Map<String, String> filterMap = new HashMap<>();
         if(0 != pageSize) {
             filterMap.put("pageSize", String.valueOf(pageSize));
             filterMap.put("pageNum", String.valueOf(pageNum));
@@ -82,7 +82,7 @@ public class LocalCpeServiceImpl implements LocalCpeService {
 
         List<NetworkElementMO> networkElementList = neInvDao.query(filterMap);
 
-        return new ResultRsp<List<NetworkElementMO>>(ErrorCode.OVERLAYVPN_SUCCESS, networkElementList);
+        return new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS, networkElementList);
     }
 
     @Override
@@ -94,7 +94,7 @@ public class LocalCpeServiceImpl implements LocalCpeService {
 
         NetworkElementMO neMO = baseResourceDao.queryNeByEsn(localCpeModel.getEsn());
 
-        return new ResultRsp<NetworkElementMO>(ErrorCode.OVERLAYVPN_SUCCESS, neMO);
+        return new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS, neMO);
     }
 
     @Override

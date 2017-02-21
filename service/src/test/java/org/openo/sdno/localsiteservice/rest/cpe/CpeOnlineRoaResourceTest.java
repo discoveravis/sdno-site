@@ -68,7 +68,7 @@ public class CpeOnlineRoaResourceTest extends SpringTest{
 
     @Test
     public void deleteTest() throws ServiceException {
-        cpeOnlineRoaResource.delete(httpRequest, httpResponse, "[\"vCpePlanInfoId\"]");
+        cpeOnlineRoaResource.delete(httpRequest, "[\"vCpePlanInfoId\"]");
     }
 
 }

@@ -44,7 +44,7 @@ public class PopRoaResourceTest extends SpringTest {
     @Test
     public void queryTest() throws ServiceException {
         new MockPopInvDao();
-        PopMO popMO = popRoaResource.query(httpRequest, httpResponse, "PopUuid");
+        PopMO popMO = popRoaResource.query(httpRequest, "PopUuid");
         assertTrue("popName".equals(popMO.getName()));
     }
 

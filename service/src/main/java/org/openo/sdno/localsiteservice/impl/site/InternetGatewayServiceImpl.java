@@ -103,7 +103,7 @@ public class InternetGatewayServiceImpl implements InternetGatewayService {
     public ComplexResult<NbiInternetGatewayModel> batchQuery(String name, String tenantId, String siteId,
             String pageNum, String pageSize) throws ServiceException {
 
-        Map<String, Object> filterMap = new HashMap<String, Object>();
+        Map<String, Object> filterMap = new HashMap<>();
 
         if(StringUtils.isNotBlank(name)) {
             filterMap.put("name", Arrays.asList(name));
@@ -132,7 +132,7 @@ public class InternetGatewayServiceImpl implements InternetGatewayService {
             fillNeAndSite(internetGatewayModel);
         }
 
-        ComplexResult<NbiInternetGatewayModel> complexResult = new ComplexResult<NbiInternetGatewayModel>();
+        ComplexResult<NbiInternetGatewayModel> complexResult = new ComplexResult<>();
         complexResult.setData(internetGatewayModelList);
         complexResult.setTotal(internetGatewayModelList.size());
 
@@ -158,7 +158,7 @@ public class InternetGatewayServiceImpl implements InternetGatewayService {
             throw new ServiceException("NbiInternetGatewayModel insert failed");
         }
 
-        List<SbiSnatNetModel> sNatNetModels = new ArrayList<SbiSnatNetModel>();
+        List<SbiSnatNetModel> sNatNetModels = new ArrayList<>();
         List<String> sourceSubnets = internetGatewayModel.getSourceSubnets();
         if(CollectionUtils.isEmpty(sourceSubnets)) {
             sNatNetModels.add(buildSNatNetModel(internetGatewayModel, null));
@@ -366,7 +366,7 @@ public class InternetGatewayServiceImpl implements InternetGatewayService {
 
         InventoryDao<SbiSnatNetModel> sNatNetModelDao = new InventoryDaoUtil<SbiSnatNetModel>().getInventoryDao();
 
-        Map<String, Object> filterMap = new HashMap<String, Object>();
+        Map<String, Object> filterMap = new HashMap<>();
         filterMap.put("internetGatewayId", Arrays.asList(internetGatewayId));
 
         ResultRsp<List<SbiSnatNetModel>> queryResultRsp =

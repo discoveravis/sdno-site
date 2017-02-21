@@ -48,7 +48,7 @@ public class RouteEntryServiceImpl implements RouteEntryService {
 
     @Override
     public ResultRsp<NbiRouteEntryModel> query(HttpServletRequest req, String routeEntityUuid) throws ServiceException {
-        ModelDataDao<NbiRouteEntryModel> routeEntryModelDao = new ModelDataDao<NbiRouteEntryModel>();
+        ModelDataDao<NbiRouteEntryModel> routeEntryModelDao = new ModelDataDao<>();
         return routeEntryModelDao.query(NbiRouteEntryModel.class, routeEntityUuid);
     }
 
@@ -56,7 +56,7 @@ public class RouteEntryServiceImpl implements RouteEntryService {
     public ComplexResult<NbiRouteEntryModel> batchQuery(String name, String tenantId, String siteId, String pageNum,
             String pageSize) throws ServiceException {
 
-        Map<String, Object> filterMap = new HashMap<String, Object>();
+        Map<String, Object> filterMap = new HashMap<>();
         if(StringUtils.hasLength(name)) {
             filterMap.put("name", Arrays.asList(name));
         }
@@ -69,7 +69,7 @@ public class RouteEntryServiceImpl implements RouteEntryService {
             filterMap.put("siteId", Arrays.asList(siteId));
         }
 
-        ModelDataDao<NbiRouteEntryModel> routeEntryModelDao = new ModelDataDao<NbiRouteEntryModel>();
+        ModelDataDao<NbiRouteEntryModel> routeEntryModelDao = new ModelDataDao<>();
 
         ResultRsp<List<NbiRouteEntryModel>> resultRsp =
                 routeEntryModelDao.batchQuery(NbiRouteEntryModel.class, JsonUtil.toJson(filterMap));
@@ -79,7 +79,7 @@ public class RouteEntryServiceImpl implements RouteEntryService {
             throw new ServiceException("Batch query RouteEntryModel failed");
         }
 
-        ComplexResult<NbiRouteEntryModel> complexResult = new ComplexResult<NbiRouteEntryModel>();
+        ComplexResult<NbiRouteEntryModel> complexResult = new ComplexResult<>();
         complexResult.setData(resultRsp.getData());
         complexResult.setTotal(resultRsp.getData().size());
 
@@ -89,20 +89,20 @@ public class RouteEntryServiceImpl implements RouteEntryService {
     @Override
     public ResultRsp<NbiRouteEntryModel> create(HttpServletRequest req, NbiRouteEntryModel routeEntryModel)
             throws ServiceException {
-        ModelDataDao<NbiRouteEntryModel> routeEntryModelDao = new ModelDataDao<NbiRouteEntryModel>();
+        ModelDataDao<NbiRouteEntryModel> routeEntryModelDao = new ModelDataDao<>();
         return routeEntryModelDao.insert(routeEntryModel);
     }
 
     @Override
     public void delete(HttpServletRequest req, String routeEntityId) throws ServiceException {
-        ModelDataDao<NbiRouteEntryModel> routeEntryModelDao = new ModelDataDao<NbiRouteEntryModel>();
+        ModelDataDao<NbiRouteEntryModel> routeEntryModelDao = new ModelDataDao<>();
         routeEntryModelDao.delete(NbiRouteEntryModel.class, routeEntityId);
     }
 
     @Override
     public ResultRsp<NbiRouteEntryModel> update(HttpServletRequest req, NbiRouteEntryModel routeEntryModel)
             throws ServiceException {
-        ModelDataDao<NbiRouteEntryModel> routeEntryModelDao = new ModelDataDao<NbiRouteEntryModel>();
+        ModelDataDao<NbiRouteEntryModel> routeEntryModelDao = new ModelDataDao<>();
         return routeEntryModelDao.update(routeEntryModel, "name,description");
     }
 }

@@ -64,7 +64,6 @@ public class InternetGatewayRoaResource {
      * Query One Internet Gateway data.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param internetGatewayId Internet Gateway Id
      * @return Internet Gateway queried out
      * @throws ServiceException when query failed
@@ -74,7 +73,7 @@ public class InternetGatewayRoaResource {
     @Path("/{uuid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public NbiInternetGatewayModel query(@Context HttpServletRequest request, @Context HttpServletResponse response,
+    public NbiInternetGatewayModel query(@Context HttpServletRequest request,
             @PathParam("uuid") String internetGatewayId) throws ServiceException {
 
         long beginTime = System.currentTimeMillis();
@@ -95,7 +94,6 @@ public class InternetGatewayRoaResource {
      * Batch Query Internet Gateway data.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @return NbiInternetGatewayModel queried out
      * @throws ServiceException when query failed
      * @since SDNO 0.5
@@ -103,8 +101,8 @@ public class InternetGatewayRoaResource {
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ComplexResult<NbiInternetGatewayModel> batchQuery(@Context HttpServletRequest request,
-            @Context HttpServletResponse response) throws ServiceException {
+    public ComplexResult<NbiInternetGatewayModel> batchQuery(@Context HttpServletRequest request)
+            throws ServiceException {
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter batch query method");
 
@@ -152,7 +150,7 @@ public class InternetGatewayRoaResource {
             throw new ServiceException("NbiInternetGatewayModel create failed");
         }
 
-        Map<String, String> result = new HashMap<String, String>();
+        Map<String, String> result = new HashMap<>();
         result.put("id", resultRsp.getData().getUuid());
 
         response.setStatus(HttpCode.CREATE_OK);
@@ -165,7 +163,6 @@ public class InternetGatewayRoaResource {
      * Delete one Internet Gateway.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param internetGatewayId Internet Gateway Uuid
      * @throws ServiceException when delete failed
      * @since SDNO 0.5
@@ -174,8 +171,8 @@ public class InternetGatewayRoaResource {
     @Path("/{uuid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void delete(@Context HttpServletRequest request, @Context HttpServletResponse response,
-            @PathParam("uuid") String internetGatewayId) throws ServiceException {
+    public void delete(@Context HttpServletRequest request, @PathParam("uuid") String internetGatewayId)
+            throws ServiceException {
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter delete method, routeEntityUuid:" + internetGatewayId);
 
@@ -199,7 +196,6 @@ public class InternetGatewayRoaResource {
      * Update NbiInternetGatewayModel.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param internetGatewayId InternetGateway Id
      * @param internetGatewayModel NbiInternetGatewayModel need to update
      * @return NbiInternetGatewayModel updated
@@ -210,7 +206,7 @@ public class InternetGatewayRoaResource {
     @Path("/{uuid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public NbiInternetGatewayModel update(@Context HttpServletRequest request, @Context HttpServletResponse response,
+    public NbiInternetGatewayModel update(@Context HttpServletRequest request,
             @PathParam("uuid") String internetGatewayId, NbiInternetGatewayModel internetGatewayModel)
             throws ServiceException {
         long beginTime = System.currentTimeMillis();

@@ -93,8 +93,8 @@ public class SiteServiceImpl implements SiteService {
     public ComplexResult<NbiSiteModel> batchQuery(HttpServletRequest req, List<String> siteIds)
             throws ServiceException {
 
-        ComplexResult<NbiSiteModel> batchQueryResult = new ComplexResult<NbiSiteModel>();
-        List<NbiSiteModel> siteModelList = new ArrayList<NbiSiteModel>();
+        ComplexResult<NbiSiteModel> batchQueryResult = new ComplexResult<>();
+        List<NbiSiteModel> siteModelList = new ArrayList<>();
         for(String siteId : siteIds) {
             NbiSiteModel curSiteModel = querySiteModelById(siteId);
             if(null != curSiteModel) {
@@ -124,7 +124,7 @@ public class SiteServiceImpl implements SiteService {
             throw new ServiceException("SiteModel insert failed");
         }
 
-        return new ResultRsp<NbiSiteModel>(ErrorCode.OVERLAYVPN_SUCCESS, insertResultRsp.getData());
+        return new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS, insertResultRsp.getData());
     }
 
     @Override

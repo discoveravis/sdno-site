@@ -21,7 +21,6 @@ import static org.junit.Assert.assertTrue;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -41,9 +40,6 @@ public class InterfaceRoaResourceTest extends SpringTest {
     @Mocked
     private HttpServletRequest httpRequest;
 
-    @Mocked
-    private HttpServletResponse httpResponse;
-
     @Before
     public void setUp() {
         new MockNetworkElementInvDao();
@@ -52,7 +48,7 @@ public class InterfaceRoaResourceTest extends SpringTest {
 
     @Test
     public void queryTest() throws ServiceException {
-        List<InterfaceModel> interfaceModelList = interfaceRoaResource.query(httpRequest, httpResponse, "deviceUuid");
+        List<InterfaceModel> interfaceModelList = interfaceRoaResource.query(httpRequest, "deviceUuid");
         assertTrue(1 == interfaceModelList.size());
         assertTrue("TestInterface".equals(interfaceModelList.get(0).getName()));
     }

@@ -69,14 +69,13 @@ public class SiteRoaResourceTest extends SpringTest {
 
     @Test
     public void queryTest() throws ServiceException {
-        NbiSiteModel siteModel = siteRoaResource.query(httpRequest, httpResponse, "SiteId");
+        NbiSiteModel siteModel = siteRoaResource.query(httpRequest, "SiteId");
         assertTrue(null != siteModel);
     }
 
     @Test
     public void batchQueryTest() throws ServiceException {
-        ComplexResult<NbiSiteModel> queryResult =
-                siteRoaResource.batchQuery(httpRequest, httpResponse, "[\"SiteId\",\"SiteId2\"]");
+        ComplexResult<NbiSiteModel> queryResult = siteRoaResource.batchQuery(httpRequest, "[\"SiteId\",\"SiteId2\"]");
         assertTrue(2 == queryResult.getTotal());
     }
 
@@ -88,12 +87,12 @@ public class SiteRoaResourceTest extends SpringTest {
 
     @Test
     public void deleteTest() throws ServiceException {
-        siteRoaResource.delete(httpRequest, httpResponse, "SiteId");
+        siteRoaResource.delete(httpRequest, "SiteId");
     }
 
     @Test
     public void updateTest() throws ServiceException {
-        Map<String, Object> updateResult = siteRoaResource.update(httpRequest, httpResponse, "SiteId", siteModel);
+        Map<String, Object> updateResult = siteRoaResource.update(httpRequest, "SiteId", siteModel);
         assertTrue(!updateResult.isEmpty());
     }
 }

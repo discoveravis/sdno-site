@@ -107,7 +107,7 @@ public class CloudCpeServiceImpl implements CloudCpeService {
         InventoryDao<NbiCloudCpeModel> cloudCpeModelDao = new InventoryDaoUtil<NbiCloudCpeModel>().getInventoryDao();
         cloudCpeModelDao.insert(cloudCpeModel);
 
-        return new ResultRsp<NbiCloudCpeModel>(ErrorCode.OVERLAYVPN_SUCCESS, cloudCpeModel);
+        return new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS, cloudCpeModel);
     }
 
     @Override

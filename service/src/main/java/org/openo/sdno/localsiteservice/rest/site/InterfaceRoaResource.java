@@ -19,7 +19,6 @@ package org.openo.sdno.localsiteservice.rest.site;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -57,7 +56,6 @@ public class InterfaceRoaResource {
      * Query Interface.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param deviceUuid NetworkElement Uuid
      * @return Interface data queried out
      * @throws ServiceException when query failed
@@ -67,8 +65,8 @@ public class InterfaceRoaResource {
     @Path("/{uuid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<InterfaceModel> query(@Context HttpServletRequest request, @Context HttpServletResponse response,
-            @PathParam("uuid") String deviceUuid) throws ServiceException {
+    public List<InterfaceModel> query(@Context HttpServletRequest request, @PathParam("uuid") String deviceUuid)
+            throws ServiceException {
 
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter query method deviceUuid:" + deviceUuid);

@@ -65,7 +65,6 @@ public class CloudCpeRoaResource {
      * Query CloudCpe.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param cloudCpeUuid CloudCpe Uuid
      * @return CloudCpe queried out
      * @throws ServiceException when query failed
@@ -75,8 +74,8 @@ public class CloudCpeRoaResource {
     @Path("/{uuid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public NbiCloudCpeModel query(@Context HttpServletRequest request, @Context HttpServletResponse response,
-            @PathParam("uuid") String cloudCpeUuid) throws ServiceException {
+    public NbiCloudCpeModel query(@Context HttpServletRequest request, @PathParam("uuid") String cloudCpeUuid)
+            throws ServiceException {
 
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter query method cloudCpeUuid:" + cloudCpeUuid);
@@ -100,7 +99,6 @@ public class CloudCpeRoaResource {
      * Batch query CloudCpes.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param tenantId Tenant Uuid
      * @param popId Pop Uuid
      * @param siteId Site Uuid
@@ -111,7 +109,7 @@ public class CloudCpeRoaResource {
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<NbiCloudCpeModel> batchQuery(@Context HttpServletRequest request, @Context HttpServletResponse response,
+    public List<NbiCloudCpeModel> batchQuery(@Context HttpServletRequest request,
             @QueryParam("tenantId") String tenantId, @QueryParam("popId") String popId,
             @QueryParam("siteId") String siteId) throws ServiceException {
 
@@ -178,7 +176,6 @@ public class CloudCpeRoaResource {
      * Delete CloudCpe.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param cloudCpeUuid CloudCpe Uuid
      * @return Uuid of NbiCloudCpeModel deleted
      * @throws ServiceException when delete failed
@@ -188,8 +185,8 @@ public class CloudCpeRoaResource {
     @Path("/{uuid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String delete(@Context HttpServletRequest request, @Context HttpServletResponse response,
-            @PathParam("uuid") String cloudCpeUuid) throws ServiceException {
+    public String delete(@Context HttpServletRequest request, @PathParam("uuid") String cloudCpeUuid)
+            throws ServiceException {
 
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter delete method cloudCpeUuid:" + cloudCpeUuid);

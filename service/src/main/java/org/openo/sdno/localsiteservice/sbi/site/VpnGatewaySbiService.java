@@ -44,6 +44,14 @@ public class VpnGatewaySbiService {
 
     private static final String VPN_GATEWAY_QUERY_URL = "/openoapi/sdnooverlay/v1/vpn-gateways";
 
+    /**
+     * Query Vpn Gateway.<br>
+     * 
+     * @param siteId Site Uuid
+     * @return List of VpnGateway queried out
+     * @throws ServiceException when query failed
+     * @since SDNO 0.5
+     */
     public List<VpnGateway> queryVpnGateway(String siteId) throws ServiceException {
 
         RestfulParametes restfulParameters = new RestfulParametes();

@@ -74,14 +74,14 @@ public class LocalCpeRoaResourceTest extends SpringTest {
 
     @Test
     public void queryTest() throws ServiceException {
-        NetworkElementMO localCpeMO = localCpeRoaResource.query(httpRequest, httpResponse, "localCpeUuid");
+        NetworkElementMO localCpeMO = localCpeRoaResource.query(httpRequest, "localCpeUuid");
         assertTrue("neName".equals(localCpeMO.getName()));
     }
 
     @Test
     public void batchQueryTest() throws ServiceException {
         List<NetworkElementMO> localCpeMOList =
-                localCpeRoaResource.batchQuery(httpRequest, httpResponse, "siteId", "cpeType", 12, 13);
+                localCpeRoaResource.batchQuery(httpRequest, "siteId", "cpeType", 12, 13);
         assertTrue(1 == localCpeMOList.size());
         assertTrue("neName".equals(localCpeMOList.get(0).getName()));
     }
@@ -101,6 +101,6 @@ public class LocalCpeRoaResourceTest extends SpringTest {
 
     @Test
     public void deleteTest() throws ServiceException {
-        localCpeRoaResource.delete(httpRequest, httpResponse, "LocalCpeId");
+        localCpeRoaResource.delete(httpRequest, "LocalCpeId");
     }
 }

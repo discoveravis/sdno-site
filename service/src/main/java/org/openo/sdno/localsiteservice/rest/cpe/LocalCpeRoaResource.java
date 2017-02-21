@@ -73,7 +73,6 @@ public class LocalCpeRoaResource {
      * Query Local Cpe.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param localCpeUuid LocalCpe Uuid
      * @return LocalCpe Data queried out
      * @throws ServiceException when query failed
@@ -83,8 +82,8 @@ public class LocalCpeRoaResource {
     @Path("/{uuid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public NetworkElementMO query(@Context HttpServletRequest request, @Context HttpServletResponse response,
-            @PathParam("uuid") String localCpeUuid) throws ServiceException {
+    public NetworkElementMO query(@Context HttpServletRequest request, @PathParam("uuid") String localCpeUuid)
+            throws ServiceException {
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter query method deviceUuid:" + localCpeUuid);
 
@@ -106,7 +105,6 @@ public class LocalCpeRoaResource {
      * Batch query LocalCpes.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param siteId Site Uuid
      * @param cpeType LocalCpe type
      * @param pageSize page size
@@ -118,9 +116,9 @@ public class LocalCpeRoaResource {
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<NetworkElementMO> batchQuery(@Context HttpServletRequest request, @Context HttpServletResponse response,
-            @QueryParam("siteId") String siteId, @QueryParam("cpeType") String cpeType,
-            @QueryParam("pageSize") int pageSize, @QueryParam("pageNum") int pageNum) throws ServiceException {
+    public List<NetworkElementMO> batchQuery(@Context HttpServletRequest request, @QueryParam("siteId") String siteId,
+            @QueryParam("cpeType") String cpeType, @QueryParam("pageSize") int pageSize,
+            @QueryParam("pageNum") int pageNum) throws ServiceException {
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter batch query method");
 
@@ -184,7 +182,6 @@ public class LocalCpeRoaResource {
      * Delete LocalCpe.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param localCpeUuid LocalCpe Uuid
      * @throws ServiceException when delete failed
      * @since SDNO 0.5
@@ -193,8 +190,8 @@ public class LocalCpeRoaResource {
     @Path("/{uuid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void delete(@Context HttpServletRequest request, @Context HttpServletResponse response,
-            @PathParam("uuid") String localCpeUuid) throws ServiceException {
+    public void delete(@Context HttpServletRequest request, @PathParam("uuid") String localCpeUuid)
+            throws ServiceException {
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter delete method, localCpeUuid:" + localCpeUuid);
 

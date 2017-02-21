@@ -66,6 +66,8 @@ public class VlanServiceImpl implements VlanService {
 
     private static final int DEFAULT_VLAN_ID = 1;
 
+    private static final String ACTION_STATE_FIELD = "actionState";
+
     @Autowired
     private VlanSbiService sbiService;
 
@@ -83,8 +85,8 @@ public class VlanServiceImpl implements VlanService {
 
     @Override
     public ResultRsp<NbiVlanModel> query(HttpServletRequest req, String vlanUuid) throws ServiceException {
-        InventoryDao<NbiVlanModel> VlanInvDao = new InventoryDaoUtil<NbiVlanModel>().getInventoryDao();
-        ResultRsp<NbiVlanModel> queryResultRsp = VlanInvDao.query(NbiVlanModel.class, vlanUuid, null);
+        InventoryDao<NbiVlanModel> vlanInvDao = new InventoryDaoUtil<NbiVlanModel>().getInventoryDao();
+        ResultRsp<NbiVlanModel> queryResultRsp = vlanInvDao.query(NbiVlanModel.class, vlanUuid, null);
         if(!queryResultRsp.isSuccess()) {
             LOGGER.error("Query Vlan Model Data failed");
             throw new ServiceException("Query Vlan Model Data failed");
@@ -93,15 +95,15 @@ public class VlanServiceImpl implements VlanService {
         NbiVlanModel vlanModel = queryResultRsp.getData();
         fillVlanModelPortsInfo(vlanModel);
 
-        return new ResultRsp<NbiVlanModel>(ErrorCode.OVERLAYVPN_SUCCESS, vlanModel);
+        return new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS, vlanModel);
     }
 
     @Override
     public ComplexResult<NbiVlanModel> batchQuery(String name, String tenantId, String siteId, String pageNum,
             String pageSize) throws ServiceException {
-        InventoryDao<NbiVlanModel> VlanInvDao = new InventoryDaoUtil<NbiVlanModel>().getInventoryDao();
+        InventoryDao<NbiVlanModel> vlanInvDao = new InventoryDaoUtil<NbiVlanModel>().getInventoryDao();
 
-        Map<String, Object> filterMap = new HashMap<String, Object>();
+        Map<String, Object> filterMap = new HashMap<>();
         if(StringUtils.hasLength(name)) {
             filterMap.put("name", Arrays.asList(name));
         }
@@ -115,7 +117,7 @@ public class VlanServiceImpl implements VlanService {
         }
 
         ResultRsp<List<NbiVlanModel>> resultRsp =
-                VlanInvDao.queryByFilter(NbiVlanModel.class, JsonUtil.toJson(filterMap), null);
+                vlanInvDao.queryByFilter(NbiVlanModel.class, JsonUtil.toJson(filterMap), null);
         if(!resultRsp.isValid()) {
             LOGGER.error("VlanModel bath query failed");
             throw new ServiceException("VlanModel bath query failed");
@@ -127,7 +129,7 @@ public class VlanServiceImpl implements VlanService {
             fillVlanModelPortsInfo(vlanModel);
         }
 
-        return new ComplexResult<NbiVlanModel>(resultVlanModelList.size(), 0, resultVlanModelList.size(),
+        return new ComplexResult<>(resultVlanModelList.size(), 0, resultVlanModelList.size(),
                 resultVlanModelList);
     }
 
@@ -140,13 +142,13 @@ public class VlanServiceImpl implements VlanService {
         // Query LocalCpe Network Element
         NetworkElementMO localCPE = siteModelDao.getSiteLocalCpe(siteId);
 
-        List<LogicalTernminationPointMO> ltpMOList = null;
+        List<LogicalTernminationPointMO> ltpMOList;
 
         // Query Related Ports
         if(CollectionUtils.isEmpty(portUuids)) {
             ltpMOList = queryLtpMOList(siteId, localCPE.getId());
             @SuppressWarnings("unchecked")
-            List<String> ltpMOUuids = new ArrayList<String>(CollectionUtils.collect(ltpMOList, new Transformer() {
+            List<String> ltpMOUuids = new ArrayList<>(CollectionUtils.collect(ltpMOList, new Transformer() {
 
                 @Override
                 public Object transform(Object arg0) {
@@ -172,7 +174,7 @@ public class VlanServiceImpl implements VlanService {
             ResultRsp<NbiVlanModel> relationResultRsp = (new ModelDataDao<NbiVlanModel>()).addRelation(relationMO);
             if(!relationResultRsp.isSuccess()) {
                 LOGGER.error("RelationMO add failed");
-                return new ResultRsp<NbiVlanModel>(ErrorCode.OVERLAYVPN_FAILED);
+                return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
             }
         }
 
@@ -205,7 +207,7 @@ public class VlanServiceImpl implements VlanService {
         // Update Status of Vlan Model
         vlanModel.setActionState(ActionStatus.NORMAL.getName());
         ResultRsp<NbiVlanModel> updateVlanResultRsp =
-                (new ModelDataDao<NbiVlanModel>()).update(vlanModel, "actionState");
+                (new ModelDataDao<NbiVlanModel>()).update(vlanModel, ACTION_STATE_FIELD);
         if(!updateVlanResultRsp.isValid()) {
             LOGGER.error("Update Vlan Model failed");
             throw new ServiceException("Update Vlan Model failed");
@@ -224,7 +226,7 @@ public class VlanServiceImpl implements VlanService {
 
         vlanModel.setActionState(ActionStatus.DELETING.getName());
         ResultRsp<NbiVlanModel> updateStatusResultRsp =
-                (new ModelDataDao<NbiVlanModel>()).update(vlanModel, "actionState");
+                (new ModelDataDao<NbiVlanModel>()).update(vlanModel, ACTION_STATE_FIELD);
         if(!updateStatusResultRsp.isValid()) {
             LOGGER.error("Update Vlan Model Status failed");
             throw new ServiceException("Update Vlan Model Status failed");
@@ -273,7 +275,7 @@ public class VlanServiceImpl implements VlanService {
             throw new ServiceException("VlanModel Delete failed");
         }
 
-        return new ResultRsp<NbiVlanModel>(ErrorCode.OVERLAYVPN_SUCCESS, vlanModel);
+        return new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS, vlanModel);
     }
 
     @Override
@@ -311,23 +313,23 @@ public class VlanServiceImpl implements VlanService {
             }
         } catch(ServiceException e) {
             vlanModel.setActionState(ActionStatus.UPDATE_EXCEPTION.getName());
-            (new ModelDataDao<NbiVlanModel>()).update(vlanModel, "actionState");
+            (new ModelDataDao<NbiVlanModel>()).update(vlanModel, ACTION_STATE_FIELD);
             throw e;
         }
 
         vlanModel.setActionState(ActionStatus.NORMAL.getName());
-        return (new ModelDataDao<NbiVlanModel>()).update(vlanModel, "actionState");
+        return (new ModelDataDao<NbiVlanModel>()).update(vlanModel, ACTION_STATE_FIELD);
     }
 
     private ResultRsp<List<SbiIfVlan>> queryIfVlanByVlanId(String vlanUuid) throws ServiceException {
-        Map<String, Object> filterMap = new HashMap<String, Object>();
+        Map<String, Object> filterMap = new HashMap<>();
         filterMap.put("serviceVlanUuId", Arrays.asList(vlanUuid));
 
         ResultRsp<List<SbiIfVlan>> queryResultRsp =
                 (new ModelDataDao<SbiIfVlan>()).queryByFilter(SbiIfVlan.class, filterMap, null);
         if(!queryResultRsp.isValid()) {
             LOGGER.error("IfVlan query failed");
-            return new ResultRsp<List<SbiIfVlan>>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         return queryResultRsp;
@@ -344,14 +346,14 @@ public class VlanServiceImpl implements VlanService {
      */
     private List<LogicalTernminationPointMO> queryLtpMOList(String siteId, String neId) throws ServiceException {
 
-        List<LogicalTernminationPointMO> ltpMOList = new ArrayList<LogicalTernminationPointMO>();
+        List<LogicalTernminationPointMO> ltpMOList = new ArrayList<>();
 
         String templateName = siteModelDao.getTemplateName(siteId);
         String localCpeType = siteModelDao.getLocalCpeType(siteId);
 
         List<String> lanInfNameList = templateSbiSrevice.getLanPortList(templateName, localCpeType);
         for(String lanInfName : lanInfNameList) {
-            Map<String, String> conditionMap = new HashMap<String, String>();
+            Map<String, String> conditionMap = new HashMap<>();
             conditionMap.put("name", lanInfName);
             conditionMap.put("meID", neId);
             List<LogicalTernminationPointMO> curLtpMOList = ltpInvDao.query(conditionMap);
@@ -374,7 +376,7 @@ public class VlanServiceImpl implements VlanService {
      */
     public static List<SbiIfVlan> constructIfVlanData(List<LogicalTernminationPointMO> ltpMOList,
             NbiVlanModel vlanModel) throws ServiceException {
-        List<SbiIfVlan> ifVlanList = new ArrayList<SbiIfVlan>(ltpMOList.size());
+        List<SbiIfVlan> ifVlanList = new ArrayList<>(ltpMOList.size());
 
         for(LogicalTernminationPointMO curLtpMO : ltpMOList) {
             SbiIfVlan ifVlan = new SbiIfVlan();
@@ -399,7 +401,7 @@ public class VlanServiceImpl implements VlanService {
      * @since SDNO 0.5
      */
     private List<SbiIfVlan> setVlanToIfVlans(List<SbiIfVlan> ifVlanList, NbiVlanModel vlanModel) {
-        List<SbiIfVlan> resultSbiIfVlanList = new ArrayList<SbiIfVlan>();
+        List<SbiIfVlan> resultSbiIfVlanList = new ArrayList<>();
         List<String> portIds = vlanModel.getPorts();
 
         for(String portId : portIds) {
@@ -446,7 +448,7 @@ public class VlanServiceImpl implements VlanService {
             throw new ServiceException("Relation query failed");
         }
 
-        List<String> portIds = new ArrayList<String>();
+        List<String> portIds = new ArrayList<>();
         for(RelationPuerMO relationMO : relationResultRsp.getData()) {
             portIds.add(relationMO.getDstUuid());
         }

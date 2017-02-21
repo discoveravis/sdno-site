@@ -64,7 +64,6 @@ public class RouteEntryRoaResource {
      * Query one RouteEntity.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param routeEntryUuid RouteEntity Uuid
      * @return RouteEntity queried out
      * @throws ServiceException when query failed
@@ -74,8 +73,8 @@ public class RouteEntryRoaResource {
     @Path("/{uuid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public NbiRouteEntryModel query(@Context HttpServletRequest request, @Context HttpServletResponse response,
-            @PathParam("uuid") String routeEntryUuid) throws ServiceException {
+    public NbiRouteEntryModel query(@Context HttpServletRequest request, @PathParam("uuid") String routeEntryUuid)
+            throws ServiceException {
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter query method routeEntityUuid:" + routeEntryUuid);
 
@@ -97,7 +96,6 @@ public class RouteEntryRoaResource {
      * Batch query RouteEntitys.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @return List of RouteEntitys queried out
      * @throws ServiceException when query failed
      * @since SDNO 0.5
@@ -105,8 +103,7 @@ public class RouteEntryRoaResource {
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ComplexResult<NbiRouteEntryModel> batchQuery(@Context HttpServletRequest request,
-            @Context HttpServletResponse response) throws ServiceException {
+    public ComplexResult<NbiRouteEntryModel> batchQuery(@Context HttpServletRequest request) throws ServiceException {
 
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter batch query method");
@@ -154,7 +151,7 @@ public class RouteEntryRoaResource {
             throw new ServiceException("SubnetModel create failed");
         }
 
-        Map<String, String> result = new HashMap<String, String>();
+        Map<String, String> result = new HashMap<>();
         result.put("id", resultRsp.getData().getUuid());
 
         response.setStatus(HttpCode.CREATE_OK);
@@ -168,7 +165,6 @@ public class RouteEntryRoaResource {
      * Delete one RouteEntry.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param routeEntryUuid Uuid of RouteEntity which need to delete
      * @throws ServiceException when delete failed
      * @since SDNO 0.5
@@ -177,8 +173,8 @@ public class RouteEntryRoaResource {
     @Path("/{uuid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void delete(@Context HttpServletRequest request, @Context HttpServletResponse response,
-            @PathParam("uuid") String routeEntryUuid) throws ServiceException {
+    public void delete(@Context HttpServletRequest request, @PathParam("uuid") String routeEntryUuid)
+            throws ServiceException {
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter delete method, routeEntityUuid:" + routeEntryUuid);
 
@@ -202,7 +198,6 @@ public class RouteEntryRoaResource {
      * Update one RouteEntry.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param routeEntryUuid Uuid of RouteEntity which need to update
      * @param routeEntryModel RouteEntryModel need to update
      * @throws ServiceException when update failed
@@ -212,8 +207,8 @@ public class RouteEntryRoaResource {
     @Path("/{uuid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public NbiRouteEntryModel update(@Context HttpServletRequest request, @Context HttpServletResponse response,
-            @PathParam("uuid") String routeEntryUuid, NbiRouteEntryModel routeEntryModel) throws ServiceException {
+    public NbiRouteEntryModel update(@Context HttpServletRequest request, @PathParam("uuid") String routeEntryUuid,
+            NbiRouteEntryModel routeEntryModel) throws ServiceException {
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter update method, routeEntityUuid:" + routeEntryUuid);
 

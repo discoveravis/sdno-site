@@ -142,7 +142,7 @@ public class CpeModelChecker {
             throw new ServiceException("Site Model query failed or does not exist");
         }
 
-        if((!localCpeType.equals(queryResultRsp.getData().getLocalCpeType()))) {
+        if(!localCpeType.equals(queryResultRsp.getData().getLocalCpeType())) {
             LOGGER.error("LocalCpeType is invalid in model data");
             throw new ServiceException("LocalCpeType is invalid in model data");
         }
@@ -150,7 +150,7 @@ public class CpeModelChecker {
 
     private void checkEsnFormat(String neRole, String esn) throws ServiceException {
 
-        Pattern targetPattern = null;
+        Pattern targetPattern;
 
         if(CpeRoleType.THIN_CPE.getName().equals(neRole)) {
             targetPattern = PHYCPE_ESN_PATTERN;

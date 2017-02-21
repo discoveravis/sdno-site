@@ -75,7 +75,6 @@ public class SiteRoaResource {
      * Query one site.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param siteUuid Site Uuid
      * @return Site queried out
      * @throws ServiceException when query failed
@@ -85,8 +84,8 @@ public class SiteRoaResource {
     @Path("/{uuid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public NbiSiteModel query(@Context HttpServletRequest request, @Context HttpServletResponse response,
-            @PathParam("uuid") String siteUuid) throws ServiceException {
+    public NbiSiteModel query(@Context HttpServletRequest request, @PathParam("uuid") String siteUuid)
+            throws ServiceException {
 
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter query method siteUuid:" + siteUuid);
@@ -109,7 +108,6 @@ public class SiteRoaResource {
      * Batch query sites.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param uuids List of Uuid need to query
      * @return List of Sites queried out
      * @throws ServiceException when query failed
@@ -119,7 +117,7 @@ public class SiteRoaResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public ComplexResult<NbiSiteModel> batchQuery(@Context HttpServletRequest request,
-            @Context HttpServletResponse response, @QueryParam("uuids") String uuids) throws ServiceException {
+            @QueryParam("uuids") String uuids) throws ServiceException {
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter batch query method");
 
@@ -170,7 +168,7 @@ public class SiteRoaResource {
             throw new ServiceException("NbiSiteModel create failed");
         }
 
-        Map<String, String> result = new HashMap<String, String>();
+        Map<String, String> result = new HashMap<>();
         result.put("id", resultRsp.getData().getUuid());
 
         response.setStatus(HttpCode.CREATE_OK);
@@ -183,7 +181,6 @@ public class SiteRoaResource {
      * Delete one site.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param siteUuid Uuid of Site which need to delete
      * @return SiteModel deleted
      * @throws ServiceException when delete failed
@@ -193,8 +190,8 @@ public class SiteRoaResource {
     @Path("/{uuid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public NbiSiteModel delete(@Context HttpServletRequest request, @Context HttpServletResponse response,
-            @PathParam("uuid") String siteUuid) throws ServiceException {
+    public NbiSiteModel delete(@Context HttpServletRequest request, @PathParam("uuid") String siteUuid)
+            throws ServiceException {
 
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter delete method, siteUuid:" + siteUuid);
@@ -231,7 +228,6 @@ public class SiteRoaResource {
      * Update Site data.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param siteUuid Uuid of Site need to update
      * @param siteModel NbiSiteModel need to update
      * @return Site updated
@@ -242,8 +238,8 @@ public class SiteRoaResource {
     @Path("/{uuid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String, Object> update(@Context HttpServletRequest request, @Context HttpServletResponse response,
-            @PathParam("uuid") String siteUuid, NbiSiteModel siteModel) throws ServiceException {
+    public Map<String, Object> update(@Context HttpServletRequest request, @PathParam("uuid") String siteUuid,
+            NbiSiteModel siteModel) throws ServiceException {
 
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter update method, siteUuid:" + siteUuid);
@@ -274,7 +270,7 @@ public class SiteRoaResource {
 
         NbiSiteModel updatedModel = updateResultRsp.getData();
 
-        Map<String, Object> resultMap = new HashMap<String, Object>();
+        Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("id", updatedModel.getUuid());
 
         LOGGER.debug("Exit update method cost time:" + (System.currentTimeMillis() - beginTime));

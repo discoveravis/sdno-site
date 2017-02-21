@@ -60,7 +60,7 @@ public class NetworkElementServiceImpl implements NetworkElementService {
 
         List<NetworkElementMO> neMOList = neInvDao.getMOByIds(neUuidList);
 
-        return new ResultRsp<List<NetworkElementMO>>(ErrorCode.OVERLAYVPN_SUCCESS, neMOList);
+        return new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS, neMOList);
     }
 
 }

@@ -82,13 +82,13 @@ public class SubnetServiceImpl implements SubnetService {
                 (new ModelDataDao<NbiSubnetModel>()).query(NbiSubnetModel.class, subnetUuid);
         if(!queryResultRsp.isValid()) {
             LOGGER.error("Query Subnet Model failed");
-            return new ResultRsp<NbiSubnetModel>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         ResultRsp<SbiSubnetNetModel> queryNetModelResultRsp = queryBySubnetId(subnetUuid);
         if(!queryNetModelResultRsp.isSuccess()) {
             LOGGER.error("Query Subnet Net Model failed");
-            return new ResultRsp<NbiSubnetModel>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         if(queryNetModelResultRsp.isValid()) {
@@ -101,7 +101,7 @@ public class SubnetServiceImpl implements SubnetService {
     @Override
     public ComplexResult<NbiSubnetModel> batchQuery(String name, String tenantId, String siteId, String pageNum,
             String pageSize) throws ServiceException {
-        Map<String, Object> filterMap = new HashMap<String, Object>();
+        Map<String, Object> filterMap = new HashMap<>();
 
         if(StringUtils.isNotBlank(name)) {
             filterMap.put("name", Arrays.asList(name));
@@ -129,7 +129,7 @@ public class SubnetServiceImpl implements SubnetService {
             subnetModel.setVni(queryNetModelResultRsp.getData().getVni());
         }
 
-        ComplexResult<NbiSubnetModel> complexResult = new ComplexResult<NbiSubnetModel>();
+        ComplexResult<NbiSubnetModel> complexResult = new ComplexResult<>();
         complexResult.setData(subnetModelList);
         complexResult.setTotal(subnetModelList.size());
 
@@ -149,13 +149,13 @@ public class SubnetServiceImpl implements SubnetService {
             if(StringUtils.isBlank(subnetModel.getCidrBlock()) || StringUtils.isBlank(subnetModel.getGatewayIp())
                     || StringUtils.isBlank(subnetModel.getIpv6Address())
                     || StringUtils.isBlank(subnetModel.getPrefixLength())) {
-                LOGGER.error("Subnet parameter is not complete");
-                throw new ServiceException("Subnet parameter is not complete");
+                LOGGER.error("Subnet parameter is not complete, need to fill complete paramters");
+                throw new ServiceException("Subnet parameter is not complete in Ipv6");
             }
         } else {
             if(StringUtils.isBlank(subnetModel.getCidrBlock()) || StringUtils.isBlank(subnetModel.getGatewayIp())) {
-                LOGGER.error("Subnet parameter is not complete");
-                throw new ServiceException("Subnet parameter is not complete");
+                LOGGER.error("Parameter is not complete, need to fill complete paramters");
+                throw new ServiceException("Subnet parameter is not complete in Ipv4");
             }
         }
 
@@ -205,7 +205,7 @@ public class SubnetServiceImpl implements SubnetService {
 
         ResultRsp<SbiSubnetNetModel> queryResultRsp = queryBySubnetId(subnetModel.getUuid());
         if(!queryResultRsp.isValid()) {
-            LOGGER.error("SbiSubnetNetModel query failed or not exist");
+            LOGGER.error("SubnetNetModel query failed or not exist");
             throw new ServiceException("SbiSubnetNetModel query failed or not exist");
         }
 
@@ -231,7 +231,7 @@ public class SubnetServiceImpl implements SubnetService {
             throw new ServiceException("NbiSubnetModel delete from database failed");
         }
 
-        return new ResultRsp<NbiSubnetModel>(ErrorCode.OVERLAYVPN_SUCCESS, subnetModel);
+        return new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS, subnetModel);
     }
 
     @Override
@@ -269,21 +269,21 @@ public class SubnetServiceImpl implements SubnetService {
     }
 
     private ResultRsp<SbiSubnetNetModel> queryBySubnetId(String subnetId) throws ServiceException {
-        Map<String, Object> filterMap = new HashMap<String, Object>();
+        Map<String, Object> filterMap = new HashMap<>();
         filterMap.put("serviceSubnetId", Arrays.asList(subnetId));
 
         ResultRsp<List<SbiSubnetNetModel>> queryResultRsp =
                 (new ModelDataDao<SbiSubnetNetModel>()).queryByFilter(SbiSubnetNetModel.class, filterMap, null);
         if(!queryResultRsp.isValid()) {
             LOGGER.error("SbiSubnetNetModel query failed");
-            return new ResultRsp<SbiSubnetNetModel>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         List<SbiSubnetNetModel> subnetNetModelList = queryResultRsp.getData();
         if(subnetNetModelList.isEmpty()) {
-            return new ResultRsp<SbiSubnetNetModel>(ErrorCode.OVERLAYVPN_SUCCESS);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS);
         } else {
-            return new ResultRsp<SbiSubnetNetModel>(ErrorCode.OVERLAYVPN_SUCCESS, subnetNetModelList.get(0));
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS, subnetNetModelList.get(0));
         }
     }
 
@@ -299,9 +299,9 @@ public class SubnetServiceImpl implements SubnetService {
 
         LogicalTernminationPointInvDao ltpInvDao = new LogicalTernminationPointInvDao();
 
-        List<LogicalTernminationPointMO> totalLtpMOList = new ArrayList<LogicalTernminationPointMO>();
+        List<LogicalTernminationPointMO> totalLtpMOList = new ArrayList<>();
         for(String portName : portNames) {
-            Map<String, String> conditionMap = new HashMap<String, String>();
+            Map<String, String> conditionMap = new HashMap<>();
             conditionMap.put("name", portName);
             conditionMap.put("meID", localCPE.getId());
             List<LogicalTernminationPointMO> ltpMOList = ltpInvDao.query(conditionMap);
@@ -309,7 +309,7 @@ public class SubnetServiceImpl implements SubnetService {
         }
 
         @SuppressWarnings("unchecked")
-        List<String> portUuids = new ArrayList<String>(CollectionUtils.collect(totalLtpMOList, new Transformer() {
+        List<String> portUuids = new ArrayList<>(CollectionUtils.collect(totalLtpMOList, new Transformer() {
 
             @Override
             public Object transform(Object arg0) {

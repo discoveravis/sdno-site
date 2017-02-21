@@ -67,14 +67,14 @@ public class CloudCpeRoaResourceTest extends SpringTest {
 
     @Test
     public void queryTest() throws ServiceException {
-        NbiCloudCpeModel cloudCpeModel = cloudCpeRoaResource.query(httpRequest, httpResponse, "cloudCpeUuid");
+        NbiCloudCpeModel cloudCpeModel = cloudCpeRoaResource.query(httpRequest, "cloudCpeUuid");
         assertTrue(null != cloudCpeModel);
     }
 
     @Test
     public void batchQueryTest() throws ServiceException {
         List<NbiCloudCpeModel> cloudCpeModelList =
-                cloudCpeRoaResource.batchQuery(httpRequest, httpResponse, "tenantId", "popId", "siteId");
+                cloudCpeRoaResource.batchQuery(httpRequest, "tenantId", "popId", "siteId");
         assertTrue(2 == cloudCpeModelList.size());
     }
 
@@ -101,7 +101,7 @@ public class CloudCpeRoaResourceTest extends SpringTest {
 
     @Test
     public void deleteTest() throws ServiceException {
-        cloudCpeRoaResource.delete(httpRequest, httpResponse, "CloudCpeId");
+        cloudCpeRoaResource.delete(httpRequest, "CloudCpeId");
     }
 
 }

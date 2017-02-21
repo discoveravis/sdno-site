@@ -94,8 +94,7 @@ public class SiteModelDao {
      */
     public String getTemplateName(String siteId) throws ServiceException {
         NbiSiteModel siteModel = querySiteModelById(siteId);
-        String templateName = siteModel.getSiteDescriptor() + TEMPLATE_NAME_SPLIT + siteModel.getReliability();
-        return templateName;
+        return siteModel.getSiteDescriptor() + TEMPLATE_NAME_SPLIT + siteModel.getReliability();
     }
 
     /**
@@ -162,7 +161,7 @@ public class SiteModelDao {
             throw new ServiceException("No gateway position in template");
         }
 
-        NetworkElementMO neMO = null;
+        NetworkElementMO neMO;
         if("localcpe".equals(gwPosition)) {
             neMO = getSiteLocalCpe(siteId);
         } else if("cloudcpe".equals(gwPosition)) {
@@ -198,7 +197,7 @@ public class SiteModelDao {
      * @since SDNO 0.5
      */
     public List<NetworkElementMO> querySiteLocalCpes(String siteId) throws ServiceException {
-        Map<String, String> conditionMap = new HashMap<String, String>();
+        Map<String, String> conditionMap = new HashMap<>();
         conditionMap.put("siteID", siteId);
         conditionMap.put("neRole", CpeRoleType.THIN_CPE.getName());
 
@@ -214,7 +213,7 @@ public class SiteModelDao {
      * @since SDNO 0.5
      */
     public List<NetworkElementMO> querySiteCloudCpes(String siteId) throws ServiceException {
-        Map<String, String> conditionMap = new HashMap<String, String>();
+        Map<String, String> conditionMap = new HashMap<>();
         conditionMap.put("siteID", siteId);
         conditionMap.put("neRole", CpeRoleType.CLOUD_CPE.getName());
 

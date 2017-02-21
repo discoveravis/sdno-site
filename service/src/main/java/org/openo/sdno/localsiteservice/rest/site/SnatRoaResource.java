@@ -19,7 +19,6 @@ package org.openo.sdno.localsiteservice.rest.site;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -56,7 +55,6 @@ public class SnatRoaResource {
      * Query SNatNetMdel by Internet Gateway Id.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param internetGatewayId Internet Gateway Id
      * @return List of SNatNetModel queried out
      * @throws ServiceException when query failed
@@ -65,7 +63,7 @@ public class SnatRoaResource {
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<SbiSnatNetModel> batchQuery(@Context HttpServletRequest request, @Context HttpServletResponse response,
+    public List<SbiSnatNetModel> batchQuery(@Context HttpServletRequest request,
             @QueryParam("igId") String internetGatewayId) throws ServiceException {
 
         long beginTime = System.currentTimeMillis();

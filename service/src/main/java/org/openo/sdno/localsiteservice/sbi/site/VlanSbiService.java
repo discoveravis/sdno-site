@@ -63,12 +63,12 @@ public class VlanSbiService {
     public ResultRsp<List<SbiIfVlan>> query(String ctrlUuid, String deviceId, String portId) throws ServiceException {
         if(StringUtils.isBlank(ctrlUuid) || StringUtils.isBlank(deviceId)) {
             LOGGER.error("Controller Uuid or Device Uuid is invalid");
-            return new ResultRsp<List<SbiIfVlan>>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         if(StringUtils.isBlank(portId)) {
             LOGGER.error("portId is invalid");
-            return new ResultRsp<List<SbiIfVlan>>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         String queryUrl = MessageFormat.format(VLAN_QUERY_URL, deviceId, portId);
@@ -79,7 +79,7 @@ public class VlanSbiService {
         RestfulResponse response = RestfulProxy.get(queryUrl, restfulParameters);
         if(!HttpCode.isSucess(response.getStatus())) {
             LOGGER.error("Query IfVlan from driver failed");
-            return new ResultRsp<List<SbiIfVlan>>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         return JsonUtil.fromJson(response.getResponseContent(), new TypeReference<ResultRsp<List<SbiIfVlan>>>() {});
@@ -100,7 +100,7 @@ public class VlanSbiService {
 
         if(StringUtils.isBlank(ctrlUuid) || StringUtils.isBlank(deviceId)) {
             LOGGER.error("Controller Uuid or Device Uuid is invalid");
-            return new ResultRsp<List<SbiIfVlan>>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         String createUrl = MessageFormat.format(VLAN_BASE_URL, deviceId);
@@ -108,10 +108,11 @@ public class VlanSbiService {
         RestfulParametes restfulParameters = new RestfulParametes();
         RestfulParameterUtil.setContentType(restfulParameters);
         RestfulParameterUtil.setControllerUuid(restfulParameters, ctrlUuid);
+        restfulParameters.setRawData(JsonUtil.toJson(ifVlanList));
         RestfulResponse response = RestfulProxy.post(createUrl, restfulParameters);
         if(!HttpCode.isSucess(response.getStatus())) {
             LOGGER.error("Create IfVlan in driver failed");
-            return new ResultRsp<List<SbiIfVlan>>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         return JsonUtil.fromJson(response.getResponseContent(), new TypeReference<ResultRsp<List<SbiIfVlan>>>() {});
@@ -132,7 +133,7 @@ public class VlanSbiService {
 
         if(StringUtils.isBlank(ctrlUuid) || StringUtils.isBlank(deviceId)) {
             LOGGER.error("Controller Uuid or Device Uuid is invalid");
-            return new ResultRsp<List<SbiIfVlan>>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         String updateUrl = MessageFormat.format(VLAN_BASE_URL, deviceId);
@@ -144,7 +145,7 @@ public class VlanSbiService {
         RestfulResponse response = RestfulProxy.put(updateUrl, restfulParameters);
         if(!HttpCode.isSucess(response.getStatus())) {
             LOGGER.error("Update IfVlan in driver failed");
-            return new ResultRsp<List<SbiIfVlan>>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         return JsonUtil.fromJson(response.getResponseContent(), new TypeReference<ResultRsp<List<SbiIfVlan>>>() {});

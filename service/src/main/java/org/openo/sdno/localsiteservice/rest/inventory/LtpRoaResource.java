@@ -19,7 +19,6 @@ package org.openo.sdno.localsiteservice.rest.inventory;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -56,7 +55,6 @@ public class LtpRoaResource {
      * Batch query ports.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param portUuids List of Port Uuid
      * @return Ports queried out
      * @throws ServiceException when query failed
@@ -66,7 +64,7 @@ public class LtpRoaResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public List<LogicalTernminationPointMO> query(@Context HttpServletRequest request,
-            @Context HttpServletResponse response, @QueryParam("uuids") String portUuids) throws ServiceException {
+            @QueryParam("uuids") String portUuids) throws ServiceException {
 
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter query method");

@@ -82,7 +82,7 @@ public class CpeOnlineServiceImpl implements CpeOnlineService {
         ResultRsp<SbiDeviceInfo> resultRsp = sbiService.create(controllerId, createBasicInfo);
         if(!resultRsp.isValid()) {
             LOGGER.error("Create Device failed");
-            return new ResultRsp<VCpePlanInfo>(ErrorCode.OVERLAYVPN_FAILED);
+            return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         // Update cpe in database
@@ -91,7 +91,7 @@ public class CpeOnlineServiceImpl implements CpeOnlineService {
         cpeNetworkElement.setOperState(OperStatus.UP.getName());
         networkElementInvDao.updateMO(cpeNetworkElement);
 
-        return new ResultRsp<VCpePlanInfo>(ErrorCode.OVERLAYVPN_SUCCESS, cpePlanInfo);
+        return new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS, cpePlanInfo);
     }
 
     @Override

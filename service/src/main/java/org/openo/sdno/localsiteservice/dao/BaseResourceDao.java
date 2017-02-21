@@ -54,7 +54,7 @@ public class BaseResourceDao {
      * @since SDNO 0.5
      */
     public NetworkElementMO queryCpeBySiteIdAndCpeType(String siteId, String cpeRoleTpe) throws ServiceException {
-        Map<String, String> conditionMap = new HashMap<String, String>();
+        Map<String, String> conditionMap = new HashMap<>();
         conditionMap.put("siteID", siteId);
         conditionMap.put("neRole", cpeRoleTpe);
 
@@ -87,7 +87,7 @@ public class BaseResourceDao {
      * @since SDNO 0.5
      */
     public NetworkElementMO queryNeByEsn(String esn) throws ServiceException {
-        Map<String, String> conditionMap = new HashMap<String, String>();
+        Map<String, String> conditionMap = new HashMap<>();
         conditionMap.put("serialNumber", esn);
         List<NetworkElementMO> neList = neInvDao.query(conditionMap);
         if(neList.isEmpty()) {
@@ -108,7 +108,7 @@ public class BaseResourceDao {
      * @since SDNO 0.5
      */
     public List<NetworkElementMO> queryNeBySiteId(String siteId) throws ServiceException {
-        Map<String, String> conditionMap = new HashMap<String, String>();
+        Map<String, String> conditionMap = new HashMap<>();
         conditionMap.put("siteID", siteId);
         return neInvDao.query(conditionMap);
     }
@@ -123,7 +123,7 @@ public class BaseResourceDao {
      * @since SDNO 0.5
      */
     public LogicalTernminationPointMO queryInterfaceByName(String neId, String infName) throws ServiceException {
-        Map<String, String> conditionMap = new HashMap<String, String>();
+        Map<String, String> conditionMap = new HashMap<>();
         conditionMap.put("meID", neId);
         conditionMap.put("name", infName);
         return ltpInvDao.query(conditionMap).get(0);

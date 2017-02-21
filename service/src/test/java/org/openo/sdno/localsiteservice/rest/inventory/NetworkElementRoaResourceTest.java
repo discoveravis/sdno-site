@@ -46,7 +46,7 @@ public class NetworkElementRoaResourceTest extends SpringTest {
     @Test
     public void queryTest() throws ServiceException {
         new MockNetworkElementInvDao();
-        List<NetworkElementMO> neList = networkElementRoaResource.query(httpRequest, httpResponse, "[\"NeId\"]");
+        List<NetworkElementMO> neList = networkElementRoaResource.query(httpRequest, "[\"NeId\"]");
         assertTrue("neName".equals(neList.get(0).getName()));
     }
 

@@ -66,7 +66,7 @@ public class RouteEntryRoaResourceTest extends SpringTest {
 
     @Test
     public void queryTest() throws ServiceException {
-        NbiRouteEntryModel routeEntryModel = routeEntryRoaResource.query(httpRequest, httpResponse, "RouteEntryId");
+        NbiRouteEntryModel routeEntryModel = routeEntryRoaResource.query(httpRequest, "RouteEntryId");
         assertTrue(null != routeEntryModel);
     }
 
@@ -79,7 +79,7 @@ public class RouteEntryRoaResourceTest extends SpringTest {
                 return parameter;
             }
         };
-        ComplexResult<NbiRouteEntryModel> queryResult = routeEntryRoaResource.batchQuery(httpRequest, httpResponse);
+        ComplexResult<NbiRouteEntryModel> queryResult = routeEntryRoaResource.batchQuery(httpRequest);
         assertTrue(2 == queryResult.getTotal());
     }
 
@@ -91,7 +91,7 @@ public class RouteEntryRoaResourceTest extends SpringTest {
 
     @Test
     public void deleteTest() throws ServiceException {
-        routeEntryRoaResource.delete(httpRequest, httpResponse, "RouteEntryId");
+        routeEntryRoaResource.delete(httpRequest, "RouteEntryId");
     }
 
     @Test
@@ -99,8 +99,7 @@ public class RouteEntryRoaResourceTest extends SpringTest {
         NbiRouteEntryModel newModel = new NbiRouteEntryModel();
         newModel.setName("newRoute");
         newModel.setDescription("Test for route");
-        NbiRouteEntryModel updatedModel =
-                routeEntryRoaResource.update(httpRequest, httpResponse, "RouteEntryId", newModel);
+        NbiRouteEntryModel updatedModel = routeEntryRoaResource.update(httpRequest, "RouteEntryId", newModel);
         assertTrue(null != updatedModel);
     }
 

@@ -67,7 +67,6 @@ public class SubnetRoaResource {
      * Query one Subnet.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param subnetUuid Subnet Uuid
      * @return NbiSubnetModel queried out
      * @throws ServiceException when query failed
@@ -77,8 +76,8 @@ public class SubnetRoaResource {
     @Path("/{uuid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public NbiSubnetModel query(@Context HttpServletRequest request, @Context HttpServletResponse response,
-            @PathParam("uuid") String subnetUuid) throws ServiceException {
+    public NbiSubnetModel query(@Context HttpServletRequest request, @PathParam("uuid") String subnetUuid)
+            throws ServiceException {
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter query method subnetUuid:" + subnetUuid);
 
@@ -100,7 +99,6 @@ public class SubnetRoaResource {
      * Batch query Subnets.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @return List of Subnets queried out
      * @throws ServiceException when query failed
      * @since SDNO 0.5
@@ -108,8 +106,7 @@ public class SubnetRoaResource {
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ComplexResult<NbiSubnetModel> batchQuery(@Context HttpServletRequest request,
-            @Context HttpServletResponse response) throws ServiceException {
+    public ComplexResult<NbiSubnetModel> batchQuery(@Context HttpServletRequest request) throws ServiceException {
 
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter batch query subnet method");
@@ -157,7 +154,7 @@ public class SubnetRoaResource {
             throw new ServiceException("SubnetModel create failed");
         }
 
-        Map<String, String> resultMap = new HashMap<String, String>();
+        Map<String, String> resultMap = new HashMap<>();
         resultMap.put("id", resultRsp.getData().getUuid());
 
         response.setStatus(HttpCode.CREATE_OK);
@@ -171,7 +168,6 @@ public class SubnetRoaResource {
      * Delete Subnet.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param subnetUuid Uuid of Subnet which need to delete
      * @throws ServiceException when delete failed
      * @since SDNO 0.5
@@ -180,8 +176,8 @@ public class SubnetRoaResource {
     @Path("/{uuid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void delete(@Context HttpServletRequest request, @Context HttpServletResponse response,
-            @PathParam("uuid") String subnetUuid) throws ServiceException {
+    public void delete(@Context HttpServletRequest request, @PathParam("uuid") String subnetUuid)
+            throws ServiceException {
 
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter delete method, subnetUuid:" + subnetUuid);
@@ -217,7 +213,6 @@ public class SubnetRoaResource {
      * Update Subnet.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param subnetUuid Uuid of Subnet which need to update
      * @param subnetModel new NbiSubnetModel
      * @throws ServiceException when update failed
@@ -228,8 +223,8 @@ public class SubnetRoaResource {
     @Path("/{uuid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public NbiSubnetModel update(@Context HttpServletRequest request, @Context HttpServletResponse response,
-            @PathParam("uuid") String subnetUuid, NbiSubnetModel subnetModel) throws ServiceException {
+    public NbiSubnetModel update(@Context HttpServletRequest request, @PathParam("uuid") String subnetUuid,
+            NbiSubnetModel subnetModel) throws ServiceException {
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter update method, subnetUuid:" + subnetUuid);
 

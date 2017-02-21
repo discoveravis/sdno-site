@@ -46,7 +46,7 @@ public class LtpRoaResourceTest extends SpringTest {
     @Test
     public void queryTest() throws ServiceException {
         new MockLtpInvDao();
-        List<LogicalTernminationPointMO> ltpMOList = ltpRoaResource.query(httpRequest, httpResponse, "[\"LtpId\"]");
+        List<LogicalTernminationPointMO> ltpMOList = ltpRoaResource.query(httpRequest, "[\"LtpId\"]");
         assertTrue("ltpName".equals(ltpMOList.get(0).getName()));
     }
 

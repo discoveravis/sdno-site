@@ -42,7 +42,7 @@ public class PopServiceImpl implements PopService {
     @Override
     public ResultRsp<PopMO> query(HttpServletRequest req, String popUuid) throws ServiceException {
         PopMO popMO = popInvDao.query(popUuid);
-        return new ResultRsp<PopMO>(ErrorCode.OVERLAYVPN_SUCCESS, popMO);
+        return new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS, popMO);
     }
 
 }

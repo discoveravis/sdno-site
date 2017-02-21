@@ -60,7 +60,7 @@ public class LtpServiceImpl implements LtpService {
 
         List<LogicalTernminationPointMO> ltpMOList = ltpInvDao.query(portUuidList);
 
-        return new ResultRsp<List<LogicalTernminationPointMO>>(ErrorCode.OVERLAYVPN_SUCCESS, ltpMOList);
+        return new ResultRsp<>(ErrorCode.OVERLAYVPN_SUCCESS, ltpMOList);
     }
 
 }

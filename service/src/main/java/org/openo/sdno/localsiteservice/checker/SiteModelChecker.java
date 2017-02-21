@@ -48,15 +48,7 @@ public class SiteModelChecker {
      */
     public boolean checkResourceDependency(String siteId) throws ServiceException {
 
-        // Check Subnets
-        if(CollectionUtils.isNotEmpty(siteModelDao.querySiteSubnets(siteId))) {
-            LOGGER.warn("Site includes subnet data");
-            return true;
-        }
-
-        // Check Vlans
-        if(CollectionUtils.isNotEmpty(siteModelDao.querySiteVlans(siteId))) {
-            LOGGER.warn("Site includes vlan data");
+        if(checkSubnetVlanDependency(siteId)) {
             return true;
         }
 
@@ -75,6 +67,23 @@ public class SiteModelChecker {
         // Check VpnGateways
         if(CollectionUtils.isNotEmpty(siteModelDao.querySiteVpnGateways(siteId))) {
             LOGGER.warn("Site includes vpn gateway");
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean checkSubnetVlanDependency(String siteId) throws ServiceException {
+
+        // Check Subnets
+        if(CollectionUtils.isNotEmpty(siteModelDao.querySiteSubnets(siteId))) {
+            LOGGER.warn("Site includes subnet data");
+            return true;
+        }
+
+        // Check Vlans
+        if(CollectionUtils.isNotEmpty(siteModelDao.querySiteVlans(siteId))) {
+            LOGGER.warn("Site includes vlan data");
             return true;
         }
 

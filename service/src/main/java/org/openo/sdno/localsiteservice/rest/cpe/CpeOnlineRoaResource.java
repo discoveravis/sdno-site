@@ -40,6 +40,7 @@ import org.openo.sdno.localsiteservice.dao.BaseResourceDao;
 import org.openo.sdno.localsiteservice.inf.cpe.CpeOnlineService;
 import org.openo.sdno.localsiteservice.model.cpe.VCpePlanInfo;
 import org.openo.sdno.overlayvpn.brs.model.NetworkElementMO;
+import org.openo.sdno.overlayvpn.consts.HttpCode;
 import org.openo.sdno.overlayvpn.result.ResultRsp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -106,6 +107,8 @@ public class CpeOnlineRoaResource {
         Map<String, String> resultMap = new HashMap<String, String>();
         resultMap.put("id", cpeNetworkElement.getId());
 
+        response.setStatus(HttpCode.CREATE_OK);
+
         LOGGER.debug("Exit create method cost time:" + (System.currentTimeMillis() - beginTime));
 
         return resultMap;
@@ -115,7 +118,6 @@ public class CpeOnlineRoaResource {
      * Delete Cpe Device.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param inputUuids Uuids need to delete
      * @throws ServiceException when delete failed
      * @since SDNO 0.5
@@ -123,7 +125,7 @@ public class CpeOnlineRoaResource {
     @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public void delete(@Context HttpServletRequest request, @Context HttpServletResponse response,
+    public void delete(@Context HttpServletRequest request,
             @QueryParam("uuids") String inputUuids) throws ServiceException {
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter delete method");

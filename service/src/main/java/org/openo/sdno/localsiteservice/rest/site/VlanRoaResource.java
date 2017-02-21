@@ -66,7 +66,6 @@ public class VlanRoaResource {
      * Query one Vlan.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param vlanUuid Vlan Model Uuid
      * @return VlanModel queried out
      * @throws ServiceException when query failed
@@ -76,8 +75,8 @@ public class VlanRoaResource {
     @Path("/{uuid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public NbiVlanModel query(@Context HttpServletRequest request, @Context HttpServletResponse response,
-            @PathParam("uuid") String vlanUuid) throws ServiceException {
+    public NbiVlanModel query(@Context HttpServletRequest request, @PathParam("uuid") String vlanUuid)
+            throws ServiceException {
 
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter query method vlanUuid:" + vlanUuid);
@@ -101,7 +100,6 @@ public class VlanRoaResource {
      * Batch query Vlans.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @return List of VlanModel queried out
      * @throws ServiceException when query failed
      * @since SDNO 0.5
@@ -109,8 +107,7 @@ public class VlanRoaResource {
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public ComplexResult<NbiVlanModel> batchQuery(@Context HttpServletRequest request,
-            @Context HttpServletResponse response) throws ServiceException {
+    public ComplexResult<NbiVlanModel> batchQuery(@Context HttpServletRequest request) throws ServiceException {
 
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter batch query method");
@@ -172,7 +169,6 @@ public class VlanRoaResource {
      * Delete one Vlan.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param vlanUuid VlanModel Uuid
      * @return delete result
      * @throws ServiceException when delete failed
@@ -182,8 +178,8 @@ public class VlanRoaResource {
     @Path("/{uuid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String, String> delete(@Context HttpServletRequest request, @Context HttpServletResponse response,
-            @PathParam("uuid") String vlanUuid) throws ServiceException {
+    public Map<String, String> delete(@Context HttpServletRequest request, @PathParam("uuid") String vlanUuid)
+            throws ServiceException {
 
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter delete method, vlanUuid:" + vlanUuid);
@@ -200,11 +196,12 @@ public class VlanRoaResource {
 
         NbiVlanModel vlanModel = queryResultRsp.getData();
 
+        Map<String, String> resultMap = new HashMap<>();
+
         // Resource not exist
         if(null == vlanModel) {
-            Map<String, String> result = new HashMap<String, String>();
-            result.put("id", vlanUuid);
-            return result;
+            resultMap.put("id", vlanUuid);
+            return resultMap;
         }
 
         // Delete Vlan Model
@@ -214,19 +211,17 @@ public class VlanRoaResource {
             throw new ServiceException("VlanModel delete failed");
         }
 
-        Map<String, String> result = new HashMap<String, String>();
-        result.put("id", deleteResultRsp.getData().getUuid());
+        resultMap.put("id", deleteResultRsp.getData().getUuid());
 
         LOGGER.debug("Exit delete method cost time:" + (System.currentTimeMillis() - beginTime));
 
-        return result;
+        return resultMap;
     }
 
     /**
      * Update VlanModel data.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param vlanUuid VlanModel Uuid
      * @param vlanModel VlanModel need to update
      * @return VlanModel updated
@@ -237,8 +232,8 @@ public class VlanRoaResource {
     @Path("/{uuid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public NbiVlanModel update(@Context HttpServletRequest request, @Context HttpServletResponse response,
-            @PathParam("uuid") String vlanUuid, NbiVlanModel vlanModel) throws ServiceException {
+    public NbiVlanModel update(@Context HttpServletRequest request, @PathParam("uuid") String vlanUuid,
+            NbiVlanModel vlanModel) throws ServiceException {
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter upadte method, vlanUuid:" + vlanUuid);
 

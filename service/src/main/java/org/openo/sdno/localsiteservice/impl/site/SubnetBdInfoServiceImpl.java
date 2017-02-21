@@ -43,6 +43,9 @@ public class SubnetBdInfoServiceImpl implements SubnetBdInfoService {
     @Autowired
     private SubnetBdInfoSbiService sbiBdInfoService;
 
+    @Autowired
+    private NetworkElementInvDao neInvDao;
+
     @Override
     public String getSubnetBdInfo(String vni, String neId) throws ServiceException {
         if(StringUtils.isBlank(vni)) {
@@ -52,7 +55,7 @@ public class SubnetBdInfoServiceImpl implements SubnetBdInfoService {
 
         SbiSubnetBdInfoModel subnetBdInfoModel = new SbiSubnetBdInfoModel();
         subnetBdInfoModel.setNeId(neId);
-        NetworkElementMO curNeDevice = new NetworkElementInvDao().query(neId);
+        NetworkElementMO curNeDevice = neInvDao.query(neId);
         subnetBdInfoModel.setDeviceId(curNeDevice.getNativeID());
         subnetBdInfoModel.setVni(vni);
         subnetBdInfoModel.setControllerId(curNeDevice.getControllerID().get(0));

@@ -56,17 +56,8 @@ public class SubnetModelChecker {
         // Check NbiSubnetModel
         ValidationUtil.validateModel(subnetModel);
 
-        // Check Cidr Exist
-        if(checkCidrExist(subnetModel)) {
-            LOGGER.error("Subnet Cidr already exist");
-            throw new ParameterServiceException("Subnet Cidr already exist");
-        }
-
-        // Check Name Exist
-        if(checkNameExist(subnetModel)) {
-            LOGGER.error("Subnet Name already exist");
-            throw new ParameterServiceException("Subnet Name already exist");
-        }
+        // Check name and cidr exist
+        checkNameAndCidrExist(subnetModel);
 
         // Vlan Id and Vni should not be non-empty at the same time
         if(StringUtils.isNotBlank(subnetModel.getVni()) && StringUtils.isNotBlank(subnetModel.getVlanId())) {
@@ -83,6 +74,28 @@ public class SubnetModelChecker {
     }
 
     /**
+     * Check name and cidr existence.<br>
+     * 
+     * @param subnetModel NbiSubnetModel need to check
+     * @throws ServiceException when check failed
+     * @since SDNO 0.5
+     */
+    private void checkNameAndCidrExist(NbiSubnetModel subnetModel) throws ServiceException {
+
+        // Check Cidr Exist
+        if(checkCidrExist(subnetModel)) {
+            LOGGER.error("Subnet Cidr already exist");
+            throw new ParameterServiceException("Subnet Cidr already exist");
+        }
+
+        // Check Name Exist
+        if(checkNameExist(subnetModel)) {
+            LOGGER.error("Subnet Name already exist");
+            throw new ParameterServiceException("Subnet Name already exist");
+        }
+    }
+
+    /**
      * Check Name Existence.<br>
      * 
      * @param subnetModel NbiSubnetModel need to check
@@ -92,12 +105,12 @@ public class SubnetModelChecker {
      */
     private boolean checkNameExist(NbiSubnetModel subnetModel) throws ServiceException {
 
-        Map<String, Object> filterMap = new HashMap<String, Object>();
+        Map<String, Object> filterMap = new HashMap<>();
 
         filterMap.put("name", Arrays.asList(subnetModel.getName()));
         filterMap.put("tenantId", Arrays.asList(subnetModel.getTenantId()));
 
-        ModelDataDao<NbiSubnetModel> subnetModelDao = new ModelDataDao<NbiSubnetModel>();
+        ModelDataDao<NbiSubnetModel> subnetModelDao = new ModelDataDao<>();
         ResultRsp<List<NbiSubnetModel>> queryResultRsp =
                 subnetModelDao.queryByFilter(NbiSubnetModel.class, filterMap, null);
 
@@ -113,12 +126,12 @@ public class SubnetModelChecker {
      * @since SDNO 0.5
      */
     private boolean checkCidrExist(NbiSubnetModel subnetModel) throws ServiceException {
-        Map<String, Object> filterMap = new HashMap<String, Object>();
+        Map<String, Object> filterMap = new HashMap<>();
 
         filterMap.put("cidrBlock", Arrays.asList(subnetModel.getCidrBlock()));
         filterMap.put("tenantId", Arrays.asList(subnetModel.getTenantId()));
 
-        ModelDataDao<NbiSubnetModel> subnetModelDao = new ModelDataDao<NbiSubnetModel>();
+        ModelDataDao<NbiSubnetModel> subnetModelDao = new ModelDataDao<>();
         ResultRsp<List<NbiSubnetModel>> queryResultRsp =
                 subnetModelDao.queryByFilter(NbiSubnetModel.class, filterMap, null);
 

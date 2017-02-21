@@ -17,7 +17,6 @@
 package org.openo.sdno.localsiteservice.rest.pop;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -55,7 +54,6 @@ public class PopRoaResource {
      * Query Pop Data.<br>
      * 
      * @param request HttpServletRequest Object
-     * @param response HttpServletResponse Object
      * @param popUuid Pop Uuid
      * @return Pop data queried out
      * @throws ServiceException when query failed
@@ -65,8 +63,7 @@ public class PopRoaResource {
     @Path("/{uuid}")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public PopMO query(@Context HttpServletRequest request, @Context HttpServletResponse response,
-            @PathParam("uuid") String popUuid) throws ServiceException {
+    public PopMO query(@Context HttpServletRequest request, @PathParam("uuid") String popUuid) throws ServiceException {
 
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter query method popUuid:" + popUuid);
