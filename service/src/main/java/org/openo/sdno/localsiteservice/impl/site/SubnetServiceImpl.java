@@ -81,13 +81,13 @@ public class SubnetServiceImpl implements SubnetService {
         ResultRsp<NbiSubnetModel> queryResultRsp =
                 (new ModelDataDao<NbiSubnetModel>()).query(NbiSubnetModel.class, subnetUuid);
         if(!queryResultRsp.isValid()) {
-            LOGGER.error("Query Subnet Model failed");
+            LOGGER.error("Query Subnet Model failed, need to check database");
             return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
         ResultRsp<SbiSubnetNetModel> queryNetModelResultRsp = queryBySubnetId(subnetUuid);
         if(!queryNetModelResultRsp.isSuccess()) {
-            LOGGER.error("Query Subnet Net Model failed");
+            LOGGER.error("Query Subnet Net Model failed, need to check database");
             return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
@@ -145,19 +145,8 @@ public class SubnetServiceImpl implements SubnetService {
 
         NetworkElementMO siteGateway = siteModelDao.getSiteGateway(subnetModel.getSiteId());
         boolean isIpv6 = "IPV6".equalsIgnoreCase(siteGateway.getAccessIPVersion());
-        if(isIpv6) {
-            if(StringUtils.isBlank(subnetModel.getCidrBlock()) || StringUtils.isBlank(subnetModel.getGatewayIp())
-                    || StringUtils.isBlank(subnetModel.getIpv6Address())
-                    || StringUtils.isBlank(subnetModel.getPrefixLength())) {
-                LOGGER.error("Subnet parameter is not complete, need to fill complete paramters");
-                throw new ServiceException("Subnet parameter is not complete in Ipv6");
-            }
-        } else {
-            if(StringUtils.isBlank(subnetModel.getCidrBlock()) || StringUtils.isBlank(subnetModel.getGatewayIp())) {
-                LOGGER.error("Parameter is not complete, need to fill complete paramters");
-                throw new ServiceException("Subnet parameter is not complete in Ipv4");
-            }
-        }
+
+        checkSubnetModelParameter(subnetModel, isIpv6);
 
         // Insert Subnet Mode into database
         subnetModel.setActionState(ActionStatus.CREATING.getName());
@@ -185,8 +174,8 @@ public class SubnetServiceImpl implements SubnetService {
         ResultRsp<SbiSubnetNetModel> updateResultRsp =
                 (new ModelDataDao<SbiSubnetNetModel>()).update(newSbiSubnetNetModel, "networkId,actionState");
         if(!updateResultRsp.isValid()) {
-            LOGGER.error("SbiSubnetNetModel update failed");
-            throw new ServiceException("SbiSubnetNetModel update failed");
+            LOGGER.error("Subnet net model update failed, need to check database");
+            throw new ServiceException("SubnetNetModel update failed");
         }
 
         String gatewayInterface = bdInfoService.getSubnetBdInfo(subnetModel.getVni(), subnetNetModel.getNeId());
@@ -205,8 +194,8 @@ public class SubnetServiceImpl implements SubnetService {
 
         ResultRsp<SbiSubnetNetModel> queryResultRsp = queryBySubnetId(subnetModel.getUuid());
         if(!queryResultRsp.isValid()) {
-            LOGGER.error("SubnetNetModel query failed or not exist");
-            throw new ServiceException("SbiSubnetNetModel query failed or not exist");
+            LOGGER.error("Subnet net model query failed or not exist, need to check database");
+            throw new ServiceException("SubnetNetModel query failed or not exist");
         }
 
         SbiSubnetNetModel subnetNetModel = queryResultRsp.getData();
@@ -370,6 +359,30 @@ public class SubnetServiceImpl implements SubnetService {
         }
 
         return subnetNetModel;
+    }
+
+    /**
+     * Check subnet model parameter.<br>
+     * 
+     * @param subnetModel NbiSubnetModel need to check
+     * @param isIpv6 whether is ipv6 protocol
+     * @throws ServiceException when check failed
+     * @since SDNO 0.5
+     */
+    private void checkSubnetModelParameter(NbiSubnetModel subnetModel, boolean isIpv6) throws ServiceException {
+        if(isIpv6) {
+            if(StringUtils.isBlank(subnetModel.getCidrBlock()) || StringUtils.isBlank(subnetModel.getGatewayIp())
+                    || StringUtils.isBlank(subnetModel.getIpv6Address())
+                    || StringUtils.isBlank(subnetModel.getPrefixLength())) {
+                LOGGER.error("Subnet parameter is not complete, need to fill complete paramters");
+                throw new ServiceException("Subnet parameter is not complete in Ipv6");
+            }
+        } else {
+            if(StringUtils.isBlank(subnetModel.getCidrBlock()) || StringUtils.isBlank(subnetModel.getGatewayIp())) {
+                LOGGER.error("Parameter is not complete, need to fill complete paramters");
+                throw new ServiceException("Subnet parameter is not complete in Ipv4");
+            }
+        }
     }
 
 }

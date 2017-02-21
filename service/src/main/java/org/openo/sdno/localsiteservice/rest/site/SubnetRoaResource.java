@@ -154,14 +154,14 @@ public class SubnetRoaResource {
             throw new ServiceException("SubnetModel create failed");
         }
 
-        Map<String, String> resultMap = new HashMap<>();
-        resultMap.put("id", resultRsp.getData().getUuid());
+        Map<String, String> createSubnetResultMap = new HashMap<>();
+        createSubnetResultMap.put("id", resultRsp.getData().getUuid());
 
         response.setStatus(HttpCode.CREATE_OK);
 
         LOGGER.debug("Exit create method cost time:" + (System.currentTimeMillis() - beginTime));
 
-        return resultMap;
+        return createSubnetResultMap;
     }
 
     /**

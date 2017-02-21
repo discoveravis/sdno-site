@@ -151,12 +151,12 @@ public class InternetGatewayRoaResource {
 
         response.setStatus(HttpCode.CREATE_OK);
 
-        Map<String, String> resultMap = new HashMap<>();
-        resultMap.put("id", resultRsp.getData().getUuid());
+        Map<String, String> createIntGatewayResultMap = new HashMap<>();
+        createIntGatewayResultMap.put("id", resultRsp.getData().getUuid());
 
         LOGGER.debug("Exit InternetGateway Create method:" + (System.currentTimeMillis() - beginTime));
 
-        return resultMap;
+        return createIntGatewayResultMap;
     }
 
     /**

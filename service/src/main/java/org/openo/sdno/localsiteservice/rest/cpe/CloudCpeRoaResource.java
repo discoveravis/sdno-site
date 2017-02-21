@@ -163,13 +163,13 @@ public class CloudCpeRoaResource {
             throw new ServiceException("Create CloudCpe failed");
         }
 
-        Map<String, String> resultMap = new HashMap<>();
-        resultMap.put("id", resultRsp.getData().getUuid());
+        Map<String, String> createCloudCpeResultMap = new HashMap<>();
+        createCloudCpeResultMap.put("id", resultRsp.getData().getUuid());
 
         response.setStatus(HttpCode.CREATE_OK);
 
         LOGGER.debug("Exit create method cost time:" + (System.currentTimeMillis() - beginTime));
-        return resultMap;
+        return createCloudCpeResultMap;
     }
 
     /**

@@ -129,8 +129,7 @@ public class VlanServiceImpl implements VlanService {
             fillVlanModelPortsInfo(vlanModel);
         }
 
-        return new ComplexResult<>(resultVlanModelList.size(), 0, resultVlanModelList.size(),
-                resultVlanModelList);
+        return new ComplexResult<>(resultVlanModelList.size(), 0, resultVlanModelList.size(), resultVlanModelList);
     }
 
     @Override
@@ -140,13 +139,13 @@ public class VlanServiceImpl implements VlanService {
         String siteId = vlanModel.getSiteId();
 
         // Query LocalCpe Network Element
-        NetworkElementMO localCPE = siteModelDao.getSiteLocalCpe(siteId);
+        NetworkElementMO localCpe = siteModelDao.getSiteLocalCpe(siteId);
 
         List<LogicalTernminationPointMO> ltpMOList;
 
         // Query Related Ports
         if(CollectionUtils.isEmpty(portUuids)) {
-            ltpMOList = queryLtpMOList(siteId, localCPE.getId());
+            ltpMOList = queryLtpMOList(siteId, localCpe.getId());
             @SuppressWarnings("unchecked")
             List<String> ltpMOUuids = new ArrayList<>(CollectionUtils.collect(ltpMOList, new Transformer() {
 
@@ -178,39 +177,19 @@ public class VlanServiceImpl implements VlanService {
             }
         }
 
-        // Construct SbiIfVlan Data
+        // Construct SbiIfVlan data
         List<SbiIfVlan> ifVlanList = constructIfVlanData(ltpMOList, vlanModel);
 
-        // Insert SbiIfVlan to database
-        ResultRsp<List<SbiIfVlan>> insertSbiIfVlanResultRsp = (new ModelDataDao<SbiIfVlan>()).batchInsert(ifVlanList);
-        if(!insertSbiIfVlanResultRsp.isSuccess()) {
-            LOGGER.error("Insert SbiIfVlan failed");
-            throw new ServiceException("Insert SbiIfVlan failed");
-        }
+        // Deploy SbiIfVlan data
+        deploySbiIfVlan(ifVlanList, localCpe);
 
-        // Create SbiIfVlan in Driver
-        ResultRsp<List<SbiIfVlan>> createResultRsp =
-                sbiService.create(localCPE.getControllerID().get(0), localCPE.getNativeID(), ifVlanList);
-        if(!createResultRsp.isValid()) {
-            LOGGER.error("Create SbiIfVlan failed");
-            throw new ServiceException("Create SbiIfVlan failed");
-        }
-
-        // Update SbiIfVlan in database
-        ResultRsp<List<SbiIfVlan>> updateResultRsp = (new ModelDataDao<SbiIfVlan>()).batchUpdate(SbiIfVlan.class,
-                createResultRsp.getData(), "ethInterfaceConfigId");
-        if(!updateResultRsp.isValid()) {
-            LOGGER.error("Update SbiIfVlan failed");
-            throw new ServiceException("Update SbiIfVlan failed");
-        }
-
-        // Update Status of Vlan Model
+        // Update status of VlanModel
         vlanModel.setActionState(ActionStatus.NORMAL.getName());
         ResultRsp<NbiVlanModel> updateVlanResultRsp =
                 (new ModelDataDao<NbiVlanModel>()).update(vlanModel, ACTION_STATE_FIELD);
         if(!updateVlanResultRsp.isValid()) {
-            LOGGER.error("Update Vlan Model failed");
-            throw new ServiceException("Update Vlan Model failed");
+            LOGGER.error("Update vlan model failed");
+            throw new ServiceException("Update vlan model failed");
         }
 
         return updateVlanResultRsp;
@@ -235,7 +214,7 @@ public class VlanServiceImpl implements VlanService {
         String siteId = vlanModel.getSiteId();
 
         // Query LocalCpe Network Element
-        NetworkElementMO localCPE = siteModelDao.getSiteLocalCpe(siteId);
+        NetworkElementMO localCpe = siteModelDao.getSiteLocalCpe(siteId);
 
         // Query Related SbiIfVlan Data
         ResultRsp<List<SbiIfVlan>> queryResultRsp = queryIfVlanByVlanId(vlanModel.getUuid());
@@ -251,21 +230,7 @@ public class VlanServiceImpl implements VlanService {
             curSbiIfVlan.setVlans(String.valueOf(DEFAULT_VLAN_ID));
         }
 
-        // Delete SbiIfVlan from AC
-        ResultRsp<List<SbiIfVlan>> deleteResultRsp =
-                sbiService.update(localCPE.getControllerID().get(0), localCPE.getNativeID(), ifVlanList);
-        if(!deleteResultRsp.isSuccess()) {
-            LOGGER.error("SbiIfVlan Delete from AC failed");
-            throw new ServiceException("SbiIfVlan Delete from AC failed");
-        }
-
-        // Delete SbiIfVlan Data
-        ResultRsp<String> deleteSbiIfVlanResultRsp =
-                (new ModelDataDao<SbiIfVlan>()).batchDelete(SbiIfVlan.class, ifVlanList);
-        if(!deleteSbiIfVlanResultRsp.isSuccess()) {
-            LOGGER.error("SbiIfVlan Delete failed");
-            throw new ServiceException("SbiIfVlan Delete failed");
-        }
+        unDeploySbiIfVlan(ifVlanList, localCpe);
 
         // Delete VlanMode data
         ResultRsp<String> deleteVlanModelResultRsp =
@@ -292,17 +257,13 @@ public class VlanServiceImpl implements VlanService {
             }
 
             NetworkElementMO localCpe = siteModelDao.getSiteLocalCpe(vlanModel.getSiteId());
-            if(null == localCpe) {
-                LOGGER.error("Current Site do not exist LocalCpe");
-                throw new ServiceException("Current Site do not exist LocalCpe");
-            }
 
             List<SbiIfVlan> ifVlanList = setVlanToIfVlans(ifVlanQueryResultRsp.getData(), vlanModel);
             ResultRsp<List<SbiIfVlan>> updateResultRsp =
                     sbiService.update(localCpe.getControllerID().get(0), localCpe.getNativeID(), ifVlanList);
             if(!updateResultRsp.isValid()) {
-                LOGGER.error("Update SbiIfVlan failed");
-                throw new ServiceException("Update SbiIfVlan failed");
+                LOGGER.error("Update vlan failed, need to check driver service");
+                throw new ServiceException("Update vlan failed");
             }
 
             ResultRsp<List<SbiIfVlan>> ifVlanUpdateResultRsp =
@@ -457,4 +418,49 @@ public class VlanServiceImpl implements VlanService {
             vlanModel.setPorts(portIds);
         }
     }
+
+    private void deploySbiIfVlan(List<SbiIfVlan> ifVlanList, NetworkElementMO localCpe) throws ServiceException {
+        // Insert SbiIfVlan to database
+        ResultRsp<List<SbiIfVlan>> insertSbiIfVlanResultRsp = (new ModelDataDao<SbiIfVlan>()).batchInsert(ifVlanList);
+        if(!insertSbiIfVlanResultRsp.isSuccess()) {
+            LOGGER.error("Insert SbiIfVlan failed");
+            throw new ServiceException("Insert SbiIfVlan failed");
+        }
+
+        // Create SbiIfVlan in Driver
+        ResultRsp<List<SbiIfVlan>> createResultRsp =
+                sbiService.create(localCpe.getControllerID().get(0), localCpe.getNativeID(), ifVlanList);
+        if(!createResultRsp.isValid()) {
+            LOGGER.error("Create SbiIfVlan failed");
+            throw new ServiceException("Create SbiIfVlan failed");
+        }
+
+        // Update SbiIfVlan in database
+        ResultRsp<List<SbiIfVlan>> updateResultRsp = (new ModelDataDao<SbiIfVlan>()).batchUpdate(SbiIfVlan.class,
+                createResultRsp.getData(), "ethInterfaceConfigId");
+        if(!updateResultRsp.isValid()) {
+            LOGGER.error("Update vlan failed, need to check database service");
+            throw new ServiceException("Update vlan failed");
+        }
+    }
+
+    private void unDeploySbiIfVlan(List<SbiIfVlan> ifVlanList, NetworkElementMO localCpe) throws ServiceException {
+
+        // Delete SbiIfVlan from AC
+        ResultRsp<List<SbiIfVlan>> deleteResultRsp =
+                sbiService.update(localCpe.getControllerID().get(0), localCpe.getNativeID(), ifVlanList);
+        if(!deleteResultRsp.isSuccess()) {
+            LOGGER.error("SbiIfVlan Delete from AC failed");
+            throw new ServiceException("SbiIfVlan Delete from AC failed");
+        }
+
+        // Delete SbiIfVlan data
+        ResultRsp<String> deleteSbiIfVlanResultRsp =
+                (new ModelDataDao<SbiIfVlan>()).batchDelete(SbiIfVlan.class, ifVlanList);
+        if(!deleteSbiIfVlanResultRsp.isSuccess()) {
+            LOGGER.error("SbiIfVlan Delete failed");
+            throw new ServiceException("SbiIfVlan Delete failed");
+        }
+    }
+
 }

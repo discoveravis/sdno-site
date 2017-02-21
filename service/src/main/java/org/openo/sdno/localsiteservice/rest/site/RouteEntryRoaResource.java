@@ -151,14 +151,14 @@ public class RouteEntryRoaResource {
             throw new ServiceException("SubnetModel create failed");
         }
 
-        Map<String, String> resultMap = new HashMap<>();
-        resultMap.put("id", resultRsp.getData().getUuid());
+        Map<String, String> createRouteEntryResultMap = new HashMap<>();
+        createRouteEntryResultMap.put("id", resultRsp.getData().getUuid());
 
         response.setStatus(HttpCode.CREATE_OK);
 
         LOGGER.debug("Exit create route entry method cost time:" + (System.currentTimeMillis() - beginTime));
 
-        return resultMap;
+        return createRouteEntryResultMap;
     }
 
     /**

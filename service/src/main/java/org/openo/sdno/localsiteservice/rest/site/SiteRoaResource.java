@@ -162,14 +162,14 @@ public class SiteRoaResource {
         }
 
         // Create SubnetModel
-        ResultRsp<NbiSiteModel> resultRsp = service.create(request, siteModel);
-        if(!resultRsp.isValid()) {
+        ResultRsp<NbiSiteModel> createSiteResultRsp = service.create(request, siteModel);
+        if(!createSiteResultRsp.isValid()) {
             LOGGER.error("NbiSiteModel create failed");
             throw new ServiceException("NbiSiteModel create failed");
         }
 
         Map<String, String> resultMap = new HashMap<>();
-        resultMap.put("id", resultRsp.getData().getUuid());
+        resultMap.put("id", createSiteResultRsp.getData().getUuid());
 
         response.setStatus(HttpCode.CREATE_OK);
 

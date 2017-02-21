@@ -155,14 +155,14 @@ public class VlanRoaResource {
             throw new ServiceException("VlanModel create failed");
         }
 
-        Map<String, String> resultMap = new HashMap<>();
-        resultMap.put("id", resultRsp.getData().getUuid());
+        Map<String, String> createVlanResultMap = new HashMap<>();
+        createVlanResultMap.put("id", resultRsp.getData().getUuid());
 
         response.setStatus(HttpCode.CREATE_OK);
 
         LOGGER.debug("Exit create vlan method cost time:" + (System.currentTimeMillis() - beginTime));
 
-        return resultMap;
+        return createVlanResultMap;
     }
 
     /**

@@ -71,7 +71,7 @@ public class InternetGatewayServiceImpl implements InternetGatewayService {
     private SNatSbiService sbiService;
 
     @Autowired
-    private InternalConnectionSbiService internalConnectionService;
+    private InternalConnectionSbiService internalConnectionSbiService;
 
     @Autowired
     private TemplateSbiService templateSbiSrevice;
@@ -89,8 +89,8 @@ public class InternetGatewayServiceImpl implements InternetGatewayService {
         ResultRsp<NbiInternetGatewayModel> internetGatewayResultRsp =
                 internetGatewayDao.query(NbiInternetGatewayModel.class, internetGatewayId, null);
         if(!internetGatewayResultRsp.isSuccess()) {
-            LOGGER.error("Query InternetGateway Model failed");
-            throw new ServiceException("Query InternetGateway Model failed");
+            LOGGER.error("Query internet gateway model failed");
+            throw new ServiceException("Query internet gateway model failed");
         }
 
         NbiInternetGatewayModel internetGatewayModel = internetGatewayResultRsp.getData();
@@ -158,28 +158,20 @@ public class InternetGatewayServiceImpl implements InternetGatewayService {
             throw new ServiceException("NbiInternetGatewayModel insert failed");
         }
 
-        List<SbiSnatNetModel> sNatNetModels = new ArrayList<>();
-        List<String> sourceSubnets = internetGatewayModel.getSourceSubnets();
-        if(CollectionUtils.isEmpty(sourceSubnets)) {
-            sNatNetModels.add(buildSNatNetModel(internetGatewayModel, null));
-        } else {
-            for(String sourceSubnet : sourceSubnets) {
-                sNatNetModels.add(buildSNatNetModel(internetGatewayModel, sourceSubnet));
-            }
-        }
+        List<SbiSnatNetModel> sNatNetModels = buildSNatNetModels(internetGatewayModel);
 
         InventoryDao<SbiSnatNetModel> sNatNetModelDao = new InventoryDaoUtil<SbiSnatNetModel>().getInventoryDao();
         // Send to Driver
         for(SbiSnatNetModel sNatNetModel : sNatNetModels) {
             ResultRsp<SbiSnatNetModel> createResultRsp = sbiService.create(sNatNetModel);
             if(!createResultRsp.isValid()) {
-                LOGGER.error("SbiSnatNetModel Create in Driver failed");
-                throw new ServiceException("SbiSnatNetModel Create in Driver failed");
+                LOGGER.error("SbiSnatNetModel create in driver failed");
+                throw new ServiceException("SbiSnatNetModel create in driver failed");
             }
             ResultRsp<SbiSnatNetModel> insertNetModelResultRsp = sNatNetModelDao.insert(createResultRsp.getData());
             if(!insertNetModelResultRsp.isValid()) {
-                LOGGER.error("SbiSnatNetModel Insert in Database failed");
-                throw new ServiceException("SbiSnatNetModel Insert in Database failed");
+                LOGGER.error("SbiSnatNetModel insert in database failed");
+                throw new ServiceException("SbiSnatNetModel insert in database failed");
             }
         }
 
@@ -187,10 +179,10 @@ public class InternetGatewayServiceImpl implements InternetGatewayService {
         InternalConnectionModel internalConnectionModel = buildInternalConnectionModel(internetGatewayModel);
 
         ResultRsp<InternalConnectionModel> createConnectionResultRsp =
-                internalConnectionService.create(internalConnectionModel);
+                internalConnectionSbiService.create(internalConnectionModel);
         if(!createConnectionResultRsp.isSuccess()) {
-            LOGGER.error("Internal Connection create failed");
-            throw new ServiceException("Internal Connection create failed");
+            LOGGER.error("Internal connection create failed");
+            throw new ServiceException("Internal connection create failed");
         }
 
         internetGatewayModel.setActionState(ActionStatus.NORMAL.getName());
@@ -207,30 +199,17 @@ public class InternetGatewayServiceImpl implements InternetGatewayService {
         ResultRsp<NbiInternetGatewayModel> updateStatusResultRsp =
                 internetGatewayDao.update(internetGatewayModel, "actionState");
         if(!updateStatusResultRsp.isSuccess()) {
-            LOGGER.error("NbiInternetGatewayModel Status update failed");
-            throw new ServiceException("NbiInternetGatewayModel Status update failed");
+            LOGGER.error("NbiInternetGatewayModel status update failed");
+            throw new ServiceException("NbiInternetGatewayModel status update failed");
         }
 
         List<SbiSnatNetModel> sNatNetModels = querySNatModelByGatewayId(internetGatewayModel.getUuid());
-        InventoryDao<SbiSnatNetModel> sNatNetModelDao = new InventoryDaoUtil<SbiSnatNetModel>().getInventoryDao();
-        // Send to Driver
-        for(SbiSnatNetModel sNatNetModel : sNatNetModels) {
-            ResultRsp<String> deleteResultRsp = sbiService.delete(sNatNetModel);
-            if(!deleteResultRsp.isSuccess()) {
-                LOGGER.error("SbiSnatNetModel Delete from Adapter failed");
-                throw new ServiceException("deleteResultRsp");
-            }
-            ResultRsp<String> deleteNetModelResultRsp =
-                    sNatNetModelDao.delete(SbiSnatNetModel.class, sNatNetModel.getUuid());
-            if(!deleteNetModelResultRsp.isSuccess()) {
-                LOGGER.error("SbiSnatNetModel delete failed");
-                throw new ServiceException("SbiSnatNetModel delete failed");
-            }
-        }
+
+        deleteSbiSnatNetModels(sNatNetModels);
 
         // Delete Internal Connection
         ResultRsp<InternalConnectionModel> deleteConnectionResultRsp =
-                internalConnectionService.delete(internetGatewayModel.getVpnId());
+                internalConnectionSbiService.delete(internetGatewayModel.getVpnId());
         if(!deleteConnectionResultRsp.isSuccess()) {
             LOGGER.error("InternalConnectionModel delete failed");
             throw new ServiceException("InternalConnectionModel delete failed");
@@ -265,8 +244,8 @@ public class InternetGatewayServiceImpl implements InternetGatewayService {
 
         List<NetworkElementMO> siteNes = baseResourceDao.queryNeBySiteId(internetGatewayModel.getSiteId());
         if(CollectionUtils.isEmpty(siteNes)) {
-            LOGGER.error("No Cpe Device in this Site");
-            throw new ServiceException("No Cpe Device in this Site");
+            LOGGER.error("No cpe device in this site");
+            throw new ServiceException("No cpe device in this site");
         }
 
         internetGatewayModel.setNes(siteNes);
@@ -274,11 +253,33 @@ public class InternetGatewayServiceImpl implements InternetGatewayService {
         ResultRsp<NbiSiteModel> queryResultRsp =
                 (new ModelDataDao<NbiSiteModel>()).query(NbiSiteModel.class, internetGatewayModel.getSiteId());
         if(!queryResultRsp.isValid()) {
-            LOGGER.error("Site Model query failed or does not exist");
-            throw new ServiceException("Site Model query failed or does not exist");
+            LOGGER.error("Site model query failed or does not exist");
+            throw new ServiceException("Site model query failed or does not exist");
         }
 
         internetGatewayModel.setSite(queryResultRsp.getData());
+    }
+
+    /**
+     * Build SNatNetModels by InternetGateway Model.<br>
+     * 
+     * @param internetGatewayModel InternetGateway model
+     * @return List of SbiSnatNetModel built
+     * @throws ServiceException when build failed
+     * @since SDNO 0.5
+     */
+    private List<SbiSnatNetModel> buildSNatNetModels(NbiInternetGatewayModel internetGatewayModel)
+            throws ServiceException {
+        List<SbiSnatNetModel> sNatNetModels = new ArrayList<>();
+        List<String> sourceSubnets = internetGatewayModel.getSourceSubnets();
+        if(CollectionUtils.isEmpty(sourceSubnets)) {
+            sNatNetModels.add(buildSNatNetModel(internetGatewayModel, null));
+        } else {
+            for(String sourceSubnet : sourceSubnets) {
+                sNatNetModels.add(buildSNatNetModel(internetGatewayModel, sourceSubnet));
+            }
+        }
+        return sNatNetModels;
     }
 
     /**
@@ -309,8 +310,8 @@ public class InternetGatewayServiceImpl implements InternetGatewayService {
 
         String infPublicIp = baseResourceDao.queryInterfaceByName(cloudCpeNe.getId(), wanInfName).getIpAddress();
         if(StringUtils.isEmpty(infPublicIp)) {
-            LOGGER.error("Current Wan Interface has no Ip Address");
-            throw new ServiceException("Current Wan Interface has no Ip Address");
+            LOGGER.error("Current wan interface has no Ip Address");
+            throw new ServiceException("Current wan interface has no Ip Address");
         }
 
         sNatNetModel.setStartPublicIpAddress(infPublicIp + "/32");
@@ -373,6 +374,34 @@ public class InternetGatewayServiceImpl implements InternetGatewayService {
                 sNatNetModelDao.batchQuery(SbiSnatNetModel.class, JsonUtil.toJson(filterMap));
 
         return queryResultRsp.getData();
+    }
+
+    /**
+     * Delete SnatNetModels.<br>
+     * 
+     * @param sNatNetModels SbiSnatNetModel need to delete
+     * @throws ServiceException when delete failed
+     * @since SDNO 0.5
+     */
+    private void deleteSbiSnatNetModels(List<SbiSnatNetModel> sNatNetModels) throws ServiceException {
+
+        InventoryDao<SbiSnatNetModel> sNatNetModelDao = new InventoryDaoUtil<SbiSnatNetModel>().getInventoryDao();
+
+        for(SbiSnatNetModel sNatNetModel : sNatNetModels) {
+            // Send to driver
+            ResultRsp<String> deleteResultRsp = sbiService.delete(sNatNetModel);
+            if(!deleteResultRsp.isSuccess()) {
+                LOGGER.error("SbiSnatNetModel delete from adapter failed, need to check driver service.");
+                throw new ServiceException("SbiSnatNetModel delete from adapter failed");
+            }
+            // Delete from database
+            ResultRsp<String> deleteNetModelResultRsp =
+                    sNatNetModelDao.delete(SbiSnatNetModel.class, sNatNetModel.getUuid());
+            if(!deleteNetModelResultRsp.isSuccess()) {
+                LOGGER.error("SbiSnatNetModel delete failed");
+                throw new ServiceException("SbiSnatNetModel delete failed");
+            }
+        }
     }
 
     private static int generateRandomAclNumber() {
