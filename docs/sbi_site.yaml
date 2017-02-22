@@ -648,6 +648,7 @@ definitions:
           linkType:
             type: string
             description: the scope is access,trunk,hybird,dot1q,qinq
+            default: trunk
           vlans:
             type: string
             description: vlan
@@ -695,7 +696,8 @@ definitions:
             description: The gateway IP address
           enableDhcp:
             type: string
-            description: enable dhcp or not
+            description: enable dhcp or not, the scope is "true","false"
+            default: "false"
           ipRangeStartIp:
             type: string
             description: The start IP address of the subnet
@@ -707,16 +709,20 @@ definitions:
             description: the scope is terminal,vm
           changedMode:
             type: string
-            description: change mode
+            description: change mode, the scope is "true","false"
+            default: "false"
           dhcpMode:
             type: string
             description: the scope is server,relay
+            default: server
           dnsServerMode:
             type: string
             description: the scope is systemsetting,custom
+            default: custom
           unlimit:
             type: string
-            description: the scope is true,false
+            description: the scope is "true","false"
+            default: "true"
           ipv6Address:
             type: string
             description: ipv6 address
@@ -725,10 +731,12 @@ definitions:
             description: prefix length
           dhcp6Enable:
             type: string
-            description: the scope is true,false
+            description: the scope is "true","false"
+            default: "false"
           dhcp6Mode:
             type: string
             description: the scope is server,relay
+            default: server
           priorDnsServer:
             description: prior dns server
             type: string
@@ -866,7 +874,8 @@ definitions:
             description: end public IP address
           qosPreNat:
             type: string
-            description: default false, true when vcpe
+            description: default "false", "true" when vcpe
+            default: "false"
           createtime:
             type: integer
             format: int64
@@ -878,6 +887,7 @@ definitions:
           type:
             type: string
             description: the scope is none,create,updateIp
+            default: none
 
   SbiInterfaceIpConfigList:
     type: array
@@ -1207,21 +1217,6 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/SbiDeviceInfo"
-
-  SbiDeviceInfoListFailData:
-    type: object
-    description: fail data model
-    properties:
-      errorCode:
-        type: string
-        description: result error code
-      message:
-        type: string
-        description: the error message word
-      data:
-        type: array
-        items:
-          $ref: "#/definitions/SbiDeviceInfoList"
 
   SbiSubnetNetModelResultRsp:
     description: String result model
