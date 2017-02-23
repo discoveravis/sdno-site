@@ -1187,9 +1187,7 @@ definitions:
       - type: object
         properties:
           data:
-            type: array
-            items:
-              $ref: "#/definitions/SbiDeviceInfo"
+            $ref: "#/definitions/SbiDeviceInfo"
           successed:
             type: array
             items:
