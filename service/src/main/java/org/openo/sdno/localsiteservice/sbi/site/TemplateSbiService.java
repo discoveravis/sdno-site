@@ -17,6 +17,7 @@
 package org.openo.sdno.localsiteservice.sbi.site;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,7 @@ import org.openo.sdno.framework.container.resthelper.RestfulProxy;
 import org.openo.sdno.framework.container.util.JsonUtil;
 import org.openo.sdno.localsiteservice.util.RestfulParameterUtil;
 import org.openo.sdno.overlayvpn.consts.HttpCode;
+import org.openo.sdno.overlayvpn.model.v2.cpe.CpeRoleType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -59,7 +61,7 @@ public class TemplateSbiService {
 
     private static final String FIELD_STANDBY_DNSSERVER = "standbyDnsServerIp";
 
-    private static final String SPEC_CLOUDCPE = "cloudCpeInfo";
+    private static final String SPEC_CLOUDCPE_INFO = "cloudCpeInfo";
 
     private static final String FIELD_CPEWAN = "interfaceName_WAN";
 
@@ -145,7 +147,7 @@ public class TemplateSbiService {
      * @since SDNO 0.5
      */
     public String getWanName(String templateName) throws ServiceException {
-        return getTemplateData(templateName, SPEC_CLOUDCPE, FIELD_CPEWAN, null);
+        return getTemplateData(templateName, SPEC_CLOUDCPE_INFO, FIELD_CPEWAN, null);
     }
 
     @SuppressWarnings("unchecked")
@@ -187,4 +189,36 @@ public class TemplateSbiService {
             return ((Map<String, String>)resultMap.get(localCpeType)).get(fieldName);
         }
     }
+
+    /**
+     * Get List of wan names.<br>
+     * 
+     * @param template template name
+     * @param neRoleType Cpe Role Type
+     * @param productName product name
+     * @return list of wan names
+     * @throws ServiceException when query failed
+     * @since SDNO 0.5
+     */
+    public List<String> getWanNameList(String template, String neRoleType, String productName) throws ServiceException {
+        String spec = CpeRoleType.CLOUD_CPE.getName().equals(neRoleType) ? SPEC_CLOUDCPE_INFO : SPEC_THINCPE_INFO;
+        Map<String, Map<String, String>> queryMap = getTemplateData(template, spec);
+        if(null == queryMap || queryMap.isEmpty()) {
+            LOGGER.warn("No cpe information queried out");
+            return new ArrayList<>();
+        }
+
+        Map<String, String> wanNameMap = queryMap.get(productName);
+        if(null == wanNameMap || wanNameMap.isEmpty()) {
+            LOGGER.warn("No wan name information related to this product");
+            return new ArrayList<>();
+        }
+
+        if(wanNameMap.containsKey(FIELD_CPEWAN)) {
+            return Arrays.asList(wanNameMap.get(FIELD_CPEWAN));
+        }
+
+        return new ArrayList<>();
+    }
+
 }

@@ -42,6 +42,7 @@ import org.openo.sdno.overlayvpn.brs.model.NetworkElementMO;
 import org.openo.sdno.overlayvpn.dao.common.InventoryDao;
 import org.openo.sdno.overlayvpn.inventory.sdk.util.InventoryDaoUtil;
 import org.openo.sdno.overlayvpn.model.common.enums.ActionStatus;
+import org.openo.sdno.overlayvpn.model.v2.cpe.CpeRoleType;
 import org.openo.sdno.overlayvpn.model.v2.internetgateway.NbiInternetGatewayModel;
 import org.openo.sdno.overlayvpn.model.v2.internetgateway.SbiSnatNetModel;
 import org.openo.sdno.overlayvpn.model.v2.result.ComplexResult;
@@ -82,6 +83,9 @@ public class InternetGatewayServiceImpl implements InternetGatewayService {
     @Autowired
     private BaseResourceDao baseResourceDao;
 
+    @Autowired
+    private TemplateSbiService templateSbiService;
+
     @Override
     public NbiInternetGatewayModel query(HttpServletRequest request, String internetGatewayId) throws ServiceException {
         InventoryDao<NbiInternetGatewayModel> internetGatewayDao =
@@ -94,7 +98,7 @@ public class InternetGatewayServiceImpl implements InternetGatewayService {
         }
 
         NbiInternetGatewayModel internetGatewayModel = internetGatewayResultRsp.getData();
-        fillNeAndSite(internetGatewayModel);
+        fillQueryInternetGatewayModel(internetGatewayModel);
 
         return internetGatewayModel;
     }
@@ -129,7 +133,7 @@ public class InternetGatewayServiceImpl implements InternetGatewayService {
         }
 
         for(NbiInternetGatewayModel internetGatewayModel : internetGatewayModelList) {
-            fillNeAndSite(internetGatewayModel);
+            fillQueryInternetGatewayModel(internetGatewayModel);
         }
 
         ComplexResult<NbiInternetGatewayModel> complexResult = new ComplexResult<>();
@@ -233,13 +237,6 @@ public class InternetGatewayServiceImpl implements InternetGatewayService {
         return internetGatewayDao.update(internetGatewayModel, "name,description");
     }
 
-    /**
-     * Fill Ne and Site Info in Site.<br>
-     * 
-     * @param internetGatewayModel NbiInternetGatewayModel need to fill
-     * @throws ServiceException when fill failed
-     * @since SDNO 0.5
-     */
     private void fillNeAndSite(NbiInternetGatewayModel internetGatewayModel) throws ServiceException {
 
         List<NetworkElementMO> siteNes = baseResourceDao.queryNeBySiteId(internetGatewayModel.getSiteId());
@@ -258,6 +255,27 @@ public class InternetGatewayServiceImpl implements InternetGatewayService {
         }
 
         internetGatewayModel.setSite(queryResultRsp.getData());
+    }
+
+    private void fillQueryInternetGatewayModel(NbiInternetGatewayModel internetGatewayModel) throws ServiceException {
+        if(null != internetGatewayModel.getGwNeId()) {
+            return;
+        }
+
+        ResultRsp<NbiSiteModel> queryResultRsp =
+                (new ModelDataDao<NbiSiteModel>()).query(NbiSiteModel.class, internetGatewayModel.getSiteId());
+        if(!queryResultRsp.isValid()) {
+            LOGGER.error("Site model query failed or does not exist");
+            throw new ServiceException("Site model query failed or does not exist");
+        }
+
+        internetGatewayModel.setSite(queryResultRsp.getData());
+
+        if("localFirst".equals(internetGatewayModel.getDeployPosition())) {
+            fillNeAndWanNameInfo(internetGatewayModel, CpeRoleType.THIN_CPE);
+        } else if("cloudFirst".equals(internetGatewayModel.getDeployPosition())) {
+            fillNeAndWanNameInfo(internetGatewayModel, CpeRoleType.CLOUD_CPE);
+        }
     }
 
     /**
@@ -407,6 +425,22 @@ public class InternetGatewayServiceImpl implements InternetGatewayService {
     private static int generateRandomAclNumber() {
         Random random = new Random();
         return random.nextInt(MAX_ACL_NUMBER - MIN_ACL_NUMBER + 1) + MIN_ACL_NUMBER;
+    }
+
+    private void fillNeAndWanNameInfo(NbiInternetGatewayModel internetGatewayModel, CpeRoleType cpeRoleType)
+            throws ServiceException {
+        NetworkElementMO cpeNeMO =
+                baseResourceDao.queryCpeBySiteIdAndCpeType(internetGatewayModel.getSiteId(), cpeRoleType.getName());
+        String templateName = siteModelDao.getTemplateName(internetGatewayModel.getSiteId());
+        List<String> wanNames =
+                templateSbiService.getWanNameList(templateName, cpeRoleType.getName(), cpeNeMO.getProductName());
+        fillAdditionalInfo(internetGatewayModel, cpeNeMO, wanNames);
+    }
+
+    private void fillAdditionalInfo(NbiInternetGatewayModel internetGatewayModel, NetworkElementMO neMO,
+            List<String> ifNames) {
+        internetGatewayModel.setGwNeId(neMO.getId());
+        internetGatewayModel.setWanNames(JsonUtil.toJson(ifNames));
     }
 
 }

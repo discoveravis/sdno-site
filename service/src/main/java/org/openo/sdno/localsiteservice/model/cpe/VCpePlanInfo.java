@@ -19,6 +19,7 @@ package org.openo.sdno.localsiteservice.model.cpe;
 import org.openo.sdno.overlayvpn.model.v2.cpe.NbiCloudCpeModel;
 import org.openo.sdno.overlayvpn.model.v2.cpe.NbiLocalCpeModel;
 import org.openo.sdno.overlayvpn.verify.annotation.AString;
+import org.springframework.util.StringUtils;
 
 /**
  * Model class of Cpe Plan Info.<br>
@@ -61,7 +62,9 @@ public class VCpePlanInfo extends CpeBasicPlanInfo {
      */
     public VCpePlanInfo(NbiLocalCpeModel localCpeModel) {
         super();
-        this.setUuid(localCpeModel.getUuid());
+        if(StringUtils.hasLength(localCpeModel.getUuid())) {
+            this.setUuid(localCpeModel.getUuid());
+        }
         this.setTenantId(localCpeModel.getTenantId());
         this.setName(localCpeModel.getName());
         this.setRole("Thin CPE");
@@ -80,7 +83,9 @@ public class VCpePlanInfo extends CpeBasicPlanInfo {
      */
     public VCpePlanInfo(NbiCloudCpeModel cloudCpeModel) {
         super();
-        this.setUuid(cloudCpeModel.getUuid());
+        if(StringUtils.hasLength(cloudCpeModel.getUuid())) {
+            this.setUuid(cloudCpeModel.getUuid());
+        }
         this.setTenantId(cloudCpeModel.getTenantId());
         this.setName(cloudCpeModel.getName());
         this.setRole("vCPE");
