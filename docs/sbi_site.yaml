@@ -644,11 +644,19 @@ definitions:
           defaultVlan:
             type: integer
             format: int32
-            description: VLAN value, the range is 1 to 4094
+            description: VLAN value
+            minimum: 1
+            maximum: 4094
           linkType:
             type: string
-            description: the scope is access,trunk,hybird,dot1q,qinq
+            description: Vlan link type
             default: trunk
+            enum:
+              - access
+              - trunk
+              - hybird
+              - dot1q
+              - qinq
           vlans:
             type: string
             description: vlan
@@ -696,8 +704,11 @@ definitions:
             description: The gateway IP address
           enableDhcp:
             type: string
-            description: enable dhcp or not, the scope is "true","false"
+            description: enable dhcp or not
             default: "false"
+            enum:
+              - "true"
+              - "false"
           ipRangeStartIp:
             type: string
             description: The start IP address of the subnet
@@ -706,37 +717,58 @@ definitions:
             description: The end IP address of the subnet
           useMode:
             type: string
-            description: the scope is terminal,vm
+            description: use mode of subnet
+            enum:
+              - terminal
+              - vm
           changedMode:
             type: string
-            description: change mode, the scope is "true","false"
+            description: change mode
             default: "false"
+            enum:
+              - "true"
+              - "false"
           dhcpMode:
             type: string
-            description: the scope is server,relay
+            description: Dhcp mode of Ipv4
             default: server
+            enum:
+              - server
+              - relay
           dnsServerMode:
             type: string
-            description: the scope is systemsetting,custom
+            description: Dns server mode
             default: custom
+            enum:
+              - systemsetting
+              - custom
           unlimit:
             type: string
-            description: the scope is "true","false"
+            description: Whether tenant time is unlimited or not
             default: "true"
+            enum:
+              - "true"
+              - "false"
           ipv6Address:
             type: string
             description: ipv6 address
           prefixLength:
             type: string
-            description: prefix length
+            description: prefix length of ipv6 address
           dhcp6Enable:
             type: string
-            description: the scope is "true","false"
+            description: whether to enable Dpch in Ipv6
             default: "false"
+            enum:
+              - "true"
+              - "false"
           dhcp6Mode:
             type: string
-            description: the scope is server,relay
+            description: Dpch mode in Ipv6
             default: server
+            enum:
+              - server
+              - relay
           priorDnsServer:
             description: prior dns server
             type: string
@@ -874,8 +906,11 @@ definitions:
             description: end public IP address
           qosPreNat:
             type: string
-            description: default "false", "true" when vcpe
+            description: whether to enable qos pre classify or not
             default: "false"
+            enum:
+              - "true"
+              - "false"
           createtime:
             type: integer
             format: int64
@@ -886,8 +921,12 @@ definitions:
             description: update time
           type:
             type: string
-            description: the scope is none,create,updateIp
+            description: operation type
             default: none
+            enum:
+              - none
+              - create
+              - updateIp
 
   SbiInterfaceIpConfigList:
     type: array
@@ -905,7 +944,10 @@ definitions:
         description: interface name
       mode:
         type: string
-        description: IP address assignment mode, the scope is dhcp,manual
+        description: Ipv4 address allocation mode
+        enum:
+          - dhcp
+          - manual
       ip:
         type: string
         description: IP address
@@ -914,13 +956,16 @@ definitions:
         description: the mask of IP address
       mode6:
         type: string
-        description: ipv6 address assignment mode, the scope is dhcp,manual
+        description: Ipv6 address allocation mode
+        enum:
+          - dhcp
+          - manual
       ipv6Address:
         type: string
-        description: ipv6 address
+        description: Ipv6 address
       prefixLength:
         type: integer
-        format: int64
+        format: int32
         description: prefix length
 
   UuidModel:
@@ -958,14 +1003,35 @@ definitions:
         properties:
           adminStatus:
             type: string
-            description: the scope is none,active,inactive,partially inactive
+            description: administrative status
+            default: none
+            enum:
+              - none
+              - active
+              - inactive
+              - partially inactive
           operStatus:
             type: string
-            description: the scope is none,up,down,partially down
+            description: operation status
+            default: none
+            enum:
+              - none
+              - up
+              - down
+              - partially down
           actionState:
             type: string
-            description: the scope is Normal,Creating,Deleting,Updating,Checking,Create_Exception,
-                        Update_Exception,Delete_Exception,Check_Exception
+            description: action state
+            default: Normal
+            enum:
+              - None
+              - Normal
+              - Creating
+              - Deleting
+              - Updating
+              - Create_Excepion
+              - Delete_Exception
+              - Update_Exception
           createTime:
             type: string
             description: create time

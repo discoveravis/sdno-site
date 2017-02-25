@@ -892,13 +892,38 @@ definitions:
         properties:
           adminStatus:
             type: string
-            description:  admin state (scope = none, active, inactive, partially_inactive)
+            description:  administrative state
+            enum:
+              - none
+              - active
+              - inactive
+              - partially_inactive
           operStatus:
             type: string
-            description: (scope = none, up, down, partially_down)
+            description: operation status
+            enum:
+              - none
+              - up
+              - down
+              - partially_down
           actionState:
             type: string
-            description: (scope = none, normal, creating, deleting, updating, create_exception, update_exception, delete_exception, deploying, deploy_exception, undeploying, undeploy_exception, checking, check_exception)
+            description: action state
+            enum:
+              - none
+              - normal
+              - creating
+              - deleting
+              - updating
+              - create_exception
+              - update_exception
+              - delete_exception
+              - deploying
+              - deploy_exception
+              - undeploying
+              - undeploy_exception
+              - checking
+              - check_exception
           createTime:
             type: string
             description: create time
@@ -999,7 +1024,9 @@ definitions:
           cidrBlockSize:
             type: integer
             format: int32
-            description: cidr block size 8~32
+            description: cidr block size
+            minimum: 8
+            maximum: 32
           gatewayIp:
             type: string
             description: gateway ip
@@ -1125,13 +1152,33 @@ definitions:
             description: reference count
           adminState:
             type: string
-            description: scope = Active, Stopped, Building
+            description: administrative state
+            enum:
+              - Active
+              - Stopped
+              - Building
           actionState:
             type: string
-            description: (scope = none, normal, creating, deleting, updating, create_exception, update_exception, delete_exception, deploying, deploy_exception, undeploying, undeploy_exception, checking, check_exception)
+            description: action state
+            default: normal
+            enum:
+              - none
+              - normal
+              - creating
+              - deleting
+              - updating
+              - create_exception
+              - update_exception
+              - delete_exception
+              - deploying
+              - deploy_exception
+              - undeploying
+              - undeploy_exception
+              - checking
+              - check_exception
           template:
             type: string
-            description: template
+            description: template of cloudcpe
           additionalInfo:
             type: array
             items:
@@ -1219,13 +1266,21 @@ definitions:
             description: product name
           isVirtual:
             type: string
-            description: whether is a virtual ne
+            description: whether is a virtual network element
+            enum:
+              - true
+              - false
           ipAddress:
             type: string
             description: ip Address
           source:
             type: string
-            description: (scope=network_me,os,network_ems,user)
+            description: source of network element
+            enum:
+              - network_me
+              - os
+              - network_ems
+              - user
           owner:
             type: string
             description: owner
@@ -1243,19 +1298,38 @@ definitions:
             description: manufacture Date
           adminState:
             type: string
-            description: (scope=active,inactive)
+            description: administrative state
+            enum:
+              - active
+              - inactive
           operState:
             type: string
-            description: (scope=up,down,unknown)
+            description: operation state
+            enum:
+              - up
+              - down
+              - unknown
           nativeId:
             type: string
             description: native id
           accessIpVersion:
             type: string
-            description: (scope=ipv4,ipv6,ipv4/ipv6)
+            description: access ip version
+            default: IPV4
+            enum:
+              - IPV4
+              - IPV6
+              - IPV4/IPV6
           neRole:
             type: string
-            description: ne role
+            description: network element role, clouecpe/localcpe/firewall
+            enum:
+              - Thin CPE
+              - vCPE
+              - vFW
+          popID:
+            type: string
+            description: pop id
           additionalInfo:
             type: array
             items:
@@ -1300,11 +1374,17 @@ definitions:
             type: string
             description: next hop
           precedence:
-            type: string
-            description: precedence
+            type: integer
+            format: int32
+            description: precedence for route entry
+            minimum: 1
+            maximum: 254
           routeType:
             type: string
-            description: only support static-routing for now
+            description: route type, staic route or policy route, currently noly support static route
+            default: static-routing
+            enum:
+              - static-routing
 
   NbiSiteModelUpdateRsp:
     description: NbiSiteModel update result response
@@ -1340,22 +1420,42 @@ definitions:
         properties:
           name:
             type: string
-            description: the name of the model
+            description: site name
           tenantId:
             type: string
-            description: tenant ID
+            description: tenant id
           description:
             type: string
-            description: description info
+            description: site description information
           location:
             type: string
-            description: location
+            description: site location
           actionState:
             type: string
-            description: operation status(scope:none,normal,creating,deleting,updating,create_exception,update_exception,delete_exception,deploying,deploy_exception,undeploying,undeploy_exception,checking,check_exception)
-          deployCloudCpeByDeafult:
-            type: string
-            description: default=true
+            description: operation status of site
+            default: normal
+            enum:
+              - none
+              - normal
+              - creating
+              - deleting
+              - updating
+              - create_exception
+              - update_exception
+              - delete_exception
+              - deploying
+              - deploy_exception
+              - undeploying
+              - undeploy_exception
+              - checking
+              - check_exception
+          deployCloudCpeByDefault:
+            type: boolean
+            description: whether to start cloudcpe when create site
+            default: true
+            enum:
+              - true
+              - false
           popId:
             type: string
             description: pop id
@@ -1367,24 +1467,44 @@ definitions:
             description: site Descriptor
           reliability:
             type: string
-            description: (scope:singleFixedNetwork,dualFixedNetwork,fixedAndWirelessNetwork,EthernetNetwork,VDSLNetwork,GSHDSLNetwork,EthernetAndLTENetwork,EthernetAndEthernetNetwork,EthernetAndVDSLNetwork,VDSLAndLTENetwork)
+            description: reliability defition of site
+            enum:
+              - singleFixedNetwork
+              - dualFixedNetwork
+              - fixedAndWirelessNetwork
+              - EthernetNetwork
+              - VDSLNetwork
+              - GSHDSLNetwork
+              - EthernetAndLTENetwork
+              - EthernetAndEthernetNetwork
+              - EthernetAndVDSLNetwork
+              - VDSLAndLTENetwork
           isEncrypt:
             type: string
-            description: is encrypt
+            description: whether connection is encrypt
+            enum:
+              - true
+              - false
           vpnUpstreamBandwidth:
             type: integer
             format: int64
-            description: vpn Upstream Bandwidth default=-2L
+            description: Vpn upstream bandwidth(kbps)
+            default: -2
+            minimum: -2
+            maximum: 4294967295
           vpnDownstreamBandwidth:
             type: integer
             format: int64
-            description: vpn Downstream Bandwidth default=-2L
+            description: Vpn downstream bandwidth(kbps)
+            default: -2
+            minimum: -2
+            maximum: 4294967295
           totalDownstreamBandwidth:
             type: string
-            description: total Downstream Bandwidth
+            description: total downstream bandwidth
           totalUpstreamBandwidth:
             type: string
-            description: total Upstream Bandwidth
+            description: total upstream bandwidth
           createtime:
             type: integer
             format: int64
@@ -1429,25 +1549,44 @@ definitions:
             description: site id
           protectionType:
             type: string
-            description: not support now
+            description: protection type
+            default: non-protection
+            enum:
+              - non-protection
           enableSnat:
             type: string
-            description: default:true
+            description: whether to enable snat
+            default: "true"
+            enum:
+              - "true"
+              - "false"
           upstreamBandwidth:
-            type: string
-            description: up stream Bandwidth
+            type: integer
+            format: int64
+            description: Up stream bandwidth
           downstreamBandwidth:
-            type: string
-            description: down stream Bandwidth
+            type: integer
+            format: int64
+            description: Down stream bandwidth
           vpnId:
             type: string
             description: vpn id
           publicIp:
             type: string
             description: public ip
+          gwNeId:
+            type: string
+            description: Gateway NetworkElement id
+          wanNames:
+            type: string
+            description: Name of wan interface used for internet
           deployPosition:
             type: string
-            description: (scope=localFirst, cloudFirst)
+            description: deploy position, localcpe or cloudcpe
+            default: localFirst
+            enum:
+              - localFirst
+              - cloudFirst
           sourceSubnets:
             type: array
             items:
