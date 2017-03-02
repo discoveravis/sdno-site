@@ -90,8 +90,16 @@ public class SiteRoaResourceTest extends SpringTest {
     }
 
     @Test
-    public void batchQueryTest() throws ServiceException {
-        ComplexResult<NbiSiteModel> queryResult = siteRoaResource.batchQuery(httpRequest, "[\"SiteId\",\"SiteId2\"]");
+    public void batchQueryUuidsNotEmptyTest() throws ServiceException {
+        ComplexResult<NbiSiteModel> queryResult =
+                siteRoaResource.batchQuery(httpRequest, "[\"SiteId\",\"SiteId2\"]", null, null, null, null);
+        assertTrue(2 == queryResult.getTotal());
+    }
+
+    @Test
+    public void batchQueryUuidsEmptyTest() throws ServiceException {
+        ComplexResult<NbiSiteModel> queryResult =
+                siteRoaResource.batchQuery(httpRequest, null, "Site1", "SiteId", null, null);
         assertTrue(2 == queryResult.getTotal());
     }
 

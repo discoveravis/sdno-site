@@ -47,13 +47,28 @@ public interface SiteService {
     /**
      * Batch query NbiSiteModel data.<br>
      * 
-     * @param name Site name
+     * @param req HttpServletRequest object
      * @param siteIds List of Site Uuid
      * @return NbiSiteModel data queried out
      * @throws ServiceException when query failed
      * @since SDNO 0.5
      */
     ComplexResult<NbiSiteModel> batchQuery(HttpServletRequest req, List<String> siteIds) throws ServiceException;
+
+    /**
+     * Batch query NbiSiteModel data.<br>
+     * 
+     * @param req HttpServletRequest Object
+     * @param name Site name
+     * @param siteId Site Id
+     * @param pageNum Page Number
+     * @param pageSize Page Size
+     * @return NbiSiteModel data queried out
+     * @throws ServiceException when query failed
+     * @since SDNO 0.5
+     */
+    ComplexResult<NbiSiteModel> batchQuery(HttpServletRequest req, String name, String siteId, String pageNum,
+            String pageSize) throws ServiceException;
 
     /**
      * Create NbiSiteModel data.<br>

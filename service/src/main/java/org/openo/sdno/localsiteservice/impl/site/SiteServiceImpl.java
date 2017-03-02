@@ -17,11 +17,15 @@
 package org.openo.sdno.localsiteservice.impl.site;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.openo.baseservice.remoteservice.exception.ServiceException;
+import org.openo.sdno.framework.container.util.JsonUtil;
 import org.openo.sdno.localsiteservice.dao.ModelDataDao;
 import org.openo.sdno.localsiteservice.dao.SiteModelDao;
 import org.openo.sdno.localsiteservice.inf.site.SiteService;
@@ -109,6 +113,36 @@ public class SiteServiceImpl implements SiteService {
     }
 
     @Override
+    public ComplexResult<NbiSiteModel> batchQuery(HttpServletRequest req, String name, String siteId, String pageNum,
+            String pageSize) throws ServiceException {
+
+        Map<String, Object> filterMap = new HashMap<>();
+        if(StringUtils.hasLength(name)) {
+            filterMap.put("name", Arrays.asList(name));
+        }
+
+        if(StringUtils.hasLength(siteId)) {
+            filterMap.put("siteId", Arrays.asList(siteId));
+        }
+
+        ModelDataDao<NbiSiteModel> siteModelDao = new ModelDataDao<>();
+
+        ResultRsp<List<NbiSiteModel>> resultRsp =
+                siteModelDao.batchQuery(NbiSiteModel.class, JsonUtil.toJson(filterMap));
+
+        if(!resultRsp.isValid()) {
+            LOGGER.error("Batch query site model failed");
+            throw new ServiceException("Batch query site model failed");
+        }
+
+        ComplexResult<NbiSiteModel> complexResult = new ComplexResult<>();
+        complexResult.setData(resultRsp.getData());
+        complexResult.setTotal(resultRsp.getData().size());
+
+        return complexResult;
+    }
+
+    @Override
     public ResultRsp<NbiSiteModel> create(HttpServletRequest req, NbiSiteModel siteModel) throws ServiceException {
 
         SiteMO dbSiteMO = siteInvDao.query(siteModel.getUuid());
@@ -191,5 +225,4 @@ public class SiteServiceImpl implements SiteService {
         siteMO.setId(siteModel.getUuid());
         return siteMO;
     }
-
 }

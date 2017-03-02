@@ -36,7 +36,6 @@ import javax.ws.rs.core.MediaType;
 
 import org.codehaus.jackson.type.TypeReference;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
-import org.openo.sdno.exception.ParameterServiceException;
 import org.openo.sdno.framework.container.util.JsonUtil;
 import org.openo.sdno.framework.container.util.UuidUtils;
 import org.openo.sdno.localsiteservice.checker.SiteModelChecker;
@@ -109,6 +108,10 @@ public class SiteRoaResource {
      * 
      * @param request HttpServletRequest Object
      * @param uuids List of Uuid need to query
+     * @param name Site name
+     * @param siteId Site Id
+     * @param pageNum Page Number
+     * @param pageSize Page Size
      * @return List of Sites queried out
      * @throws ServiceException when query failed
      * @since SDNO 0.5
@@ -117,17 +120,17 @@ public class SiteRoaResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public ComplexResult<NbiSiteModel> batchQuery(@Context HttpServletRequest request,
-            @QueryParam("uuids") String uuids) throws ServiceException {
+            @QueryParam("uuids") String uuids, @QueryParam("name") String name, @QueryParam("siteId") String siteId,
+            @QueryParam("pageNum") String pageNum, @QueryParam("pageSize") String pageSize) throws ServiceException {
         long beginTime = System.currentTimeMillis();
         LOGGER.debug("Enter batch query method");
 
-        if(!StringUtils.hasLength(uuids)) {
-            LOGGER.error("uuids is empty");
-            throw new ParameterServiceException("uuids is empty");
+        ComplexResult<NbiSiteModel> result;
+        if(StringUtils.hasLength(uuids)) {
+            result = service.batchQuery(request, JsonUtil.fromJson(uuids, new TypeReference<List<String>>() {}));
+        } else {
+            result = service.batchQuery(request, name, siteId, pageNum, pageSize);
         }
-
-        ComplexResult<NbiSiteModel> result =
-                service.batchQuery(request, JsonUtil.fromJson(uuids, new TypeReference<List<String>>() {}));
 
         LOGGER.debug("Exit query method cost time:" + (System.currentTimeMillis() - beginTime));
 
