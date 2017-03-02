@@ -16,12 +16,15 @@
 
 package org.openo.sdno.localsiteservice.rest.cpe;
 
+import java.util.Arrays;
+
 import org.openo.baseservice.remoteservice.exception.ServiceException;
 import org.openo.baseservice.roa.util.restclient.RestfulParametes;
 import org.openo.baseservice.roa.util.restclient.RestfulResponse;
 import org.openo.sdno.exception.HttpCode;
 import org.openo.sdno.framework.container.resthelper.RestfulProxy;
 import org.openo.sdno.framework.container.util.JsonUtil;
+import org.openo.sdno.framework.container.util.UuidUtils;
 import org.openo.sdno.overlayvpn.errorcode.ErrorCode;
 import org.openo.sdno.overlayvpn.model.v2.cpe.SbiDeviceInfo;
 import org.openo.sdno.overlayvpn.result.ResultRsp;
@@ -39,7 +42,9 @@ public class MockCpeOnlineRestfulProxy extends MockUp<RestfulProxy> {
     @Mock
     public static RestfulResponse post(String uri, RestfulParametes restParametes) throws ServiceException {
         SbiDeviceInfo sbiDeviceInfo = new SbiDeviceInfo();
-        ResultRsp<SbiDeviceInfo> resultRsp = new ResultRsp<SbiDeviceInfo>(ErrorCode.OVERLAYVPN_SUCCESS, sbiDeviceInfo);
+        sbiDeviceInfo.setUuid(UuidUtils.createUuid());
+        ResultRsp<SbiDeviceInfo> resultRsp = new ResultRsp<SbiDeviceInfo>(ErrorCode.OVERLAYVPN_SUCCESS);
+        resultRsp.setSuccessed(Arrays.asList(sbiDeviceInfo));
         restfulResponse.setResponseJson(JsonUtil.toJson(resultRsp));
         return restfulResponse;
     }

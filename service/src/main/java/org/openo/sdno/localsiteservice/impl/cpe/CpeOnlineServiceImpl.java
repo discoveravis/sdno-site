@@ -40,11 +40,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 /**
  * Implementation class of CpeOnline Service.<br>
- * 
+ *
  * @author
  * @version SDNO 0.5 2017-1-27
  */
@@ -80,13 +81,19 @@ public class CpeOnlineServiceImpl implements CpeOnlineService {
         // Create device in driver
         String controllerId = cpePlanInfo.getControllerId();
         ResultRsp<SbiDeviceInfo> resultRsp = sbiService.create(controllerId, createBasicInfo);
-        if(!resultRsp.isValid()) {
-            LOGGER.error("Create Device failed");
+        if(!resultRsp.isSuccess()) {
+            LOGGER.error("Create device failed");
             return new ResultRsp<>(ErrorCode.OVERLAYVPN_FAILED);
         }
 
+        List<SbiDeviceInfo> successDeviceList = resultRsp.getSuccessed();
+        if(CollectionUtils.isEmpty(successDeviceList)) {
+            LOGGER.error("No created device returned from driver");
+            throw new ServiceException("No created device returned from driver");
+        }
+
         // Update cpe in database
-        cpeNetworkElement.setNativeID(resultRsp.getData().getId());
+        cpeNetworkElement.setNativeID(successDeviceList.get(0).getId());
         cpeNetworkElement.setAdminState(AdminStatus.ACTIVE.getName());
         cpeNetworkElement.setOperState(OperStatus.UP.getName());
         networkElementInvDao.updateMO(cpeNetworkElement);
