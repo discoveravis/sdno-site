@@ -1,6 +1,6 @@
 {
 	"request": {
-		"uri": "/openoapi/sdnooverlay/v1/template/policy/enterprise_l2cpe_singleFixedNetwork/cloudCpeInfo",
+		"uri": "/openoapi/sdnooverlay/v1/template/policy/enterprise_l2cpe_EthernetNetwork/cloudCpeInfo",
 		"method": "get"
 	},
 	"response": {

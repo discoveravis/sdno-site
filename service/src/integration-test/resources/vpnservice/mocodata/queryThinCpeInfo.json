@@ -1,6 +1,6 @@
 {
 	"request": {
-		"uri": "/openoapi/sdnooverlay/v1/template/policy/enterprise_l2cpe_singleFixedNetwork/thinCpeInfo",
+		"uri": "/openoapi/sdnooverlay/v1/template/policy/enterprise_l2cpe_EthernetNetwork/localCpeInfo",
 		"method": "get"
 	},
 	"response": {
@@ -8,7 +8,7 @@
 		"json": {
 			"AR169FGW-L": {
 				"interfaceName_LAN": "GigabitEthernet0/0/1,GigabitEthernet0/0/2"
-				}
 			}
 		}
+	}
 }

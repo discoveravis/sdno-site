@@ -49,7 +49,7 @@ public class TemplateSbiService {
 
     private static final String TEMPLATE_QUERY_URL = "/openoapi/sdnooverlay/v1/template/policy/{0}/{1}";
 
-    private static final String SPEC_THINCPE_INFO = "thinCpeInfo";
+    private static final String SPEC_THINCPE_INFO = "localCpeInfo";
 
     private static final String FIELD_THINCPE_LAN = "interfaceName_LAN";
 
