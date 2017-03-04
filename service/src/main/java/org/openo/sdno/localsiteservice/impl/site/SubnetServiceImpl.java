@@ -76,6 +76,9 @@ public class SubnetServiceImpl implements SubnetService {
     @Autowired
     private SiteModelDao siteModelDao;
 
+    @Autowired
+    private LogicalTernminationPointInvDao ltpInvDao;
+
     @Override
     public ResultRsp<NbiSubnetModel> query(HttpServletRequest req, String subnetUuid) throws ServiceException {
         ResultRsp<NbiSubnetModel> queryResultRsp =
@@ -286,8 +289,6 @@ public class SubnetServiceImpl implements SubnetService {
         // Query Local Network Element
         NetworkElementMO localCPE = siteModelDao.getSiteLocalCpe(subnetModel.getSiteId());
 
-        LogicalTernminationPointInvDao ltpInvDao = new LogicalTernminationPointInvDao();
-
         List<LogicalTernminationPointMO> totalLtpMOList = new ArrayList<>();
         for(String portName : portNames) {
             Map<String, String> conditionMap = new HashMap<>();
@@ -339,11 +340,8 @@ public class SubnetServiceImpl implements SubnetService {
             subnetNetModel.setDhcp6Enable("true");
             subnetNetModel.setGatewayIp(subnetModel.getGatewayIp());
         } else {
-            subnetNetModel.setCidrIpAddress(subnetModel.getCidrBlock());
-            if(null != subnetModel.getCidrBlockSize()) {
-                subnetNetModel.setCidrMask(IpUtils.prefixToMask(subnetModel.getCidrBlockSize()));
-            }
-
+            subnetNetModel.setCidrIpAddress(IpUtils.getMinIpFromCIDR(subnetModel.getCidrBlock()));
+            subnetNetModel.setCidrMask(IpUtils.getNetMaskFromCIDR(subnetModel.getCidrBlock()));
             subnetNetModel.setEnableDhcp(subnetModel.getEnableDhcp());
             if("true".equals(subnetModel.getEnableDhcp())) {
                 subnetNetModel.setDhcpMode("server");
@@ -378,9 +376,9 @@ public class SubnetServiceImpl implements SubnetService {
                 throw new ServiceException("Subnet parameter is not complete in Ipv6");
             }
         } else {
-            if(StringUtils.isBlank(subnetModel.getCidrBlock()) || StringUtils.isBlank(subnetModel.getGatewayIp())) {
-                LOGGER.error("Parameter is not complete, need to fill complete paramters");
-                throw new ServiceException("Subnet parameter is not complete in Ipv4");
+            if(StringUtils.isBlank(subnetModel.getCidrBlock())) {
+                LOGGER.error("CidrBlock need to be filled in Ipv4");
+                throw new ServiceException("CidrBlock need to be filled in Ipv4");
             }
         }
     }
