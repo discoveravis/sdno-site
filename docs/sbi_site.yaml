@@ -1022,16 +1022,22 @@ definitions:
           actionState:
             type: string
             description: action state
-            default: Normal
+            default: normal
             enum:
-              - None
-              - Normal
-              - Creating
-              - Deleting
-              - Updating
-              - Create_Excepion
-              - Delete_Exception
-              - Update_Exception
+              - none
+              - normal
+              - creating
+              - deleting
+              - updating
+              - create_exception
+              - delete_exception
+              - update_exception
+              - deploying
+              - deploy_exception
+              - undeploying
+              - undeploy_exception
+              - checking
+              - check_exception
           createTime:
             type: string
             description: create time
