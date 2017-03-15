@@ -16,7 +16,9 @@
 
 package org.openo.sdno.localsiteservice.rest.site;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Map;
 
@@ -105,8 +107,14 @@ public class SiteRoaResourceTest extends SpringTest {
 
     @Test
     public void createTest() throws ServiceException {
-        Map<String, String> createResult = siteRoaResource.create(httpRequest, httpResponse, siteModel);
-        assertTrue("SiteId".equals(createResult.get("id")));
+        try {
+            Map<String, String> createResult = siteRoaResource.create(httpRequest, httpResponse, siteModel);
+            assertEquals("SiteId", createResult.get("id"));
+        } catch(ServiceException e) {
+            e.printStackTrace();
+            System.out.println(e.toString());
+            fail("Create site test occurs exception");
+        }
     }
 
     @Test
