@@ -1,0 +1,1955 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "site service NBI interface",
+    "version" : "1.0.0",
+    "title" : "SiteService",
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "basePath" : "/openoapi/sdnolocalsite/v1",
+  "schemes" : [ "http" ],
+  "consumes" : [ "application/json" ],
+  "produces" : [ "application/json" ],
+  "paths" : {
+    "/sites" : {
+      "get" : {
+        "tags" : [ "SiteRoaResource" ],
+        "summary" : "batch query sites",
+        "description" : "batch query sites",
+        "operationId" : "batchQuerySites",
+        "parameters" : [ {
+          "name" : "uuids",
+          "in" : "query",
+          "description" : "uuid list of sites",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/NbiSiteModelComplexRsp"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "SiteRoaResource" ],
+        "summary" : "create  site",
+        "description" : "create  site",
+        "operationId" : "createSite",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "site",
+          "description" : "site to create",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/NbiSiteModel"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/NbiModelCreateRsp"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/sites/{uuid}" : {
+      "get" : {
+        "tags" : [ "SiteRoaResource" ],
+        "summary" : "query  sites",
+        "description" : "query  sites",
+        "operationId" : "querySite",
+        "parameters" : [ {
+          "name" : "uuid",
+          "in" : "path",
+          "description" : "uuid of site to query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/NbiSiteModel"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "SiteRoaResource" ],
+        "summary" : "update  sites",
+        "description" : "update  sites",
+        "operationId" : "updateSite",
+        "parameters" : [ {
+          "name" : "uuid",
+          "in" : "path",
+          "description" : "uuid of site to update",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/NbiSiteModelUpdateRsp"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "SiteRoaResource" ],
+        "summary" : "delete  sites",
+        "description" : "delete  sites",
+        "operationId" : "deleteSite",
+        "parameters" : [ {
+          "name" : "uuid",
+          "in" : "path",
+          "description" : "uuid of site to delete",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/NbiSiteModel"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/internet-gateways" : {
+      "get" : {
+        "tags" : [ "InternetGatewayRoaResource" ],
+        "summary" : "batch query  internet gateways",
+        "description" : "batch query  internet gateways",
+        "operationId" : "batchQueryInternetGateways",
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "query",
+          "description" : "name",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "tenantId",
+          "in" : "query",
+          "description" : "tenant id",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "siteId",
+          "in" : "query",
+          "description" : "site id",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "pageNum",
+          "in" : "query",
+          "description" : "page number",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "pageSize",
+          "in" : "query",
+          "description" : "size of page",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/NbiInternetGatewayModelComplexRsp"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "InternetGatewayRoaResource" ],
+        "summary" : "create  internet gateway",
+        "description" : "create  internet gateway",
+        "operationId" : "createInternetGateway",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "internet gateway",
+          "description" : "internet gateway to create",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/NbiInternetGatewayModel"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/NbiModelCreateRsp"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/internet-gateways/{uuid}" : {
+      "get" : {
+        "tags" : [ "InternetGatewayRoaResource" ],
+        "summary" : "query  internet gateways",
+        "description" : "query  internet gateways",
+        "operationId" : "queryInternetGateway",
+        "parameters" : [ {
+          "name" : "uuid",
+          "in" : "path",
+          "description" : "uuid of internet gateway to query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/NbiInternetGatewayModel"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "InternetGatewayRoaResource" ],
+        "summary" : "update  internet gateways",
+        "description" : "update  internet gateways",
+        "operationId" : "updateInternetGateway",
+        "parameters" : [ {
+          "name" : "uuid",
+          "in" : "path",
+          "description" : "uuid of internet gateway to update",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/NbiInternetGatewayModel"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "InternetGatewayRoaResource" ],
+        "summary" : "delete  internet gateways",
+        "description" : "delete  internet gateways",
+        "operationId" : "deleteInternetGateway",
+        "parameters" : [ {
+          "name" : "uuid",
+          "in" : "path",
+          "description" : "uuid of internet gateway to delete",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "OK"
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/local-cpes" : {
+      "get" : {
+        "tags" : [ "LocalCpeRoaResource" ],
+        "summary" : "batch query  localcpes",
+        "description" : "batch query  localcpes",
+        "operationId" : "batchQueryLocalCpes",
+        "parameters" : [ {
+          "name" : "cpeType",
+          "in" : "query",
+          "description" : "cpe type",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "siteId",
+          "in" : "query",
+          "description" : "site id",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "pageNum",
+          "in" : "query",
+          "description" : "page number",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "pageSize",
+          "in" : "query",
+          "description" : "size of page",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/NbiNeMo"
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "LocalCpeRoaResource" ],
+        "summary" : "create  localcpe",
+        "description" : "create  localcpe",
+        "operationId" : "createLocalCpe",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "localcpe",
+          "description" : "localcpe to create",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/NbiLocalCpeModel"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/NbiModelCreateRsp"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/local-cpes/{uuid}" : {
+      "get" : {
+        "tags" : [ "LocalCpeRoaResource" ],
+        "summary" : "query  localcpes",
+        "description" : "query  localcpes",
+        "operationId" : "queryLocalCpe",
+        "parameters" : [ {
+          "name" : "uuid",
+          "in" : "path",
+          "description" : "uuid of localcpe to query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/NbiNeMo"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "LocalCpeRoaResource" ],
+        "summary" : "delete  localcpes",
+        "description" : "delete  localcpes",
+        "operationId" : "deleteLocalCpe",
+        "parameters" : [ {
+          "name" : "uuid",
+          "in" : "path",
+          "description" : "uuid of localcpe to delete",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "OK"
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/cloud-cpes" : {
+      "get" : {
+        "tags" : [ "CloudCpeRoaResource" ],
+        "summary" : "batch query  cloudcpes",
+        "description" : "batch query  cloudcpes",
+        "operationId" : "batchQueryCloudCpes",
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "query",
+          "description" : "pop id",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "tenantId",
+          "in" : "query",
+          "description" : "tenant Id",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "siteId",
+          "in" : "query",
+          "description" : "site id",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/NbiCloudCpeModel"
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "CloudCpeRoaResource" ],
+        "summary" : "create  cloudcpe",
+        "description" : "create  cloudcpe",
+        "operationId" : "createCloudCpe",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "cloudcpe to create",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/NbiCloudCpeModel"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/NbiModelCreateRsp"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/cloud-cpes/{uuid}" : {
+      "get" : {
+        "tags" : [ "CloudCpeRoaResource" ],
+        "summary" : "query  cloudcpes",
+        "description" : "query  cloudcpes",
+        "operationId" : "queryCloudCpe",
+        "parameters" : [ {
+          "name" : "uuid",
+          "in" : "path",
+          "description" : "uuid of cloudcpe to query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/NbiCloudCpeModel"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "CloudCpeRoaResource" ],
+        "summary" : "delete  cloudcpes",
+        "description" : "delete  cloudcpes",
+        "operationId" : "deleteCloudCpe",
+        "parameters" : [ {
+          "name" : "uuid",
+          "in" : "path",
+          "description" : "uuid of cloudcpe to delete",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "type" : "string"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/subnets" : {
+      "get" : {
+        "tags" : [ "SubnetRoaResource" ],
+        "summary" : "batch query  subnets",
+        "description" : "batch query  subnets",
+        "operationId" : "batchQuerySubnets",
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "query",
+          "description" : "subnet name",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "tenantId",
+          "in" : "query",
+          "description" : "tenant Id",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "siteId",
+          "in" : "query",
+          "description" : "site id",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "pageNum",
+          "in" : "query",
+          "description" : "page number",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "pageSize",
+          "in" : "query",
+          "description" : "size of page",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/NbiSubnetModelComplexRsp"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "SubnetRoaResource" ],
+        "summary" : "create  subnet",
+        "description" : "create  subnet",
+        "operationId" : "createSubnet",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "subnet",
+          "description" : "subnet to create",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/NbiSubnetModel"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/NbiModelCreateRsp"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/subnets/{uuid}" : {
+      "get" : {
+        "tags" : [ "SubnetRoaResource" ],
+        "summary" : "query  subnets",
+        "description" : "query  subnets",
+        "operationId" : "querySubnet",
+        "parameters" : [ {
+          "name" : "uuid",
+          "in" : "path",
+          "description" : "uuid of subnet to query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/NbiSubnetModel"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "SubnetRoaResource" ],
+        "summary" : "update  subnets",
+        "description" : "update  subnets",
+        "operationId" : "updateSubnet",
+        "parameters" : [ {
+          "name" : "uuid",
+          "in" : "path",
+          "description" : "uuid of subnet to update",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/NbiSubnetModel"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "SubnetRoaResource" ],
+        "summary" : "delete  subnets",
+        "description" : "delete  subnets",
+        "operationId" : "deleteSubnet",
+        "parameters" : [ {
+          "name" : "uuid",
+          "in" : "path",
+          "description" : "uuid of subnet to delete",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "OK"
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/vlans" : {
+      "get" : {
+        "tags" : [ "VlanRoaResource" ],
+        "summary" : "batch query  vlans",
+        "description" : "batch query  vlans",
+        "operationId" : "batchQueryVlans",
+        "parameters" : [ {
+          "name" : "name",
+          "in" : "query",
+          "description" : "name",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "tenantId",
+          "in" : "query",
+          "description" : "tenant Id",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "siteId",
+          "in" : "query",
+          "description" : "site id",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "pageNum",
+          "in" : "query",
+          "description" : "page number",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "pageSize",
+          "in" : "query",
+          "description" : "size of page",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/NbiVlanModelComplexRsp"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "VlanRoaResource" ],
+        "summary" : "create  vlan",
+        "description" : "create  vlan",
+        "operationId" : "createVlan",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "vlan",
+          "description" : "vlan to create",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/NbiVlanModel"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/NbiModelCreateRsp"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/vlans/{uuid}" : {
+      "get" : {
+        "tags" : [ "VlanRoaResource" ],
+        "summary" : "query  vlans",
+        "description" : "query  vlans",
+        "operationId" : "queryVlan",
+        "parameters" : [ {
+          "name" : "uuid",
+          "in" : "path",
+          "description" : "uuid of vlan to query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/NbiVlanModel"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "VlanRoaResource" ],
+        "summary" : "update  vlans",
+        "description" : "update  vlans",
+        "operationId" : "updateVlan",
+        "parameters" : [ {
+          "name" : "uuid",
+          "in" : "path",
+          "description" : "uuid of vlan to update",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/NbiVlanModel"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "VlanRoaResource" ],
+        "summary" : "delete  vlans",
+        "description" : "delete  vlans",
+        "operationId" : "deleteVlan",
+        "parameters" : [ {
+          "name" : "uuid",
+          "in" : "path",
+          "description" : "uuid of vlan to delete",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "schema" : {
+              "$ref" : "#/definitions/NbiModelCreateRsp"
+            }
+          },
+          "400" : {
+            "description" : "Bad Request"
+          },
+          "401" : {
+            "description" : "Unauthorized"
+          },
+          "404" : {
+            "description" : "Not Found"
+          },
+          "500" : {
+            "description" : "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "UuidModel" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "the UUID of the model"
+        }
+      }
+    },
+    "ModelBase" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/UuidModel"
+      }, {
+        "type" : "object",
+        "required" : [ "tenantId" ],
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "the name of the model"
+          },
+          "tenantId" : {
+            "type" : "string",
+            "description" : "tenant ID"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "description info"
+          },
+          "additionalInfo" : {
+            "type" : "array",
+            "description" : "additional info",
+            "items" : {
+              "$ref" : "#/definitions/NvString"
+            }
+          }
+        }
+      } ]
+    },
+    "NvString" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/UuidModel"
+      }, {
+        "type" : "object",
+        "required" : [ "name" ],
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "name, 1 <= length <= 36"
+          },
+          "value" : {
+            "type" : "string",
+            "description" : "value, min = 0, max =255"
+          },
+          "firstParentUuid" : {
+            "type" : "string",
+            "description" : "uuid, 1 <= length <= 36"
+          }
+        }
+      } ]
+    },
+    "BaseServiceModel" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/ModelBase"
+      }, {
+        "type" : "object",
+        "required" : [ "adminStatus" ],
+        "properties" : {
+          "adminStatus" : {
+            "type" : "string",
+            "description" : "administrative state",
+            "enum" : [ "none", "active", "inactive", "partially_inactive" ]
+          },
+          "operStatus" : {
+            "type" : "string",
+            "description" : "operation status",
+            "enum" : [ "none", "up", "down", "partially_down" ]
+          },
+          "actionState" : {
+            "type" : "string",
+            "description" : "action state",
+            "enum" : [ "none", "normal", "creating", "deleting", "updating", "create_exception", "update_exception", "delete_exception", "deploying", "deploy_exception", "undeploying", "undeploy_exception", "checking", "check_exception" ]
+          },
+          "createTime" : {
+            "type" : "string",
+            "description" : "create time"
+          }
+        }
+      } ]
+    },
+    "NbiModelCreateRsp" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "Uuid of Nbi Model created"
+        }
+      },
+      "description" : "create result response"
+    },
+    "ComplexResultResponse" : {
+      "type" : "object",
+      "required" : [ "total" ],
+      "properties" : {
+        "total" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "count of result data"
+        },
+        "curIndex" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "current data index"
+        },
+        "pageCapacity" : {
+          "type" : "integer",
+          "format" : "int32",
+          "description" : "page capacity"
+        }
+      },
+      "description" : "Complex Result Response, batch query result"
+    },
+    "NbiVlanModelComplexRsp" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/ComplexResultResponse"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "description" : "List of NbiVlanModel returned",
+            "items" : {
+              "$ref" : "#/definitions/NbiVlanModel"
+            }
+          }
+        }
+      } ],
+      "description" : "NbiVlanModel complex result response"
+    },
+    "NbiVlanModel" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/BaseServiceModel"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "siteId" : {
+            "type" : "string",
+            "description" : "site id"
+          },
+          "vlanId" : {
+            "type" : "integer",
+            "format" : "int32",
+            "description" : "vlan id"
+          },
+          "ports" : {
+            "type" : "array",
+            "description" : "ports list",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "portNames" : {
+            "type" : "array",
+            "description" : "port name list",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "createtime" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "create time"
+          },
+          "updatetime" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "update time"
+          }
+        }
+      } ]
+    },
+    "NbiSubnetModelComplexRsp" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/ComplexResultResponse"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "description" : "List of NbiSubnetModel returned",
+            "items" : {
+              "$ref" : "#/definitions/NbiSubnetModel"
+            }
+          }
+        }
+      } ],
+      "description" : "NbiSubnetModel complex result response"
+    },
+    "NbiSubnetModel" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/BaseServiceModel"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "siteId" : {
+            "type" : "string",
+            "description" : "site id"
+          },
+          "cidrBlock" : {
+            "type" : "string",
+            "description" : "cidr block"
+          },
+          "cidrBlockSize" : {
+            "type" : "integer",
+            "format" : "int32",
+            "description" : "cidr block size",
+            "minimum" : 8,
+            "maximum" : 32
+          },
+          "gatewayIp" : {
+            "type" : "string",
+            "description" : "gateway ip"
+          },
+          "vlanId" : {
+            "type" : "string",
+            "description" : "vlan id"
+          },
+          "vni" : {
+            "type" : "string",
+            "description" : "vni"
+          },
+          "ports" : {
+            "type" : "array",
+            "description" : "ports list",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "portNames" : {
+            "type" : "array",
+            "description" : "port name list",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "ipv6Address" : {
+            "type" : "string",
+            "description" : "ipv6 address"
+          },
+          "prefixLength" : {
+            "type" : "string",
+            "description" : "length of prifix"
+          },
+          "dhcp6Enable" : {
+            "type" : "string",
+            "description" : "whether enable dhcp6"
+          },
+          "dhcp6Mode" : {
+            "type" : "string",
+            "description" : "dhcp mode scope =\"server, relay\""
+          },
+          "enableDhcp" : {
+            "type" : "string",
+            "description" : "whether enable dhcp"
+          },
+          "gatewayInterface" : {
+            "type" : "string",
+            "description" : "BDIF interface name, when vni is not null and need to read from AC, pass this parameter to lower layer"
+          },
+          "createTime" : {
+            "type" : "string",
+            "description" : "create time"
+          },
+          "updateTime" : {
+            "type" : "string",
+            "description" : "update time"
+          }
+        }
+      } ]
+    },
+    "NbiCloudCpeModel" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/UuidModel"
+      }, {
+        "type" : "object",
+        "required" : [ "siteId", "tenantId" ],
+        "properties" : {
+          "tenantId" : {
+            "type" : "string",
+            "description" : "tenant id"
+          },
+          "siteId" : {
+            "type" : "string",
+            "description" : "site id"
+          },
+          "popId" : {
+            "type" : "string",
+            "description" : "pop id"
+          },
+          "vCpeId" : {
+            "type" : "string",
+            "description" : "vcpe id"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "name"
+          },
+          "esn" : {
+            "type" : "string",
+            "description" : "esn"
+          },
+          "mgrIp" : {
+            "type" : "string",
+            "description" : "mgr ip"
+          },
+          "mgrMask" : {
+            "type" : "string",
+            "description" : "mask of mgr ip"
+          },
+          "mgrGatewayIp" : {
+            "type" : "string",
+            "description" : "mgr gateway ip"
+          },
+          "controllerId" : {
+            "type" : "string",
+            "description" : "controller id"
+          },
+          "controllerIp" : {
+            "type" : "string",
+            "description" : "controller ip"
+          },
+          "controllerMask" : {
+            "type" : "string",
+            "description" : "controller mask"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "description"
+          },
+          "vendor" : {
+            "type" : "string",
+            "description" : "vendor"
+          },
+          "type" : {
+            "type" : "string",
+            "description" : "type"
+          },
+          "vnfdVersion" : {
+            "type" : "string",
+            "description" : "vnfd Version"
+          },
+          "callbackUrl" : {
+            "type" : "string",
+            "description" : "callback Url"
+          },
+          "vnfdId" : {
+            "type" : "string",
+            "description" : "vnfd id"
+          },
+          "vnfId" : {
+            "type" : "string",
+            "description" : "vnf id"
+          },
+          "vnfmId" : {
+            "type" : "string",
+            "description" : "vnfm id"
+          },
+          "dcLocation" : {
+            "type" : "string",
+            "description" : "dc location"
+          },
+          "rangeId" : {
+            "type" : "string",
+            "description" : "range id"
+          },
+          "referenceCount" : {
+            "type" : "integer",
+            "format" : "int32",
+            "description" : "reference count"
+          },
+          "adminState" : {
+            "type" : "string",
+            "description" : "administrative state",
+            "enum" : [ "Active", "Stopped", "Building" ]
+          },
+          "actionState" : {
+            "type" : "string",
+            "description" : "action state",
+            "default" : "normal",
+            "enum" : [ "none", "normal", "creating", "deleting", "updating", "create_exception", "update_exception", "delete_exception", "deploying", "deploy_exception", "undeploying", "undeploy_exception", "checking", "check_exception" ]
+          },
+          "template" : {
+            "type" : "string",
+            "description" : "template of cloudcpe"
+          },
+          "additionalInfo" : {
+            "type" : "array",
+            "description" : "additional info",
+            "items" : {
+              "$ref" : "#/definitions/NvString"
+            }
+          }
+        }
+      } ]
+    },
+    "NbiLocalCpeModel" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/UuidModel"
+      }, {
+        "type" : "object",
+        "required" : [ "siteId", "tenantId" ],
+        "properties" : {
+          "tenantId" : {
+            "type" : "string",
+            "description" : "tenant id"
+          },
+          "siteId" : {
+            "type" : "string",
+            "description" : "site id"
+          },
+          "name" : {
+            "type" : "string",
+            "description" : "name"
+          },
+          "esn" : {
+            "type" : "string",
+            "description" : "esn"
+          },
+          "oldEsn" : {
+            "type" : "string",
+            "description" : "old esn"
+          },
+          "controllerId" : {
+            "type" : "string",
+            "description" : "controller id"
+          },
+          "localCpeType" : {
+            "type" : "string",
+            "description" : "local cpe type"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "description"
+          }
+        }
+      } ]
+    },
+    "BaseMo" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "the UUID of the model"
+        },
+        "name" : {
+          "type" : "string",
+          "description" : "name of the object"
+        }
+      }
+    },
+    "NbiNeMo" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/BaseMo"
+      }, {
+        "type" : "object",
+        "required" : [ "ipAddress" ],
+        "properties" : {
+          "version" : {
+            "type" : "string",
+            "description" : "version"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "description"
+          },
+          "logicId" : {
+            "type" : "string",
+            "description" : "logic id of ne"
+          },
+          "phyNeId" : {
+            "type" : "string",
+            "description" : "physical ne id"
+          },
+          "managementDomainId" : {
+            "type" : "array",
+            "description" : "management Domain Id",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "controllerId" : {
+            "type" : "array",
+            "description" : "controller Id list",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "siteId" : {
+            "type" : "array",
+            "description" : "site id list",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "productName" : {
+            "type" : "string",
+            "description" : "product name"
+          },
+          "isVirtual" : {
+            "type" : "string",
+            "description" : "whether is a virtual network element"
+          },
+          "ipAddress" : {
+            "type" : "string",
+            "description" : "ip Address"
+          },
+          "source" : {
+            "type" : "string",
+            "description" : "source of network element",
+            "enum" : [ "network_me", "os", "network_ems", "user" ]
+          },
+          "owner" : {
+            "type" : "string",
+            "description" : "owner"
+          },
+          "location" : {
+            "type" : "string",
+            "description" : "location"
+          },
+          "serialNumber" : {
+            "type" : "string",
+            "description" : "serial Number"
+          },
+          "manufacturer" : {
+            "type" : "string",
+            "description" : "manufacturer"
+          },
+          "manufactureDate" : {
+            "type" : "string",
+            "description" : "manufacture Date"
+          },
+          "adminState" : {
+            "type" : "string",
+            "description" : "administrative state",
+            "enum" : [ "active", "inactive" ]
+          },
+          "operState" : {
+            "type" : "string",
+            "description" : "operation state",
+            "enum" : [ "up", "down", "unknown" ]
+          },
+          "nativeId" : {
+            "type" : "string",
+            "description" : "native id"
+          },
+          "accessIpVersion" : {
+            "type" : "string",
+            "description" : "access ip version",
+            "default" : "IPV4",
+            "enum" : [ "IPV4", "IPV6", "IPV4/IPV6" ]
+          },
+          "neRole" : {
+            "type" : "string",
+            "description" : "network element role, clouecpe/localcpe/firewall",
+            "enum" : [ "Thin CPE", "vCPE", "vFW" ]
+          },
+          "popID" : {
+            "type" : "string",
+            "description" : "pop id"
+          },
+          "additionalInfo" : {
+            "type" : "array",
+            "description" : "additional info",
+            "items" : {
+              "$ref" : "#/definitions/NvString"
+            }
+          }
+        }
+      } ]
+    },
+    "NbiInternetGatewayModelComplexRsp" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/ComplexResultResponse"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "description" : "List of NbiInternetGatewayModel returned",
+            "items" : {
+              "$ref" : "#/definitions/NbiInternetGatewayModel"
+            }
+          }
+        }
+      } ],
+      "description" : "NbiInternetGatewayModel complex result response"
+    },
+    "NbiRouteEntryModel" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/BaseServiceModel"
+      }, {
+        "type" : "object",
+        "required" : [ "siteId" ],
+        "properties" : {
+          "siteId" : {
+            "type" : "string",
+            "description" : "site id"
+          },
+          "subnetId" : {
+            "type" : "string",
+            "description" : "subnet id"
+          },
+          "cidr" : {
+            "type" : "string",
+            "description" : "cidr"
+          },
+          "vpnGatewayId" : {
+            "type" : "string",
+            "description" : "vpn gateway id"
+          },
+          "internetGatewayId" : {
+            "type" : "string",
+            "description" : "internet Gateway Id"
+          },
+          "nextHop" : {
+            "type" : "string",
+            "description" : "next hop"
+          },
+          "precedence" : {
+            "type" : "integer",
+            "format" : "int32",
+            "description" : "precedence for route entry",
+            "minimum" : 1,
+            "maximum" : 254
+          },
+          "routeType" : {
+            "type" : "string",
+            "description" : "route type, staic route or policy route, currently noly support static route",
+            "default" : "static-routing",
+            "enum" : [ "static-routing" ]
+          }
+        }
+      } ]
+    },
+    "NbiSiteModelUpdateRsp" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "Uuid of NbiSiteModel updated"
+        },
+        "properties" : {
+          "$ref" : "#/definitions/NbiSiteModel"
+        }
+      },
+      "description" : "NbiSiteModel update result response"
+    },
+    "NbiSiteModelComplexRsp" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/ComplexResultResponse"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : "array",
+            "description" : "List of NbiSiteModel returned",
+            "items" : {
+              "$ref" : "#/definitions/NbiSiteModel"
+            }
+          }
+        }
+      } ],
+      "description" : "NbiSiteModel complex result response"
+    },
+    "NbiSiteModel" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/UuidModel"
+      }, {
+        "type" : "object",
+        "required" : [ "name", "reliability", "siteDescriptor", "tenantId" ],
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "description" : "site name"
+          },
+          "tenantId" : {
+            "type" : "string",
+            "description" : "tenant id"
+          },
+          "description" : {
+            "type" : "string",
+            "description" : "site description information"
+          },
+          "location" : {
+            "type" : "string",
+            "description" : "site location"
+          },
+          "actionState" : {
+            "type" : "string",
+            "description" : "operation status of site",
+            "default" : "normal",
+            "enum" : [ "none", "normal", "creating", "deleting", "updating", "create_exception", "update_exception", "delete_exception", "deploying", "deploy_exception", "undeploying", "undeploy_exception", "checking", "check_exception" ]
+          },
+          "deployCloudCpeByDefault" : {
+            "type" : "boolean",
+            "description" : "whether to start cloudcpe when create site",
+            "default" : true
+          },
+          "popId" : {
+            "type" : "string",
+            "description" : "pop id"
+          },
+          "localCpeType" : {
+            "type" : "string",
+            "description" : "local cpe type"
+          },
+          "siteDescriptor" : {
+            "type" : "string",
+            "description" : "site Descriptor"
+          },
+          "reliability" : {
+            "type" : "string",
+            "description" : "reliability defition of site",
+            "enum" : [ "singleFixedNetwork", "dualFixedNetwork", "fixedAndWirelessNetwork", "EthernetNetwork", "VDSLNetwork", "GSHDSLNetwork", "EthernetAndLTENetwork", "EthernetAndEthernetNetwork", "EthernetAndVDSLNetwork", "VDSLAndLTENetwork" ]
+          },
+          "isEncrypt" : {
+            "type" : "string",
+            "description" : "whether connection is encrypt"
+          },
+          "vpnUpstreamBandwidth" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Vpn upstream bandwidth(kbps)",
+            "minimum" : -2,
+            "maximum" : 4294967295,
+            "default" : -2
+          },
+          "vpnDownstreamBandwidth" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Vpn downstream bandwidth(kbps)",
+            "minimum" : -2,
+            "maximum" : 4294967295,
+            "default" : -2
+          },
+          "totalDownstreamBandwidth" : {
+            "type" : "string",
+            "description" : "total downstream bandwidth"
+          },
+          "totalUpstreamBandwidth" : {
+            "type" : "string",
+            "description" : "total upstream bandwidth"
+          },
+          "createtime" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "create time"
+          },
+          "updatetime" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "update time"
+          },
+          "localCpes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/NbiNeMo"
+            }
+          },
+          "cloudCpes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/NbiNeMo"
+            }
+          },
+          "subnets" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/NbiSubnetModel"
+            }
+          },
+          "vlans" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/NbiVlanModel"
+            }
+          },
+          "routes" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/NbiRouteEntryModel"
+            }
+          },
+          "internetGateway" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/NbiInternetGatewayModel"
+            }
+          }
+        }
+      } ]
+    },
+    "NbiInternetGatewayModel" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/BaseServiceModel"
+      }, {
+        "type" : "object",
+        "required" : [ "siteId" ],
+        "properties" : {
+          "siteId" : {
+            "type" : "string",
+            "description" : "site id"
+          },
+          "protectionType" : {
+            "type" : "string",
+            "description" : "protection type",
+            "default" : "non-protection",
+            "enum" : [ "non-protection" ]
+          },
+          "enableSnat" : {
+            "type" : "string",
+            "description" : "whether to enable snat",
+            "default" : "true",
+            "enum" : [ "true", "false" ]
+          },
+          "upstreamBandwidth" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Up stream bandwidth"
+          },
+          "downstreamBandwidth" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "Down stream bandwidth"
+          },
+          "vpnId" : {
+            "type" : "string",
+            "description" : "vpn id"
+          },
+          "publicIp" : {
+            "type" : "string",
+            "description" : "public ip"
+          },
+          "gwNeId" : {
+            "type" : "string",
+            "description" : "Gateway NetworkElement id"
+          },
+          "wanNames" : {
+            "type" : "string",
+            "description" : "Name of wan interface used for internet"
+          },
+          "deployPosition" : {
+            "type" : "string",
+            "description" : "deploy position, localcpe or cloudcpe",
+            "default" : "localFirst",
+            "enum" : [ "localFirst", "cloudFirst" ]
+          },
+          "sourceSubnets" : {
+            "type" : "array",
+            "description" : "port name list",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "createtime" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "create time"
+          },
+          "updatetime" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "update time"
+          }
+        }
+      } ]
+    }
+  }
+}

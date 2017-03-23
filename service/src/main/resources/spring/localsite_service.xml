@@ -50,6 +50,7 @@
             <ref bean="CloudCpeRoaResource"></ref>
             <ref bean="CpeOnlineRoaResource"></ref>
             <ref bean="healthCheckRoaResource"></ref>
+            <ref bean="swaggerRoaResource"></ref>
         </jaxrs:serviceBeans>
         <!-- registering providers -->
         <jaxrs:providers>
