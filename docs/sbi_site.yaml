@@ -566,11 +566,9 @@ paths:
           type: string
         - name: deviceIds
           in: query
-          description: device id list
+          description: device id list,example:["deviceId1","deviceId2"]
           required: true
-          type: array
-          items:
-            type: string
+          type: string
       responses:
         200:
           description: OK
